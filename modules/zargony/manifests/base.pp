@@ -40,4 +40,14 @@ class zargony::base (
 	Package <| |> {
 		require +> Exec['aptget_update'],
 	}
+
+	# Make sure required system services are installed
+	package { ['acpid', 'apparmor', 'aptitude', 'ntp', 'openssh-server', 'unattended-upgrades']:
+		ensure => installed,
+	}
+
+	# Install useful tools
+	package { ['bash-completion', 'curl', 'htop', 'iptraf', 'lftp', 'lsof', 'pciutils', 'psmisc', 'rsync', 'screen', 'tcpdump', 'usbutils', 'wget']:
+		ensure => installed,
+	}
 }
