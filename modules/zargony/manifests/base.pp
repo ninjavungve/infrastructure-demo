@@ -4,7 +4,6 @@ class zargony::base (
 	$ubuntu_components = 'main restricted universe multiverse',
 	$timezone = 'Europe/Berlin',
 ) {
-
 	# Ensure that the root password is disabled
 	user { 'root':
 		ensure   => present,
@@ -49,8 +48,10 @@ class zargony::base (
 	}
 
 	# Make sure required system services are installed
-	package { ['acpid', 'apparmor', 'aptitude', 'ntp', 'openssh-server', 'unattended-upgrades']:
+	package { ['acpid', 'apparmor', 'aptitude', 'ntp', 'openssh-server']:
 		ensure => installed,
+	}
+	class { 'zargony::unattended_upgrades':
 	}
 
 	# Configure root shell
