@@ -1,7 +1,7 @@
 node default {
-	include zargony::base
+	class { 'zargony::base': }
 }
 
 node 'vagrant.local' {
-	include zargony::server
+	class { 'zargony::server': }
 }

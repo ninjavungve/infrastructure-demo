@@ -1,3 +1,3 @@
 class zargony::server {
-	include zargony::base
+	class { 'zargony::base': }
 }
