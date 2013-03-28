@@ -2,6 +2,7 @@ class zargony::base (
 	$ubuntu_area = 'de',
 	$ubuntu_distribution = 'precise',
 	$ubuntu_components = 'main restricted universe multiverse',
+	$timezone = 'Europe/Berlin',
 ) {
 
 	# Ensure that the root password is disabled
@@ -39,6 +40,12 @@ class zargony::base (
 	# Make sure to update before installing any package
 	Package <| |> {
 		require +> Exec['aptget_update'],
+	}
+
+	# Set timezone
+	file { '/etc/localtime':
+		ensure => link,
+		target => "/usr/share/zoneinfo/${timezone}",
 	}
 
 	# Make sure required system services are installed
