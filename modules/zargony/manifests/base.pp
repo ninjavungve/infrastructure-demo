@@ -46,6 +46,18 @@ class zargony::base (
 		ensure => installed,
 	}
 
+	# Configure root shell
+	file { '/root/.inputrc':
+		ensure => present,
+		source => 'puppet:///modules/zargony/inputrc',
+		mode   => 0644, owner => 'root', group => 'root',
+	}
+	file { '/root/.bashrc':
+		ensure => present,
+		source => 'puppet:///modules/zargony/bashrc',
+		mode   => 0644, owner => 'root', group => 'root',
+	}
+
 	# Install useful tools
 	package { ['bash-completion', 'curl', 'htop', 'iptraf', 'lftp', 'lsof', 'pciutils', 'psmisc', 'rsync', 'screen', 'tcpdump', 'usbutils', 'wget']:
 		ensure => installed,
