@@ -65,9 +65,14 @@ class zargony::base (
 		source => 'puppet:///modules/zargony/bashrc',
 		mode   => 0644, owner => 'root', group => 'root',
 	}
+	file { '/root/.vimrc':
+		ensure => present,
+		source => 'puppet:///modules/zargony/vimrc',
+		mode   => 0644, owner => 'root', group => 'root',
+	}
 
 	# Install useful tools
-	package { ['bash-completion', 'curl', 'htop', 'iptraf', 'lftp', 'lsof', 'pciutils', 'psmisc', 'rsync', 'screen', 'tcpdump', 'usbutils', 'wget']:
+	package { ['bash-completion', 'curl', 'htop', 'iptraf', 'lftp', 'lsof', 'pciutils', 'psmisc', 'rsync', 'screen', 'tcpdump', 'usbutils', 'vim', 'wget']:
 		ensure => installed,
 	}
 }
