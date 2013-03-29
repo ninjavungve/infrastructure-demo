@@ -51,8 +51,8 @@ class zargony::base (
 	package { ['acpid', 'apparmor', 'aptitude', 'ntp', 'openssh-server']:
 		ensure => installed,
 	}
-	class { 'zargony::unattended_upgrades':
-	}
+	class { 'zargony::unattended_upgrades': }
+	class { 'zargony::logrotate': }
 
 	# Configure root shell
 	file { '/root/.inputrc':
