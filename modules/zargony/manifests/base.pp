@@ -10,16 +10,9 @@ class zargony::base (
 		password => '*',
 	}
 
-	# Install authorized ssh keys
-	file { '/root/.ssh':
-		ensure => directory,
-		mode   => 0644, owner => 'root', group => 'root',
-	}
-	file { '/root/.ssh/authorized_keys':
-		ensure  => present,
-		source  => 'puppet:///modules/zargony/authorized_keys',
-		mode    => 0644, owner => 'root', group => 'root',
-		require => File['/root/.ssh'],
+	# Configure user profile for root, allow ssh access
+	zargony::profile { 'root':
+		ssh => true,
 	}
 
 	# Configure and update APT
@@ -53,23 +46,6 @@ class zargony::base (
 	}
 	class { 'zargony::unattended_upgrades': }
 	class { 'zargony::logrotate': }
-
-	# Configure root shell
-	file { '/root/.inputrc':
-		ensure => present,
-		source => 'puppet:///modules/zargony/inputrc',
-		mode   => 0644, owner => 'root', group => 'root',
-	}
-	file { '/root/.bashrc':
-		ensure => present,
-		source => 'puppet:///modules/zargony/bashrc',
-		mode   => 0644, owner => 'root', group => 'root',
-	}
-	file { '/root/.vimrc':
-		ensure => present,
-		source => 'puppet:///modules/zargony/vimrc',
-		mode   => 0644, owner => 'root', group => 'root',
-	}
 
 	# Install useful tools
 	package { ['bash-completion', 'curl', 'htop', 'iptraf', 'lftp', 'lsof', 'pciutils', 'psmisc', 'rsync', 'screen', 'tcpdump', 'usbutils', 'vim', 'wget']:
