@@ -15,10 +15,17 @@ class zargony::base (
 		ssh => true,
 	}
 
+	# Configure hosts file
+	file { '/etc/hosts':
+		ensure  => present,
+		content => template('zargony/hosts.erb'),
+		mode    => 0644, owner => 'root', group => 'root',
+	}
+
 	# Configure and update APT
 	file { '/etc/apt/sources.list':
 		ensure  => present,
-		content => template("zargony/sources.list.erb"),
+		content => template('zargony/sources.list.erb'),
 		mode    => 0644, owner => 'root', group => 'root',
 		before  => Exec['aptget_update'],
 		notify  => Exec['aptget_update'],
