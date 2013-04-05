@@ -47,11 +47,16 @@ class zargony::base (
 	}
 
 	# Make sure required system services are installed
-	package { ['acpid', 'apparmor', 'aptitude', 'ntp', 'openssh-server']:
+	package { ['acpid', 'apparmor', 'aptitude', 'logrotate', 'ntp', 'openssh-server']:
 		ensure => installed,
 	}
 	class { 'zargony::unattended_upgrades': }
-	class { 'zargony::logrotate': }
+	file { '/etc/logrotate.conf':
+		ensure  => present,
+		source  => 'puppet:///modules/zargony/logrotate.conf',
+		mode    => 0644, owner => 'root', group => 'root',
+		require => Package['logrotate'],
+	}
 
 	# Install useful tools
 	package { ['bash-completion', 'curl', 'htop', 'iptraf', 'lftp', 'lsof', 'pciutils', 'psmisc', 'rsync', 'screen', 'tcpdump', 'usbutils', 'vim', 'wget']:
