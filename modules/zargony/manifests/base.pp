@@ -27,7 +27,6 @@ class zargony::base (
 		ensure  => present,
 		content => template('zargony/sources.list.erb'),
 		mode    => 0644, owner => 'root', group => 'root',
-		before  => Exec['aptget_update'],
 		notify  => Exec['aptget_update'],
 	}
 	exec { 'aptget_update':

@@ -4,8 +4,9 @@ class zargony::logrotate {
 	}
 
 	file { '/etc/logrotate.conf':
-		ensure => present,
-		source => 'puppet:///modules/zargony/logrotate.conf',
-		mode   => 0644, owner => 'root', group => 'root',
+		ensure  => present,
+		source  => 'puppet:///modules/zargony/logrotate.conf',
+		mode    => 0644, owner => 'root', group => 'root',
+		require => Package['logrotate'],
 	}
 }
