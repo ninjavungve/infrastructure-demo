@@ -1,9 +1,9 @@
-<% if @ubuntu_area == 'hetzner' -%>
-deb http://mirror.hetzner.de/ubuntu/packages <%= @ubuntu_distribution %> <%= @ubuntu_components %>
-deb http://mirror.hetzner.de/ubuntu/packages <%= @ubuntu_distribution %>-updates <%= @ubuntu_components %>
-deb http://mirror.hetzner.de/ubuntu/security <%= @ubuntu_distribution %>-security <%= @ubuntu_components %>
+<% if ubuntu_area == 'hetzner' -%>
+deb http://mirror.hetzner.de/ubuntu/packages <%= ubuntu_distribution %> <%= ubuntu_components %>
+deb http://mirror.hetzner.de/ubuntu/packages <%= ubuntu_distribution %>-updates <%= ubuntu_components %>
+deb http://mirror.hetzner.de/ubuntu/security <%= ubuntu_distribution %>-security <%= ubuntu_components %>
 <% else -%>
-deb http://<%= @ubuntu_area %>.archive.ubuntu.com/ubuntu <%= @ubuntu_distribution %> <%= @ubuntu_components %>
-deb http://<%= @ubuntu_area %>.archive.ubuntu.com/ubuntu <%= @ubuntu_distribution %>-updates <%= @ubuntu_components %>
+deb http://<%= ubuntu_area %>.archive.ubuntu.com/ubuntu <%= ubuntu_distribution %> <%= ubuntu_components %>
+deb http://<%= ubuntu_area %>.archive.ubuntu.com/ubuntu <%= ubuntu_distribution %>-updates <%= ubuntu_components %>
 <% end -%>
-deb http://security.ubuntu.com/ubuntu <%= @ubuntu_distribution %>-security <%= @ubuntu_components %>
+deb http://security.ubuntu.com/ubuntu <%= ubuntu_distribution %>-security <%= ubuntu_components %>
