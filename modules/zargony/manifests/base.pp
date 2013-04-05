@@ -50,7 +50,6 @@ class zargony::base (
 	package { ['acpid', 'apparmor', 'aptitude', 'logrotate', 'ntp', 'openssh-server']:
 		ensure => installed,
 	}
-	class { 'zargony::unattended_upgrades': }
 	file { '/etc/logrotate.conf':
 		ensure  => present,
 		source  => 'puppet:///modules/zargony/logrotate.conf',

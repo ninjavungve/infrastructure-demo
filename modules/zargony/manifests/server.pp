@@ -10,4 +10,21 @@ class zargony::server (
 		ubuntu_components   => $ubuntu_components,
 		timezone            => $timezone,
 	}
+
+	# Configure system for unattended upgrades
+	package { 'unattended-upgrades':
+		ensure => installed,
+	}
+	file { '/etc/apt/apt.conf.d/20auto-upgrades':
+		ensure => present,
+		source => 'puppet:///modules/zargony/apt_20auto-upgrades',
+		mode   => 0644, owner => 'root', group => 'root',
+		notify => Exec['aptget_update'],
+	}
+	file { '/etc/apt/apt.conf.d/50unattended-upgrades':
+		ensure => present,
+		source => 'puppet:///modules/zargony/apt_50unattended-upgrades',
+		mode   => 0644, owner => 'root', group => 'root',
+		notify => Exec['aptget_update'],
+	}
 }
