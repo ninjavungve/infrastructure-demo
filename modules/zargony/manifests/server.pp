@@ -27,4 +27,8 @@ class zargony::server (
 		mode   => 0644, owner => 'root', group => 'root',
 		notify => Exec['aptget_update'],
 	}
+
+	# Set up server stuff
+	class { 'zargony::git': }
+	class { 'zargony::rbenv': }
 }
