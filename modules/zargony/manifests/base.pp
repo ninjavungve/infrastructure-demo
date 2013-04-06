@@ -4,6 +4,8 @@ class zargony::base (
 	$ubuntu_components = 'main restricted universe multiverse',
 	$timezone = 'Europe/Berlin',
 ) {
+	$path = ['/sbin', '/bin', '/usr/sbin', '/usr/bin']
+
 	# Ensure that the root password is disabled
 	user { 'root':
 		ensure   => present,
@@ -30,7 +32,8 @@ class zargony::base (
 		notify  => Exec['aptget_update'],
 	}
 	exec { 'aptget_update':
-		command     => '/usr/bin/apt-get -qq update',
+		path        => $zargony::base::path,
+		command     => 'apt-get -qq update',
 		logoutput   => false,
 		refreshonly => true,
 	}
