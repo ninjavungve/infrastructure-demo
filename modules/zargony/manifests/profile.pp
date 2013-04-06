@@ -22,7 +22,7 @@ define zargony::profile (
 	if ($ssh) {
 		file { "${homedir}/.ssh":
 			ensure => directory,
-			mode   => 0644, owner => $name, group => $name,
+			mode   => 0755, owner => $name, group => $name,
 		}
 		file { "${homedir}/.ssh/authorized_keys":
 			ensure  => present,
