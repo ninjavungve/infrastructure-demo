@@ -34,8 +34,9 @@ class zargony::rbenv (
 define zargony::rbenv::ruby (
 	$global = false,
 ) {
-	exec { "rbenv install ${name}":
+	exec { "rbenv_install_${name}":
 		path        => $zargony::rbenv::path,
+		command     => "rbenv install ${name}",
 		environment => "RBENV_ROOT=${zargony::rbenv::rbenv_root}",
 		timeout     => 600,
 		creates     => "${zargony::rbenv::rbenv_root}/versions/${name}/bin/ruby",
@@ -47,7 +48,7 @@ define zargony::rbenv::ruby (
 			ensure  => present,
 			content => "${name}\n",
 			mode    => 0644, owner => 'root', group => 'root',
-			require => Exec["rbenv install ${name}"],
+			require => Exec["rbenv_install_${name}"],
 		}
 	}
 }
