@@ -2,7 +2,7 @@ class zargony::rbenv (
 	$rbenv_root = '/opt/rbenv',
 	$ruby_version = '1.9.3-p392',
 ) {
-	$path = [$zargony::base::path, "${rbenv_root}/bin"]
+	$path = [$zargony::base::path, "${rbenv_root}/shims", "${rbenv_root}/bin"]
 
 	file { $rbenv_root:
 		ensure  => directory,
