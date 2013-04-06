@@ -49,7 +49,7 @@ class zargony::base (
 		target => "/usr/share/zoneinfo/${timezone}",
 	}
 
-	# Make sure required system services are installed
+	# Make sure required system services are installed and running
 	package { ['acpid', 'apparmor', 'aptitude', 'logrotate', 'ntp', 'openssh-server']:
 		ensure => installed,
 	}
@@ -59,6 +59,10 @@ class zargony::base (
 		mode    => 0644, owner => 'root', group => 'root',
 		require => Package['logrotate'],
 	}
+	service { 'acpid':    ensure => running, enable => true, require => Package['acpid'] }
+	service { 'apparmor': ensure => running, enable => true, require => Package['apparmor'] }
+	service { 'ntp':      ensure => running, enable => true, require => Package['ntp'] }
+	service { 'ssh':      ensure => running, enable => true, require => Package['openssh-server'] }
 
 	# Install useful tools
 	package { ['bash-completion', 'curl', 'htop', 'iptraf', 'lftp', 'lsof', 'pciutils', 'psmisc', 'rsync', 'screen', 'tcpdump', 'usbutils', 'vim', 'wget']:
