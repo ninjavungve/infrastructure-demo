@@ -15,6 +15,7 @@ define zargony::bootstrap::create (
 	$target_ipaddress = undef,
 	$target_netmask = 24,
 	$target_gateway = undef,
+	$target_pointopoint = undef,
 	$target_ipaddress6 = undef,
 	$target_netmask6 = 64,
 	$target_gateway6 = undef,
