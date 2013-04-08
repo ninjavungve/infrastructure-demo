@@ -1,0 +1,9 @@
+domain <%= target_fqdn.split('.')[1..-1].join('.') %>
+<% if @ubuntu_area == 'hetzner' -%>
+nameserver 213.133.100.100
+nameserver 213.133.99.99
+nameserver 213.133.98.98
+<% else -%>
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+<% end -%>

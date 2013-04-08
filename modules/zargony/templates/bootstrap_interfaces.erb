@@ -1,0 +1,23 @@
+# interfaces(5) file used by ifup(8) and ifdown(8)
+auto lo
+iface lo inet loopback
+<% if @target_ipaddress || @target_ipaddress6 -%>
+
+auto eth0
+<% if @target_ipaddress -%>
+iface eth0 inet static
+  address <%= @target_ipaddress %>
+  netmask <%= @target_netmask %>
+<% if @target_gateway -%>
+  gateway <%= @target_gateway %>
+<% end -%>
+<% end -%>
+<% if @target_ipaddress6 -%>
+iface eth0 inet6 static
+  address <%= @target_ipaddress6 %>
+  netmask <%= @target_netmask6 %>
+<% if @target_gateway6 -%>
+  gateway <%= @target_gateway6 %>
+<% end -%>
+<% end -%>
+<% end -%>

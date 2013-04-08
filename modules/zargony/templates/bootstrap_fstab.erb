@@ -1,0 +1,4 @@
+proc						proc		proc	defaults			0 0
+sysfs						/sys		sysfs	defaults			0 0
+UUID=<%= `blkid #{root_dev}`[/UUID="([^"]+)"/, 1] || raise %>	none		swap	sw				0 0
+UUID=<%= `blkid #{swap_dev}`[/UUID="([^"]+)"/, 1] || raise %>	/		ext4	noatime,errors=remount-ro	0 1
