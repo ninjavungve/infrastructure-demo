@@ -65,7 +65,7 @@ class zargony::base (
 	service { 'ssh':      ensure => running, enable => true, require => Package['openssh-server'] }
 
 	# Install useful tools
-	package { ['bash-completion', 'curl', 'htop', 'iptraf', 'lftp', 'lsof', 'pciutils', 'psmisc', 'rsync', 'screen', 'tcpdump', 'usbutils', 'vim', 'wget']:
+	package { ['bash-completion', 'curl', 'htop', 'iotop', 'iptraf', 'lftp', 'lsof', 'pciutils', 'psmisc', 'rsync', 'screen', 'tcpdump', 'usbutils', 'vim', 'wget']:
 		ensure => installed,
 	}
 }
