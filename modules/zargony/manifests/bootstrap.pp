@@ -6,7 +6,7 @@ define zargony::bootstrap (
 	$ubuntu_distribution = 'precise',
 	$ubuntu_kernel = 'linux-server',
 	$target_hostname = $name,
-	$target_domain = 'local',
+	$target_domain = $domain,
 	$target_ipaddress = undef,
 	$target_netmask = 24,
 	$target_gateway = undef,
