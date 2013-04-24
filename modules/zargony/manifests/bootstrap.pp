@@ -48,21 +48,21 @@ define zargony::bootstrap (
 	}
 
 	file { "${root_dir}/etc/fstab":
-		ensure  => present,
+		ensure  => file,
 		content => template('zargony/bootstrap_fstab.erb'),
 		mode    => 0644, owner => 'root', group => 'root',
 		require => Exec["debootstrap_${root_dir}"],
 		before  => Exec["unmount_${root_dir}"],
 	}
 	file { "${root_dir}/etc/hostname":
-		ensure  => present,
+		ensure  => file,
 		content => "${target_hostname}.${target_domain}\n",
 		mode    => 0644, owner => 'root', group => 'root',
 		require => Exec["debootstrap_${root_dir}"],
 		before  => Exec["unmount_${root_dir}"],
 	}
 	file { "${root_dir}/etc/network/interfaces":
-		ensure  => present,
+		ensure  => file,
 		content => template("zargony/bootstrap_interfaces.erb"),
 		mode    => 0644, owner => 'root', group => 'root',
 		require => Exec["debootstrap_${root_dir}"],
@@ -82,7 +82,7 @@ define zargony::bootstrap (
 		before  => Exec["unmount_${root_dir}"],
 	}
 	file { "${root_dir}/root/.ssh/authorized_keys":
-		ensure  => present,
+		ensure  => file,
 		source  => 'puppet:///modules/zargony/authorized_keys',
 		mode    => 0644, owner => 'root', group => 'root',
 		require => File["${root_dir}/root/.ssh"],

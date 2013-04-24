@@ -19,14 +19,14 @@ class zargony::base (
 
 	# Configure hosts file
 	file { '/etc/hosts':
-		ensure  => present,
+		ensure  => file,
 		content => template('zargony/hosts.erb'),
 		mode    => 0644, owner => 'root', group => 'root',
 	}
 
 	# Configure and update APT
 	file { '/etc/apt/sources.list':
-		ensure  => present,
+		ensure  => file,
 		content => template('zargony/sources.list.erb'),
 		mode    => 0644, owner => 'root', group => 'root',
 		notify  => Exec['aptget_update'],
@@ -54,7 +54,7 @@ class zargony::base (
 		ensure => installed,
 	}
 	file { '/etc/logrotate.conf':
-		ensure  => present,
+		ensure  => file,
 		source  => 'puppet:///modules/zargony/logrotate.conf',
 		mode    => 0644, owner => 'root', group => 'root',
 		require => Package['logrotate'],
