@@ -2,6 +2,10 @@ class zargony::rbenv (
 	$rbenv_root = '/opt/rbenv',
 	$ruby_version = '1.9.3-p392',
 ) {
+	if (!defined(Class['zargony::git'])) {
+		class { 'zargony::git': }
+	}
+
 	$path = [$zargony::base::path, "${rbenv_root}/shims", "${rbenv_root}/bin"]
 
 	file { $rbenv_root:

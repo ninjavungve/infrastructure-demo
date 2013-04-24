@@ -28,6 +28,6 @@ class zargony::server (
 		notify => Exec['aptget_update'],
 	}
 
-	# Set up server stuff
+	# Set up ruby
 	class { 'zargony::rbenv': }
 }
