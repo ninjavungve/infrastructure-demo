@@ -28,6 +28,14 @@ class zargony::rbenv (
 		ensure => installed,
 	}
 
+	exec { 'rbenv_rehash':
+		path        => $path,
+		command     => 'rbenv rehash',
+		environment => ["RBENV_ROOT=${rbenv_root}"],
+		require     => Exec[$rbenv_root],
+		refreshonly => true,
+	}
+
 	zargony::rbenv::ruby { $ruby_version: global => true }
 }
 
@@ -41,13 +49,7 @@ define zargony::rbenv::ruby (
 		timeout     => 600,
 		creates     => "${zargony::rbenv::rbenv_root}/versions/${name}/bin/ruby",
 		require     => Exec["${zargony::rbenv::rbenv_root}/plugins/ruby-build"],
-	}
-	exec { "rbenv_${name}_rehash":
-		path        => $zargony::rbenv::path,
-		command     => "rbenv rehash",
-		environment => ["RBENV_ROOT=${zargony::rbenv::rbenv_root}", "RBENV_VERSION=${name}"],
-		require     => Exec["rbenv_install_${name}"],
-		refreshonly => true,
+		notify      => Exec['rbenv_rehash'],
 	}
 
 	zargony::rbenv::gem { 'bundler': command => 'bundle' }
@@ -58,6 +60,7 @@ define zargony::rbenv::ruby (
 			content => "${name}\n",
 			mode    => 0644, owner => 'root', group => 'root',
 			require => Exec["rbenv_install_${name}"],
+			notify  => Exec['rbenv_rehash'],
 		}
 	}
 }
@@ -72,6 +75,6 @@ define zargony::rbenv::gem (
 		environment => ["RBENV_ROOT=${zargony::rbenv::rbenv_root}", "RBENV_VERSION=${ruby_version}"],
 		creates     => "${zargony::rbenv::rbenv_root}/versions/${ruby_version}/bin/${command}",
 		require     => Exec["rbenv_install_${ruby_version}"],
-		notify      => Exec["rbenv_${ruby_version}_rehash"],
+		notify      => Exec["rbenv_rehash"],
 	}
 }
