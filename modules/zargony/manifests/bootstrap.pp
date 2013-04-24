@@ -5,7 +5,8 @@ define zargony::bootstrap (
 	$ubuntu_area = 'de',
 	$ubuntu_distribution = 'precise',
 	$ubuntu_kernel = 'linux-server',
-	$target_fqdn = $name,
+	$target_hostname = $name,
+	$target_domain = 'local',
 	$target_ipaddress = undef,
 	$target_netmask = 24,
 	$target_gateway = undef,
@@ -55,7 +56,7 @@ define zargony::bootstrap (
 	}
 	file { "${root_dir}/etc/hostname":
 		ensure  => present,
-		content => "${target_fqdn}\n",
+		content => "${target_hostname}.${target_domain}\n",
 		mode    => 0644, owner => 'root', group => 'root',
 		require => Exec["debootstrap_${root_dir}"],
 		before  => Exec["unmount_${root_dir}"],
