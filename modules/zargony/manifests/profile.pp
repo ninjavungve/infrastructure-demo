@@ -26,7 +26,7 @@ define zargony::profile (
 		}
 		file { "${homedir}/.ssh/authorized_keys":
 			ensure  => present,
-			source  => 'puppet:///modules/zargony/authorized_keys',
+			source  => ["puppet:///modules/zargony/authorized_keys_${name}", 'puppet:///modules/zargony/authorized_keys'],
 			mode    => 0644, owner => $name, group => $name,
 			require => File["${homedir}/.ssh"],
 		}
