@@ -29,6 +29,5 @@ class zargony::server (
 	}
 
 	# Set up server stuff
-	class { 'zargony::git': }
 	class { 'zargony::rbenv': }
 }

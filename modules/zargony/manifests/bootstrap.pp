@@ -1,10 +1,4 @@
-class zargony::bootstrap {
-	package { 'debootstrap':
-		ensure => installed
-	}
-}
-
-define zargony::bootstrap::create (
+define zargony::bootstrap (
 	$root_dev,
 	$swap_dev,
 	$ubuntu_arch = 'amd64',
@@ -28,6 +22,12 @@ define zargony::bootstrap::create (
 	}
 
 	$root_dir = "/mnt/${name}"
+
+	if (!defined(Package['debootstrap'])) {
+		package { 'debootstrap':
+			ensure => installed,
+		}
+	}
 
 	file { $root_dir:
 		ensure => directory,
