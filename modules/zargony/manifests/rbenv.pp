@@ -51,6 +51,17 @@ define zargony::rbenv::ruby (
 		require     => Exec["${zargony::rbenv::rbenv_root}/plugins/ruby-build"],
 		notify      => Exec['rbenv_rehash'],
 	}
+	file { "${zargony::rbenv::rbenv_root}/versions/${name}/etc":
+		ensure  => directory,
+		mode    => 0755, owner => 'root', group => 'root',
+		require => Exec["rbenv_install_${name}"],
+	}
+	file { "${zargony::rbenv::rbenv_root}/versions/${name}/etc/gemrc":
+		ensure  => present,
+		source  => 'puppet:///modules/zargony/gemrc',
+		mode    => 0644, owner => 'root', group => 'root',
+		require => File["${zargony::rbenv::rbenv_root}/versions/${name}/etc"],
+	}
 
 	zargony::rbenv::gem { 'bundler': command => 'bundle' }
 
@@ -69,12 +80,12 @@ define zargony::rbenv::gem (
 	$command,
 	$ruby_version = $zargony::rbenv::ruby_version,
 ) {
-	exec { "rbenv_${ruby_version}_gem_${name}":
+	exec { "rbenv_${ruby_version}_gem_install_${name}":
 		path        => $zargony::rbenv::path,
 		command     => "gem install ${name}",
 		environment => ["RBENV_ROOT=${zargony::rbenv::rbenv_root}", "RBENV_VERSION=${ruby_version}"],
 		creates     => "${zargony::rbenv::rbenv_root}/versions/${ruby_version}/bin/${command}",
-		require     => Exec["rbenv_install_${ruby_version}"],
+		require     => [Exec["rbenv_install_${ruby_version}"], File["${zargony::rbenv::rbenv_root}/versions/${ruby_version}/etc/gemrc"]],
 		notify      => Exec["rbenv_rehash"],
 	}
 }
