@@ -69,7 +69,7 @@ define zargony::bootstrap (
 		before  => Exec["unmount_${root_dir}"],
 	}
 	file { "${root_dir}/etc/resolv.conf":
-		ensure  => present,
+		ensure  => file,
 		content => template("zargony/bootstrap_resolv.conf.erb"),
 		mode    => 0644, owner => 'root', group => 'root',
 		require => Exec["debootstrap_${root_dir}"],
