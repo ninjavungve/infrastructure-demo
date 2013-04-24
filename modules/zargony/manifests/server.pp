@@ -28,6 +28,9 @@ class zargony::server (
 		notify => Exec['aptget_update'],
 	}
 
+	# Set up logical volume manager
+	class { 'zargony::lvm': }
+
 	# Set up ruby
 	class { 'zargony::rbenv': }
 }
