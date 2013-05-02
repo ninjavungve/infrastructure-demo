@@ -66,7 +66,7 @@ class zargony::base (
 
 	# Install useful tools
 	class { 'zargony::git': }
-	package { ['bash-completion', 'curl', 'htop', 'iotop', 'iptraf', 'lftp', 'lsof', 'pciutils', 'psmisc', 'rsync', 'screen', 'tcpdump', 'usbutils', 'vim', 'wget']:
+	package { ['bash-completion', 'curl', 'htop', 'iotop', 'iptraf', 'lftp', 'lsof', 'pciutils', 'psmisc', 'rsync', 'screen', 'strace', 'tcpdump', 'usbutils', 'vim', 'wget']:
 		ensure => installed,
 	}
 }
