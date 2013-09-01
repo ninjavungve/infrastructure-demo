@@ -1,9 +1,9 @@
 #!/bin/bash
 
-test -x /usr/bin/wget || apt-get install -qy wget
+test -x /usr/bin/curl || apt-get install -qy curl
 
 if ! test -d /etc/apt/sources.list.d/docker.list; then
-	wget -q -O- http://get.docker.io/gpg |apt-key add -
+	curl -s http://get.docker.io/gpg |apt-key add -
 	echo "deb http://get.docker.io/ubuntu docker main" >/etc/apt/sources.list.d/docker.list
 	apt-get update -qq
 fi
