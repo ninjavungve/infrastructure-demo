@@ -45,7 +45,7 @@ case "${TYPE}" in
 	box)
 		# We could use --variant=minbase here to make it even smaller, but a box is supposed
 		# to provide a shared base for boxes created on top of it
-		ARGS="--components=main,universe --include vim"
+		ARGS="--components=main,universe --include apparmor,vim"
 		# Some useful tools
 		ARGS="${ARGS},bash-completion,htop,iptraf,lftp,curl,lsof,pciutils,psmisc,rsync,screen,tcpdump,usbutils,wget"
 		;;
