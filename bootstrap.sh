@@ -65,7 +65,7 @@ EOF
 # Set timezone to Europe/Berlin
 ln -sf /usr/share/zoneinfo/Europe/Berlin ${TARGET}/etc/localtime
 
-# Configure SSH access
+# Configure SSH access if installed
 if test -x ${TARGET}/usr/sbin/sshd; then
 	mkdir -p ${TARGET}/root/.ssh
 	cat >${TARGET}/root/.ssh/authorized_keys <<-EOF
@@ -74,6 +74,32 @@ if test -x ${TARGET}/usr/sbin/sshd; then
 		ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCzz9mVFVI6HLTYxV352Q2/9M6pjaWWHXFDJ3+f7j6LceI596rLL2ITgqhxtfN8S2yHWi/8UsBy0xykwsyS7BRmh76/m0nCG+djrqPidG8uZPasicRZyIz/5LxYsi6i9gw/FGv8oL8MvCqilB/zpAqy0/FQEC9wWysbvbB33+q0eJ4wa2FVGm2KW19WkPOysC4jKrc99FcX2pZld5QhU3f6FocTNH4Baq6opzf65SfV40Rp6mERn3FuVrZivcmGt8K7t6rvidQEPxfnoFuuCxN6ZnXAZIOxbFcjqadjI9XaVFPkrtR/5a5xyyOEGDuzN0crxNI8Wd9gYUcbpgCH+R1l zargony@ios
 	EOF
 fi
+
+# Configure shell input
+cat >${TARGET}/root/.inputrc <<-EOF
+	set input-meta on
+	set output-meta on
+	set show-all-if-ambiguous on
+	set completion-ignore-case on
+	"\e[1~": beginning-of-line
+	"\e[2~": quoted-insert
+	"\e[3~": delete-char
+	"\e[4~": end-of-line
+	"\e[A": history-search-backward
+	"\e[B": history-search-forward
+	"\e[1;5C": forward-word
+	"\e[1;5D": backward-word
+	"\e[5C": forward-word
+	"\e[5D": backward-word
+	"\e\e[C": forward-word
+	"\e\e[D": backward-word
+EOF
+
+# Configure shell
+cp ${TARGET}/etc/skel/.bashrc ${TARGET}/root/.bashrc
+sed -i "s/xterm-color/xterm-color|xterm-265color/" ${TARGET}/root/.bashrc
+echo "" >>${TARGET}/root/.bashrc
+echo "alias l='ls -la'" >>${TARGET}/root/.bashrc
 
 # When an archive was given as the destination, create it and remove the temporary build directory
 case "${DESTINATION}" in
