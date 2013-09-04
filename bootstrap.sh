@@ -55,11 +55,11 @@ esac
 debootstrap --arch amd64 ${ARGS} ${DISTRIBUTION} ${TARGET} ${URL}
 
 # Configure APT sources
-cat >${TARGET}/etc/apt/sources.list <<EOF
-deb ${URL} ${DISTRIBUTION} main restricted universe multiverse
-deb ${URL} ${DISTRIBUTION}-updates main restricted universe multiverse
-deb ${URL} ${DISTRIBUTION}-security main restricted universe multiverse
-deb http://security.ubuntu.com/ubuntu ${DISTRIBUTION}-security main restricted universe multiverse
+cat >${TARGET}/etc/apt/sources.list <<-EOF
+	deb ${URL} ${DISTRIBUTION} main restricted universe multiverse
+	deb ${URL} ${DISTRIBUTION}-updates main restricted universe multiverse
+	deb ${URL} ${DISTRIBUTION}-security main restricted universe multiverse
+	deb http://security.ubuntu.com/ubuntu ${DISTRIBUTION}-security main restricted universe multiverse
 EOF
 
 # Set timezone to Europe/Berlin
