@@ -21,7 +21,7 @@ case "${2:?missing download server area}" in
 esac
 DISTRIBUTION="${3:?missing distribution name}"
 case "${4}" in
-	box) TYPE="box" ;;
+	box) TYPE="box"; URL="${URL/localhost/172.17.42.1}" ;;
 	*) TYPE="host" ;;
 esac
 
