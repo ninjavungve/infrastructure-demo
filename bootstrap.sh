@@ -58,6 +58,7 @@ debootstrap --arch amd64 ${ARGS} ${DISTRIBUTION} ${TARGET} ${URL}
 cat >${TARGET}/etc/apt/sources.list <<EOF
 deb ${URL} ${DISTRIBUTION} main restricted universe multiverse
 deb ${URL} ${DISTRIBUTION}-updates main restricted universe multiverse
+deb ${URL} ${DISTRIBUTION}-security main restricted universe multiverse
 deb http://security.ubuntu.com/ubuntu ${DISTRIBUTION}-security main restricted universe multiverse
 EOF
 
