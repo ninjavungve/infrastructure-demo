@@ -38,14 +38,16 @@ case "${TARGET}" in
 		# Packages required for booting and running a host
 		ARGS="${ARGS} --include grub-pc,linux-server,mdadm,lvm2,openssh-server"
 		# Required system and security packages
-		ARGS="${ARGS},ufw,apparmor,acpid,ntp,unattended-upgrades,vim,monit"
+		ARGS="${ARGS},ufw,apparmor,acpid,ntp,unattended-upgrades,monit,vim"
 		# Some useful tools
 		ARGS="${ARGS},bash-completion,htop,iptraf,lftp,curl,lsof,pciutils,psmisc,rsync,screen,tcpdump,usbutils,wget"
 		;;
 	box)
 		# We could use --variant=minbase here to make it even smaller, but a box is supposed
 		# to provide a shared base for boxes created on top of it
-		ARGS="--components=main"
+		ARGS="--components=main,universe --include vim"
+		# Some useful tools
+		ARGS="${ARGS},bash-completion,htop,iptraf,lftp,curl,lsof,pciutils,psmisc,rsync,screen,tcpdump,usbutils,wget"
 		;;
 esac
 
