@@ -101,6 +101,20 @@ sed -i "s/xterm-color/xterm-color|xterm-265color/" ${TARGET}/root/.bashrc
 echo "" >>${TARGET}/root/.bashrc
 echo "alias l='ls -la'" >>${TARGET}/root/.bashrc
 
+# Configure VIM
+cat >${TARGET}/root/.vimrc <<-EOF
+	syntax on
+	set background=dark
+	colorscheme smyck
+	set showcmd showmatch
+	set nowrap
+	set ignorecase smartcase hlsearch
+	if has("autocmd")
+	  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+	  filetype plugin indent on
+	endif
+EOF
+
 # When an archive was given as the destination, create it and remove the temporary build directory
 case "${DESTINATION}" in
 	*.tar.gz)
