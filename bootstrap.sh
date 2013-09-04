@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Usage: bootstrap <destination> <area> [box]
+# Usage: bootstrap <destination> <area> <distribution> [box]
 #
 # <destination> : empty directory or name of a tar.gz file where to
 #                 install the base system to
