@@ -21,18 +21,18 @@ case "${2:?missing download server area}" in
 esac
 DISTRIBUTION="${3:?missing distribution name}"
 case "${4}" in
-	box) TARGET="box" ;;
-	*) TARGET="host" ;;
+	box) TYPE="box" ;;
+	*) TYPE="host" ;;
 esac
 
 # When an archive was given as the destination, install to an temporary directory
 case "${DESTINATION}" in
-	*.tar.gz) BUILDDIR=`mktemp -d` ;;
-	*) BUILDDIR="${DESTINATION}" ;;
+	*.tar.gz) TARGET=`mktemp -d` ;;
+	*) TARGET="${DESTINATION}" ;;
 esac
 
-# Add some required and useful packages if installing a host, none if creating the base box
-case "${TARGET}" in
+# Add install arguments based on wether installing a host or the base box
+case "${TYPE}" in
 	host)
 		ARGS="--components=main,universe"
 		# Packages required for booting and running a host
@@ -52,22 +52,22 @@ case "${TARGET}" in
 esac
 
 # Install base system (ubuntu-minimal)
-debootstrap --arch amd64 ${ARGS} ${DISTRIBUTION} ${BUILDDIR} ${URL}
+debootstrap --arch amd64 ${ARGS} ${DISTRIBUTION} ${TARGET} ${URL}
 
 # Configure APT sources
-cat >${BUILDDIR}/etc/apt/sources.list <<EOF
+cat >${TARGET}/etc/apt/sources.list <<EOF
 deb ${URL} ${DISTRIBUTION} main restricted universe multiverse
 deb ${URL} ${DISTRIBUTION}-updates main restricted universe multiverse
 deb http://security.ubuntu.com/ubuntu ${DISTRIBUTION}-security main restricted universe multiverse
 EOF
 
 # Set timezone to Europe/Berlin
-ln -sf /usr/share/zoneinfo/Europe/Berlin ${BUILDDIR}/etc/localtime
+ln -sf /usr/share/zoneinfo/Europe/Berlin ${TARGET}/etc/localtime
 
 # When an archive was given as the destination, create it and remove the temporary build directory
 case "${DESTINATION}" in
 	*.tar.gz)
-		tar -C "${BUILDDIR}" -zcf "${DESTINATION}" .
-		rm -rf "${BUILDDIR}"
+		tar -C "${TARGET}" -zcf "${DESTINATION}" .
+		rm -rf "${TARGET}"
 		;;
 esac
