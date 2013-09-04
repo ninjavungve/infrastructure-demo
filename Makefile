@@ -1,10 +1,14 @@
 AREA := de
 DISTRIBUTION := raring
 
-all: base
+all: help
+
+help:
+	@echo base     -- create a new base image by bootstrapping from scratch
+	@echo <name>   -- build image for the named box (see <name>/Dockerfile)
 
 base: bootstrap.tar.gz
-	cat $< |docker import - zargony/$@
+	docker import - zargony/$@ <$<
 
 bootstrap.tar.gz:
 	./bootstrap.sh $@ $(AREA) $(DISTRIBUTION) box
