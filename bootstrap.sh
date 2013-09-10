@@ -105,7 +105,7 @@ echo "alias l='ls -la'" >>${TARGET}/root/.bashrc
 cat >${TARGET}/root/.vimrc <<-EOF
 	syntax on
 	set background=dark
-	colorscheme smyck
+	colorscheme elflord
 	set showcmd showmatch
 	set nowrap
 	set ignorecase smartcase hlsearch
