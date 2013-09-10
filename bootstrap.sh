@@ -1,12 +1,12 @@
 #!/bin/bash
 #
-# Usage: bootstrap <destination> <area> <distribution> [box]
+# Usage: bootstrap <destination> <area> <suite> [box]
 #
 # <destination> : empty directory or name of a tar.gz file where to
 #                 install the base system to
 # <area>        : "de", "us", etc to use the official Ubuntu servers,
 #                 "hetzner" to use the mirror inside Hetzner datacenters
-# <distribution>: distribution name, e.g. "precise", "quantal" or "raring"
+# <suite>       : suite name, e.g. "precise", "quantal" or "raring"
 # [box]         : "box" to only include a minimum set of packages (for
 #                 creating a box template). Otherwise more packages
 #                 (like a kernel and a bootloader) will be included
@@ -19,7 +19,7 @@ case "${2:?missing download server area}" in
 	hetzner) URL="http://mirror.hetzner.de/ubuntu/packages" ;;
 	*) URL="http://${2}.archive.ubuntu.com/ubuntu" ;;
 esac
-DISTRIBUTION="${3:?missing distribution name}"
+SUITE="${3:?missing suite name}"
 case "${4}" in
 	box) TYPE="box"; URL="${URL/localhost/172.17.42.1}" ;;
 	*) TYPE="host" ;;
@@ -52,14 +52,14 @@ case "${TYPE}" in
 esac
 
 # Install base system (ubuntu-minimal)
-debootstrap --arch amd64 ${ARGS} ${DISTRIBUTION} ${TARGET} ${URL}
+debootstrap --arch=amd64 ${ARGS} ${SUITE} ${TARGET} ${URL}
 
 # Configure APT sources
 cat >${TARGET}/etc/apt/sources.list <<-EOF
-	deb ${URL} ${DISTRIBUTION} main restricted universe multiverse
-	deb ${URL} ${DISTRIBUTION}-updates main restricted universe multiverse
-	deb ${URL} ${DISTRIBUTION}-security main restricted universe multiverse
-	deb http://security.ubuntu.com/ubuntu ${DISTRIBUTION}-security main restricted universe multiverse
+	deb ${URL} ${SUITE} main restricted universe multiverse
+	deb ${URL} ${SUITE}-updates main restricted universe multiverse
+	deb ${URL} ${SUITE}-security main restricted universe multiverse
+	deb http://security.ubuntu.com/ubuntu ${SUITE}-security main restricted universe multiverse
 EOF
 
 # Set timezone to Europe/Berlin
