@@ -25,7 +25,7 @@ case "${4}" in
 	*) TYPE="host" ;;
 esac
 
-# When an archive was given as the destination, install to an temporary directory
+# When an archive was given as the destination, install to a temporary directory
 case "${DESTINATION}" in
 	*.tar.gz) TARGET=`mktemp -d` ;;
 	*) TARGET="${DESTINATION}" ;;
