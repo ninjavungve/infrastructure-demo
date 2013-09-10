@@ -8,12 +8,12 @@ Assuming that a the real host has two hard drives that should be mirrored, start
 
     $ fdisk /dev/sda      # create a single primary partition of type FD (Linux RAID autodetect))
     $ fdisk /dev/sdb      # ditto
-    $ mdadm --create /dev/md/0 --level=1 --raid-devices=2 /dev/sda1 /dev/sdb1
-    $ pvcreate /dev/md/0
-    $ vgcreate vg0 /dev/md/0
+    $ mdadm --create /dev/md0 --level=1 --raid-devices=2 /dev/sda1 /dev/sdb1
+    $ pvcreate /dev/md0
+    $ vgcreate vg0 /dev/md0
     $ lvcreate -L 2G -n server_root vg0
-    $ mkfs.ext4 /dev/vg0/server_root
     $ lvcreate -L 1G -n server_swap vg0
+    $ mkfs.ext4 /dev/vg0/server_root
     $ mkswap -c /dev/vg0/server_swap
     $ mkdir /mnt/server
     $ mount /dev/vg0/server_root /mnt/server
@@ -89,9 +89,9 @@ Install the bootloader to both harddisks.
 
     $ mount -t proc none /mnt/server/proc
     $ mount -o bind /dev /mnt/server/dev
-    $ chroot /mnt/server /sbin/update-grub
-    $ chroot /mnt/server /sbin/grub-install /dev/sda
-    $ chroot /mnt/server /sbin/grub-install /dev/sdb
+    $ chroot /mnt/server /usr/sbin/grub-install /dev/sda
+    $ chroot /mnt/server /usr/sbin/grub-install /dev/sdb
+    $ chroot /mnt/server /usr/sbin/update-grub2
 
 ## Restart
 
