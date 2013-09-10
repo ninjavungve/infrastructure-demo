@@ -26,7 +26,7 @@ Assuming that a the real host has two hard drives that should be mirrored, start
 
 ## Install base system
 
-    $ ./bootstrap.sh /mnt/server
+    $ ./bootstrap.sh /mnt/server de raring
 
 ## Configuration
 
