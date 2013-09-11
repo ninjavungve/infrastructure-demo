@@ -1,5 +1,7 @@
-AREA := de
-DISTRIBUTION := raring
+SUITE := raring
+MIRROR := local
+
+#----------------------------------------------------------------------------
 
 all: help
 
@@ -11,7 +13,7 @@ base: bootstrap.tar.gz
 	docker import - zargony/$@ <$<
 
 bootstrap.tar.gz:
-	./bootstrap.sh $@ $(AREA) $(DISTRIBUTION) box
+	./bootstrap.sh $@ $(SUITE) $(MIRROR)
 
 clean:
 	docker rm `docker ps -a -q`
