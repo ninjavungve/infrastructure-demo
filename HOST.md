@@ -26,7 +26,8 @@ Assuming that a the real host has two hard drives that should be mirrored, start
 
 ## Install base system
 
-    $ ./bootstrap.sh /mnt/server de raring
+    $ wget http://raw.github.com/zargony/infrastructure/master/bootstrap.sh
+    $ . ./bootstrap.sh /mnt/server
 
 ## Configuration
 

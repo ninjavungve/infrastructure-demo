@@ -1,64 +1,63 @@
 #!/bin/bash
-#
-# Usage: bootstrap <destination> <area> <suite> [box]
-#
-# <destination> : empty directory or name of a tar.gz file where to
-#                 install the base system to
-# <area>        : "de", "us", etc to use the official Ubuntu servers,
-#                 "hetzner" to use the mirror inside Hetzner datacenters
-# <suite>       : suite name, e.g. "precise", "quantal" or "raring"
-# [box]         : "box" to only include a minimum set of packages (for
-#                 creating a box template). Otherwise more packages
-#                 (like a kernel and a bootloader) will be included
-#
 set -e
 
-DESTINATION="${1:?missing destination}"
-case "${2:?missing download server area}" in
-	local) URL="http://localhost:3142/ubuntu" ;;
-	hetzner) URL="http://mirror.hetzner.de/ubuntu/packages" ;;
-	*) URL="http://${2}.archive.ubuntu.com/ubuntu" ;;
-esac
-SUITE="${3:?missing suite name}"
-case "${4}" in
-	box) TYPE="box"; URL="${URL/localhost/172.17.42.1}" ;;
-	*) TYPE="host" ;;
-esac
+TARGET="${1}"
+SUITE="${2:-raring}"
+MIRROR="${3:-http://archive.ubuntu.com/ubuntu}"
 
-# When an archive was given as the destination, install to a temporary directory
-case "${DESTINATION}" in
-	*.tar.gz) TARGET=`mktemp -d` ;;
-	*) TARGET="${DESTINATION}" ;;
-esac
+# Display usage if arguments are missing
+if [ -z "${TARGET}" -o -z "${SUITE}" -o -z "${MIRROR}" ]; then
+	exec 1>&2
+	echo ""
+	echo "Usage: $0 <target-dir> [suite] [mirror-url]"
+	echo ""
+	echo "  Default Ubuntu archive : http://archive.ubuntu.com/ubuntu"
+	echo "  German Ubuntu mirror   : http://de.archive.ubuntu.com/ubuntu"
+	echo "  Hetzner Ubuntu mirror  : http://mirror.hetzner.de/ubuntu/packages"
+	echo "  Local apt-cacher mirror: http://localhost:3142/ubuntu"
+	echo "  Boxed apt-cacher mirror: http://172.17.42.1:3142/ubuntu"
+	echo ""
+	exit 1
+fi
 
-# Add install arguments based on wether installing a host or the base box
-case "${TYPE}" in
-	host)
-		ARGS="--components=main,universe"
-		# Packages required for booting and running a host
-		ARGS="${ARGS} --include grub-pc,linux-server,mdadm,lvm2,openssh-server"
-		# Required system and security packages
-		ARGS="${ARGS},ufw,apparmor,acpid,ntp,unattended-upgrades,monit,vim"
-		# Some useful tools
-		ARGS="${ARGS},bash-completion,htop,iptraf,lftp,curl,lsof,pciutils,psmisc,rsync,screen,tcpdump,usbutils,wget"
-		;;
-	box)
-		# We could use --variant=minbase here to make it even smaller, but a box is supposed
-		# to provide a shared base for boxes created on top of it
-		ARGS="--components=main,universe --include apparmor,vim"
-		# Some useful tools
-		ARGS="${ARGS},bash-completion,htop,iptraf,lftp,curl,lsof,pciutils,psmisc,rsync,screen,tcpdump,usbutils,wget"
+# Install to a temporary directory if an archive is specified as the target
+case "${TARGET}" in
+	*.tar.gz|*.tgz)
+		ARCHIVE="${TARGET}"
+		TARGET=`mktemp -d`
+		trap "umount ${TARGET}/proc; umount ${TARGET}/sys; rm -rf ${TARGET}" ERR INT TERM
 		;;
 esac
 
-# Install base system (ubuntu-minimal)
-debootstrap --arch=amd64 ${ARGS} ${SUITE} ${TARGET} ${URL}
+# Provide shortcuts for mirror-urls
+case "${MIRROR}" in
+	de) MIRROR="http://de.archive.ubuntu.com/ubuntu" ;;
+	hetzner) MIRROR="http://mirror.hetzner.de/ubuntu/packages" ;;
+	local) MIRROR="http://localhost:3142/ubuntu" ;;
+esac
+
+# Always install these packages
+PACKAGES="apparmor,vim"
+
+# If the target should be bootable, include packages required for booting
+# and some useful system and security packages
+if [ -n "${BOOTABLE}" ]; then
+	PACKAGES="${PACKAGES},grub-pc,linux-server,mdadm,lvm2,openssh-server"
+	PACKAGES="${PACKAGES},ufw,acpid,ntp,unattended-upgrades"
+fi
+
+# Always install these useful tools
+PACKAGES="${PACKAGES},bash-completion,iptraf,lftp,curl,lsof,pciutils"
+PACKAGES="${PACKAGES},psmisc,rsync,screen,tcpdump,usbutils,wget"
+
+# Install the base system (ubuntu-minimal)
+debootstrap --arch=amd64 --components=main --include=${PACKAGES} ${SUITE} ${TARGET} ${MIRROR}
 
 # Configure APT sources
 cat >${TARGET}/etc/apt/sources.list <<-EOF
-	deb ${URL} ${SUITE} main restricted universe multiverse
-	deb ${URL} ${SUITE}-updates main restricted universe multiverse
-	deb ${URL} ${SUITE}-security main restricted universe multiverse
+	deb ${MIRROR} ${SUITE} main restricted universe multiverse
+	deb ${MIRROR} ${SUITE}-updates main restricted universe multiverse
+	deb ${MIRROR} ${SUITE}-security main restricted universe multiverse
 	deb http://security.ubuntu.com/ubuntu ${SUITE}-security main restricted universe multiverse
 EOF
 
@@ -115,10 +114,8 @@ cat >${TARGET}/root/.vimrc <<-EOF
 	endif
 EOF
 
-# When an archive was given as the destination, create it and remove the temporary build directory
-case "${DESTINATION}" in
-	*.tar.gz)
-		tar -C "${TARGET}" -zcf "${DESTINATION}" .
-		rm -rf "${TARGET}"
-		;;
-esac
+# Build archive if specified
+if [ -n "${ARCHIVE}" ]; then
+	tar -C ${TARGET} -zcpf ${ARCHIVE} .
+	rm -rf ${TARGET}
+fi
