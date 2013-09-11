@@ -53,6 +53,10 @@ PACKAGES="${PACKAGES},psmisc,rsync,screen,tcpdump,usbutils,wget"
 # Install the base system (ubuntu-minimal)
 debootstrap --arch=amd64 --components=main --include=${PACKAGES} ${SUITE} ${TARGET} ${MIRROR}
 
+# Clean up cached stuff
+rm -rf ${TARGET}/var/lib/apt/lists/*
+rm -rf ${TARGET}/var/cache/apt/archives/*
+
 # Configure APT sources
 cat >${TARGET}/etc/apt/sources.list <<-EOF
 	deb ${MIRROR} ${SUITE} main restricted universe multiverse
