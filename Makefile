@@ -6,8 +6,8 @@ MIRROR := local
 all: help
 
 help:
-	@echo base     -- create a new base image by bootstrapping from scratch
-	@echo <name>   -- build image for the named box (see <name>/Dockerfile)
+	@echo "  base        create a new base image by bootstrapping from scratch"
+	@echo "  <name>      build image for the named box (see <name>/Dockerfile)"
 
 base: bootstrap.tar.gz
 	docker import - zargony/$@ <$<
