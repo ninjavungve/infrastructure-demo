@@ -7,5 +7,9 @@ ADD bootstrap.tar.gz /
 # Add the apt proxy configuration
 ADD apt-proxy.conf /etc/apt/apt.conf.d/02proxy
 
+# Run apt update and upgrade all packages
+RUN apt-get -qq update
+RUN apt-get -qqy upgrade
+
 # Run a command to test that this image is able to execute commands
 RUN echo Base system created
