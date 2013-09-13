@@ -4,11 +4,13 @@ PROXY :=
 
 #----------------------------------------------------------------------------
 
+IMAGES=$(patsubst %/Dockerfile,%,$(wildcard */Dockerfile))
+
 all: help
 
 help:
 	@echo "  base        create a new base image by bootstrapping from scratch"
-	@echo "  <name>      build image for the named box (see <name>/Dockerfile)"
+	@echo "  <name>      build the named image (see <name>/Dockerfile)"
 
 base: bootstrap.tar.gz
 	docker import - zargony/$@ <$<
@@ -22,6 +24,8 @@ clean:
 
 distclean: clean
 	rm -f bootstrap.tar.gz
+
+.PHONY: $(IMAGES) base clean distclean
 
 %: %/Dockerfile
 	docker build -t zargony/$@ $(dir $<)
