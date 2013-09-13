@@ -12,11 +12,10 @@ help:
 	@echo "  base        create a new base image by bootstrapping from scratch"
 	@echo "  <name>      build the named image (see <name>/Dockerfile)"
 
-base: bootstrap.tar.gz
-	docker import - zargony/bootstrap <$<
+base: base/bootstrap.tar.gz
 	docker build -t zargony/$@ $@
 
-bootstrap.tar.gz:
+base/bootstrap.tar.gz:
 	$(if $(PROXY), http_proxy=$(PROXY)) ./bootstrap.sh $@ $(SUITE) $(MIRROR)
 
 clean:
@@ -24,7 +23,7 @@ clean:
 	docker images |grep "^<none>" |awk '{print $$3}' |xargs -r docker rmi
 
 distclean: clean
-	rm -f bootstrap.tar.gz
+	rm -f base/bootstrap.tar.gz
 
 .PHONY: $(IMAGES) clean distclean
 
