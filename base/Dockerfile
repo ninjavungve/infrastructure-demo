@@ -4,6 +4,9 @@ FROM scratch
 # Add the base system (result of a bootstrap.sh run)
 ADD bootstrap.tar.gz /
 
+# Always use the noninteractive frontend
+ENV DEBIAN_FRONTEND noninteractive
+
 # Add the apt proxy configuration
 ADD apt-proxy.conf /etc/apt/apt.conf.d/02proxy
 
