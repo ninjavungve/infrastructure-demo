@@ -7,6 +7,9 @@ ADD bootstrap.tar.gz /
 # Always use the noninteractive frontend
 ENV DEBIAN_FRONTEND noninteractive
 
+# Stub initctl since it won't work inside a container
+RUN dpkg-divert --local --rename --add /sbin/initctl; ln -s ../bin/true /sbin/initctl
+
 # Add the apt proxy configuration
 ADD apt-proxy.conf /etc/apt/apt.conf.d/02proxy
 
