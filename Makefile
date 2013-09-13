@@ -7,9 +7,13 @@ PROXY :=
 IMAGES=$(filter-out base,$(patsubst %/Dockerfile,%,$(wildcard */Dockerfile)))
 
 help:
+	@echo "  base        create a new base image by bootstrapping from scratch"
 	@echo "  <name>      build the named image (see <name>/Dockerfile)"
 	@echo "  all         build all images (except base)"
-	@echo "  base        create a new base image by bootstrapping from scratch"
+	@echo "  shell       run an interactive shell in a fresh container"
+
+shell:
+	docker run -i -t zargony/base /bin/bash
 
 all: $(IMAGES)
 
