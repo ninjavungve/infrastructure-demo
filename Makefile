@@ -13,7 +13,8 @@ help:
 	@echo "  <name>      build the named image (see <name>/Dockerfile)"
 
 base: bootstrap.tar.gz
-	docker import - zargony/$@ <$<
+	docker import - zargony/bootstrap <$<
+	docker build -t zargony/$@ $@
 
 bootstrap.tar.gz:
 	$(if $(PROXY), http_proxy=$(PROXY)) ./bootstrap.sh $@ $(SUITE) $(MIRROR)
@@ -25,7 +26,7 @@ clean:
 distclean: clean
 	rm -f bootstrap.tar.gz
 
-.PHONY: $(IMAGES) base clean distclean
+.PHONY: $(IMAGES) clean distclean
 
 %: %/Dockerfile
 	docker build -t zargony/$@ $(dir $<)
