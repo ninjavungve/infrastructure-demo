@@ -1,2 +1,3 @@
 /.vagrant
+/base/apt-proxy.conf
 /base/bootstrap.tar.gz
