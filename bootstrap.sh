@@ -53,8 +53,8 @@ if [ -n "${BOOTABLE}" ]; then
 fi
 
 # Always install these useful tools
-PACKAGES="${PACKAGES},bash-completion,iptraf,lftp,curl,lsof,pciutils"
-PACKAGES="${PACKAGES},psmisc,rsync,screen,tcpdump,usbutils,wget"
+PACKAGES="${PACKAGES},bash-completion,curl,iptraf,lftp,lsof,pciutils"
+PACKAGES="${PACKAGES},psmisc,rsync,screen,strace,tcpdump,usbutils,wget"
 
 # Install the base system (ubuntu-minimal)
 debootstrap --arch=amd64 --components=main --include=${PACKAGES} ${SUITE} ${TARGET} ${MIRROR}
