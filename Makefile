@@ -1,5 +1,6 @@
 SUITE :=
 MIRROR :=
+PROXY :=
 
 #----------------------------------------------------------------------------
 
@@ -13,7 +14,7 @@ base: bootstrap.tar.gz
 	docker import - zargony/$@ <$<
 
 bootstrap.tar.gz:
-	./bootstrap.sh $@ $(SUITE) $(MIRROR)
+	$(if $(PROXY), http_proxy=$(PROXY)) ./bootstrap.sh $@ $(SUITE) $(MIRROR)
 
 clean:
 	docker ps -a -q |xargs -r docker rm
