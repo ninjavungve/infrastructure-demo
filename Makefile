@@ -16,7 +16,8 @@ bootstrap.tar.gz:
 	./bootstrap.sh $@ $(SUITE) $(MIRROR)
 
 clean:
-	docker rm `docker ps -a -q`
+	docker ps -a -q |xargs -r docker rm
+	docker images |grep "^<none>" |awk '{print $$3}' |xargs -r docker rmi
 
 distclean: clean
 	rm -f bootstrap.tar.gz
