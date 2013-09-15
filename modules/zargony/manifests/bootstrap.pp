@@ -15,6 +15,12 @@ define zargony::bootstrap (
 	$target_netmask6 = 64,
 	$target_gateway6 = undef,
 ) {
+	if (!defined(Package['debootstrap'])) {
+		package { 'debootstrap':
+			ensure => installed,
+		}
+	}
+
 	$ubuntu_components = 'main,restricted'
 	$ubuntu_include = "${ubuntu_kernel},mdadm,lvm2,openssh-server"
 	$ubuntu_url = $ubuntu_area ? {
@@ -23,12 +29,6 @@ define zargony::bootstrap (
 	}
 
 	$root_dir = "/mnt/${name}"
-
-	if (!defined(Package['debootstrap'])) {
-		package { 'debootstrap':
-			ensure => installed,
-		}
-	}
 
 	file { $root_dir:
 		ensure => directory,
@@ -95,5 +95,53 @@ define zargony::bootstrap (
 		path    => $zargony::base::path,
 		command => "umount ${root_dir}",
 		onlyif  => "test -e ${root_dir}/usr",
+	}
+}
+
+define zargony::bootstrap::lvm (
+	$root_size = '2.5G',
+	$swap_size = '1G',
+	$lvm_group = 'vg0',
+	$ubuntu_arch = undef,
+	$ubuntu_area = undef,
+	$ubuntu_distribution = undef,
+	$ubuntu_kernel = undef,
+	$target_hostname = undef,
+	$target_domain = undef,
+	$target_ipaddress = undef,
+	$target_netmask = undef,
+	$target_gateway = undef,
+	$target_pointopoint = undef,
+	$target_ipaddress6 = undef,
+	$target_netmask6 = undef,
+	$target_gateway6 = undef,
+) {
+	zargony::lvm::volume { "${name}_root":
+		size   => $root_size,
+		group  => $lvm_group,
+		format => 'ext4',
+	}
+	zargony::lvm::volume { "${name}_swap":
+		size   => $swap_size,
+		group  => $lvm_group,
+		format => 'swap',
+	}
+	zargony::bootstrap { $name:
+		root_dev => "/dev/${lvm_group}/${name}_root",
+		swap_dev => "/dev/${lvm_group}/${name}_swap",
+		ubuntu_arch => $ubuntu_arch,
+		ubuntu_area => $ubuntu_area,
+		ubuntu_distribution => $ubuntu_distribution,
+		ubuntu_kernel => $ubuntu_kernel,
+		target_hostname => $target_hostname,
+		target_domain => $target_domain,
+		target_ipaddress => $target_ipaddress,
+		target_netmask => $target_netmask,
+		target_gateway => $target_gateway,
+		target_pointopoint => $target_pointopoint,
+		target_ipaddress6 => $target_ipaddress6,
+		target_netmask6 => $target_netmask6,
+		target_gateway6 => $target_gateway6,
+		require => [Exec["mkfs_${name}_root"], Exec["mkfs_${name}_swap"]],
 	}
 }
