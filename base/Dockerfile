@@ -12,7 +12,7 @@ USER root
 # Always use the noninteractive frontend
 ENV DEBIAN_FRONTEND noninteractive
 
-# Stub initctl since it won't work inside a container
+# Stub initctl since it won't work inside a container (see also https://github.com/dotcloud/docker/issues/1024)
 RUN dpkg-divert --local --rename --add /sbin/initctl; ln -s ../bin/true /sbin/initctl
 
 # Add the apt proxy configuration
