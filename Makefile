@@ -18,7 +18,7 @@ shell:
 all: $(IMAGES)
 
 base: base/bootstrap.tar.gz base/apt-proxy.conf
-	docker build -t zargony/$@ $@
+	docker build -rm -t zargony/$@ $@
 
 base/apt-proxy.conf:
 	echo "$(if $(PROXY),Acquire::http { Proxy \"$(PROXY)\"; };)" >$@
@@ -27,7 +27,7 @@ base/bootstrap.tar.gz:
 	$(if $(PROXY),http_proxy=$(PROXY)) ./bootstrap.sh $@ $(SUITE) $(MIRROR)
 
 $(IMAGES): %: %/Dockerfile
-	docker build -t zargony/$@ $(dir $<)
+	docker build -rm -t zargony/$@ $(dir $<)
 
 clean:
 	docker ps -a |grep -E "Exit [0-9]+" |awk '{print $$1}' |xargs -r docker rm
