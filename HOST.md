@@ -1,6 +1,6 @@
 # Setting up a real host
 
-Assuming that a the real host has two hard drives that should be mirrored, start a rescue system from an external media.
+Assuming that a the real host has two hard drives that should be mirrored. First, start a rescue system from an external media.
 
 ## Create and mount root filesystem
 
