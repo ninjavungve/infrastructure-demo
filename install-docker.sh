@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 test -x /usr/bin/curl || apt-get install -qy curl
 
