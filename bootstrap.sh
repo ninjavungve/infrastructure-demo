@@ -1,12 +1,8 @@
 #!/bin/bash
 set -e
 
-TARGET="${1}"
-SUITE="${2:-raring}"
-MIRROR="${3:-http://archive.ubuntu.com/ubuntu}"
-
-# Display usage if arguments are missing
-if [ -z "${TARGET}" -o -z "${SUITE}" -o -z "${MIRROR}" ]; then
+# Print help text and quit
+print_help () {
 	exec 1>&2
 	echo ""
 	echo "Usage: $0 [-b] <target> [suite] [mirror]"
@@ -24,14 +20,27 @@ if [ -z "${TARGET}" -o -z "${SUITE}" -o -z "${MIRROR}" ]; then
 	echo "    Boxed apt-cacher mirror: http://172.17.42.1:3142/ubuntu"
 	echo ""
 	exit 1
-fi
+}
 
 # Parse options
-while getopts "b" opt; do
-	case "${opt}" in
-		b) BOOTABLE="y" ;;
+while true; do
+	case "${1}" in
+		-h|--help) print_help;;
+		-b|--bootable) BOOTABLE="y"; shift;;
+		--) shift; break;;
+		-*) echo "Error: Unknown option: $1" >&2; print_help;;
+		*) break;;
 	esac
 done
+
+# Parse arguments
+TARGET="${1}"
+shift || print_help
+SUITE="${1:-raring}"
+shift || true
+MIRROR="${1:-http://archive.ubuntu.com/ubuntu}"
+shift || true
+if [ -n "${1}" ]; then print_help; fi
 
 # Install to a temporary directory if an archive is specified as the target
 case "${TARGET}" in
