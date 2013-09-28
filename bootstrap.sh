@@ -9,7 +9,7 @@ MIRROR="${3:-http://archive.ubuntu.com/ubuntu}"
 if [ -z "${TARGET}" -o -z "${SUITE}" -o -z "${MIRROR}" ]; then
 	exec 1>&2
 	echo ""
-	echo "Usage: $0 <target> [suite] [mirror]"
+	echo "Usage: $0 [-b] <target> [suite] [mirror]"
 	echo ""
 	echo "  Bootstraps a base system to the given target. Target may be"
 	echo "  either an empty directory or a name of an archive (.tar.gz)"
@@ -25,6 +25,13 @@ if [ -z "${TARGET}" -o -z "${SUITE}" -o -z "${MIRROR}" ]; then
 	echo ""
 	exit 1
 fi
+
+# Parse options
+while getopts "b" opt; do
+	case "${opt}" in
+		b) BOOTABLE="y" ;;
+	esac
+done
 
 # Install to a temporary directory if an archive is specified as the target
 case "${TARGET}" in
