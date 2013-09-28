@@ -91,8 +91,16 @@ if test -x ${TARGET}/usr/sbin/sshd; then
 	EOF
 fi
 
+# Configure shell
+cp ${TARGET}/etc/skel/.bashrc ${TARGET}/root/.bashrc
+sed -i "s/^#force_color_prompt=yes/force_color_prompt=yes/" ${TARGET}/root/.bashrc
+cat >${TARGET}/root/.bash_aliases <<-EOF
+	alias l='ls -la'
+EOF
+
 # Configure shell input
-cat >${TARGET}/root/.inputrc <<-EOF
+cp -a ${TARGET}/etc/inputrc ${TARGET}/etc/inputrc.orig
+cat >${TARGET}/etc/inputrc <<-EOF
 	set input-meta on
 	set output-meta on
 	set show-all-if-ambiguous on
@@ -111,14 +119,8 @@ cat >${TARGET}/root/.inputrc <<-EOF
 	"\e\e[D": backward-word
 EOF
 
-# Configure shell
-cp ${TARGET}/etc/skel/.bashrc ${TARGET}/root/.bashrc
-sed -i "s/xterm-color/xterm-color|xterm-265color/" ${TARGET}/root/.bashrc
-echo "" >>${TARGET}/root/.bashrc
-echo "alias l='ls -la'" >>${TARGET}/root/.bashrc
-
 # Configure VIM
-cat >${TARGET}/root/.vimrc <<-EOF
+cat >${TARGET}/etc/vim/vimrc.local <<-EOF
 	syntax on
 	set background=dark
 	colorscheme elflord
