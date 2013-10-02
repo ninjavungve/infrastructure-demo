@@ -101,9 +101,9 @@ if test -x ${TARGET}/usr/sbin/sshd; then
 fi
 
 # Configure shell
-cp ${TARGET}/etc/skel/.bashrc ${TARGET}/root/.bashrc
-sed -i "s/^#force_color_prompt=yes/force_color_prompt=yes/" ${TARGET}/root/.bashrc
-cat >${TARGET}/root/.bash_aliases <<-EOF
+cat >>${TARGET}/etc/bash.bashrc <<-EOF
+	force_color_prompt=yes
+	. /etc/skel/.bashrc
 	alias l='ls -la'
 EOF
 

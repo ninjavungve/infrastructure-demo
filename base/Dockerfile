@@ -4,11 +4,6 @@ FROM scratch
 # Add the base system (result of a bootstrap.sh run)
 ADD bootstrap.tar.gz /
 
-# Be root inside the container by default
-ENV HOME /root
-WORKDIR /root
-USER root
-
 # Always use the noninteractive frontend
 ENV DEBIAN_FRONTEND noninteractive
 
