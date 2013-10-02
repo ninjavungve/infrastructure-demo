@@ -88,7 +88,7 @@ cat >${TARGET}/etc/apt/sources.list <<-EOF
 EOF
 
 # Set timezone to Europe/Berlin
-ln -sf /usr/share/zoneinfo/Europe/Berlin ${TARGET}/etc/localtime
+ln -sf ../usr/share/zoneinfo/Europe/Berlin ${TARGET}/etc/localtime
 
 # Configure SSH access if installed
 if test -x ${TARGET}/usr/sbin/sshd; then
