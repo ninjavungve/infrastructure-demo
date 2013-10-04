@@ -33,7 +33,7 @@ Assuming that a the real host has two hard drives that should be mirrored. First
 
 *etc/mdadm/mdadm.conf*
 
-    DEVICE partitions
+    #DEVICE partitions containers
     CREATE owner=root group=disk mode=0660 auto=yes
     HOMEHOST <system>
     MAILADDR root
@@ -68,9 +68,12 @@ Assuming that a the real host has two hard drives that should be mirrored. First
 *etc/resolv.conf* (Hetzner DNS)
 
     domain dc.zargony.com
-    nameserver 213.133.100.100
-    nameserver 213.133.99.99
     nameserver 213.133.98.98
+    nameserver 213.133.99.99
+    nameserver 213.133.100.100
+    nameserver 2a01:4f8:0:a0a1::add:1010
+    nameserver 2a01:4f8:0:a102::add:9999
+    nameserver 2a01:4f8:0:a111::add:9898
 
 ## Bootloader
 
@@ -84,7 +87,6 @@ Add `panic=60` to the kernel commandline to ensure a reboot after a kernel panic
     GRUB_TIMEOUT=10
     GRUB_CMDLINE_LINUX_DEFAULT=""
     GRUB_CMDLINE_LINUX="panic=60"
-    GRUB_DISABLE_OS_PROBER="true"
 
 Install the bootloader to both harddisks.
 
