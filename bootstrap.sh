@@ -69,7 +69,7 @@ if [ -n "${BOOTABLE}" ]; then
 fi
 
 # Always install these useful tools
-PACKAGES="${PACKAGES},bash-completion,curl,iptraf,lftp,lsof,pciutils"
+PACKAGES="${PACKAGES},bash-completion,curl,iptraf,lftp,lsof,ltrace,pciutils"
 PACKAGES="${PACKAGES},psmisc,rsync,screen,strace,tcpdump,usbutils,wget"
 
 # Install the base system (ubuntu-minimal)
