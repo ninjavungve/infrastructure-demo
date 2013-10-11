@@ -37,3 +37,18 @@ distclean: clean
 	rm -f base/bootstrap.tar.gz base/apt-proxy.conf
 
 .PHONY: all base $(IMAGES) clean distclean
+
+#----------------------------------------------------------------------------
+
+# Files that are not excluded by the main .gitignore but by a .gitignore in
+# a subdirectory are considered private files
+DIRS_WITH_PRIVATE_FILES=$(patsubst %/.gitignore,%,$(wildcard */.gitignore))
+PRIVATE_FILES=$(foreach d,$(DIRS_WITH_PRIVATE_FILES),$(addprefix $(d),$(shell cat $(d)/.gitignore)))
+
+pack:
+	tar -cp $(PRIVATE_FILES) |gzip -c9 |openssl aes-256-cbc -a -e -salt >private.dat
+
+unpack:
+	cat private.dat |openssl aes-256-cbc -a -d |gzip -dc |tar -xp
+
+.PHONY: pack unpack
