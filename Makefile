@@ -46,9 +46,10 @@ DIRS_WITH_PRIVATE_FILES=$(patsubst %/.gitignore,%,$(wildcard */.gitignore))
 PRIVATE_FILES=$(foreach d,$(DIRS_WITH_PRIVATE_FILES),$(addprefix $(d),$(shell cat $(d)/.gitignore)))
 
 pack:
-	tar -cp $(PRIVATE_FILES) |gzip -c9 |openssl aes-256-cbc -a -e -salt >private.dat
+	tar -c $(PRIVATE_FILES) |gzip -c9 |openssl aes-256-cbc -a -e -salt >private.dat
 
 unpack:
-	cat private.dat |openssl aes-256-cbc -a -d |gzip -dc |tar -xp
+	cat private.dat |openssl aes-256-cbc -a -d |gzip -dc |tar -x
+	chmod 600 $(PRIVATE_FILES)
 
 .PHONY: pack unpack
