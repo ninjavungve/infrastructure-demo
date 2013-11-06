@@ -1,0 +1,42 @@
+@import url(../../../stylesheets/application.css);
+@import url(../../alternate/stylesheets/application.css);
+
+input#q { border-radius: 10px; height: 0.9em; }
+#main-menu li a { border-top-left-radius: 4px; border-top-right-radius: 4px; }
+#login-form table { border-radius: 4px; }
+.flash { border-radius: 4px; }
+.tabs li a { border-top-left-radius: 4px; border-top-right-radius: 4px; }
+.box, .issue { border-radius: 4px; }
+
+body { font-family: "Lucida Grande", Verdana, Arial, Helvetica, sans-serif; }
+h1, h2, h3, h4 { font-family: Georgia, "Times", "Times New Roman", serif; }
+#top-menu { font-family: Verdana, Arial, Helvetica, sans-serif; }
+
+/* colors: http://www.colourlovers.com/palette/160309/soapbox_parade */
+/* f0ffc9, a9da88, 62997a, 72243d, 3b0819 */
+
+body { color: #444; }
+#content h1, #content h2, #content h3, #content h4 { color: #666; }
+a, a:link, a:visited { color: #62997a; text-decoration: none; }
+a:hover, a:active { color: #72243d; text-decoration: none; }
+#footer a { color: inherit; text-decoration: underline; }
+
+#top-menu { background: #000; color: #eee; }
+#top-menu a { color: #eee; }
+#top-menu li a { padding: 4px; }
+#top-menu li a:hover { background: #333; text-decoration: none; }
+#top-menu #account a.logout:hover { background: #900; }
+
+#header { background: #62997a; }
+#main-menu li a { background: #62997a; }
+#main-menu li a:hover { background: #72a98a; text-decoration: none; }
+#main-menu li a.selected, #main-menu li a.selected:hover { }
+
+table.progress td.closed { background: #a9da88; }
+table.progress td.done { background: #f0ffc9; }
+table.progress td.open { }
+
+table.list tbody tr:hover, div.issue,
+#content .tabs ul li a:hover, div.wiki ul.toc { background: #f0ffc9; }
+table.cal td.today { background: transparent; border: 2px solid #72243d; }
+#login-form table { background: #f0ffc9; border: 2px solid #a9da88; }
