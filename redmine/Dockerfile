@@ -29,4 +29,4 @@ VOLUME ["/var/lib/redmine"]
 
 USER redmine
 WORKDIR /opt/redmine
-CMD ["/usr/local/bin/unicorn_rails", "--env", "production", "--listen", "/var/www/redmine/backend.sock"]
+CMD ["/usr/local/bin/unicorn", "--env", "production", "--listen", "/var/www/redmine/backend.sock"]
