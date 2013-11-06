@@ -28,6 +28,5 @@ RUN mkdir /var/log/redmine; chown redmine:users /var/log/redmine; chmod 700 /var
 VOLUME ["/var/lib/redmine"]
 
 USER redmine
-ENV RAILS_ENV production
-CMD ["/opt/redmine/script/server", "-p", "5000"]
-EXPOSE 5000
+WORKDIR /opt/redmine
+CMD ["/usr/local/bin/unicorn_rails", "--env", "production", "--listen", "/var/www/redmine/backend.sock"]
