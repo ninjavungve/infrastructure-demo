@@ -5,9 +5,9 @@ RUN apt-get -qqy install nginx ca-certificates
 ADD developer.zargony.com.key /etc/ssl/private/
 RUN chown 0:0 /etc/ssl/private/*; chmod 600 /etc/ssl/private/*
 ADD developer.zargony.com.pem /etc/ssl/certs/
-RUN update-ca-certificates
+RUN update-ca-certificates --fresh
 
-ADD nginx.conf /opt/nginx/nginx.conf
+ADD nginx.conf /opt/nginx/
 
 VOLUME ["/var/www"]
 
