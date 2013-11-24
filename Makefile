@@ -30,7 +30,7 @@ $(IMAGES): %: %/Dockerfile
 	docker build -rm -t zargony/$@ $(dir $<)
 
 clean:
-	docker ps -a |grep -E "Exit [0-9]+" |awk '{print $$1}' |xargs -r docker rm
+	docker ps -a |grep -E "Exit -?[0-9]+" |awk '{print $$1}' |xargs -r docker rm
 	docker images |grep "^<none>" |awk '{print $$3}' |xargs -r docker rmi
 
 distclean: clean
