@@ -9,6 +9,8 @@ if ! test -e /etc/apt/sources.list.d/docker.list; then
 	apt-get update -qq
 fi
 
+echo 'DOCKER_OPTS="-r=false"' >/etc/default/docker
+
 test -e /lib/modules/`uname -r`/kernel/ubuntu/aufs/aufs.ko || apt-get install -qy linux-image-extra-`uname -r`
 test -x /usr/bin/auchk || apt-get install -qy aufs-tools
 test -x /usr/bin/docker || apt-get install -qy lxc-docker
