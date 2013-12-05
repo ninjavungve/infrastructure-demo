@@ -20,15 +20,15 @@ For setting up a real host, see [HOST.md][HOST.md].
 
 ## Building a base image
 
-To create a new minimal base image, use `make base`. This uses bootstrap.sh to install a minimal base system into a directory, configures some core settings and imports it as the base image into Docker. The base image is the prerequisite for other images.
+To create a new minimal base image, use `make base-image`. This uses bootstrap.sh to install a minimal base system into a directory, configures some core settings and imports it as the base image into Docker. The base image is the prerequisite for other images.
 
 ## Building an image
 
-Use `make <subdir>` to build the image in the given subdirectory.
+Use `make <name>` to build the image with the given name and start a container from it. The image is built from a Dockerfile in the subdirectory `<name>`. After building the image, a container of the same name will be started (a previously running one is stopped first, so a running service is effectively restarted with a new fresh image).
 
 ## Updating images
 
-To update an image to the latest version, simply rebuild it. If the base image is rebuild, it'll contain all latest updates from the distribution (other images based on it must also be rebuild to take advantage of a new base image).
+To update an image to the latest version, simply rebuild and start it. If the base image is rebuild, it'll contain all latest updates from the distribution (other images based on it must also be rebuild to take advantage of a new base image).
 
 
 [HOST.md]: HOST.md
