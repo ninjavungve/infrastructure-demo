@@ -70,7 +70,7 @@ fi
 
 # Always install these useful tools
 PACKAGES="${PACKAGES},bash-completion,curl,iptraf,lftp,lsof,ltrace,pciutils"
-PACKAGES="${PACKAGES},psmisc,rsync,screen,strace,tcpdump,usbutils,wget"
+PACKAGES="${PACKAGES},psmisc,rsync,screen,strace,tcpdump,tmux,usbutils,wget"
 
 # Install the base system (ubuntu-minimal)
 debootstrap --arch=amd64 --components=main --include=${PACKAGES} ${SUITE} ${TARGET} ${MIRROR}
