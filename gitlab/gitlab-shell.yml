@@ -1,0 +1,15 @@
+user: git
+gitlab_url: "http://localhost:8080/"
+http_settings:
+  self_signed_cert: true
+repos_path: "/var/lib/gitlab/repositories"
+auth_file: "/var/lib/gitlab/repositories/.ssh/authorized_keys"
+redis:
+  bin: /usr/bin/redis-cli
+  host: redis
+  port: 6379
+  database: 0
+  namespace: resque:gitlab
+log_file: "/var/log/gitlab/gitlab-shell.log"
+log_level: INFO
+audit_usernames: false

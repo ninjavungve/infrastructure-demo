@@ -1,0 +1,68 @@
+production:
+  gitlab:
+    host: developer.zargony.com
+    port: 443
+    https: true
+    ssh_host: git.zargony.com
+    user: git
+    time_zone: Europe/Berlin
+    email_from: gitlab@zargony.com
+    default_projects_limit: 10
+    default_can_create_group: false
+    username_changing_enabled: true
+    default_theme: 2 # 1=BASIC, 2=MARS, 3=MODERN, 4=GRAY, 5=COLOR
+    signup_enabled: false
+    signin_enabled: true
+    issue_closing_pattern: '([Cc]lose[sd]|[Ff]ixe[sd]) #(\d+)'
+    default_projects_features:
+      issues: true
+      merge_requests: true
+      wiki: false
+      snippets: false
+      visibility_level: "private"  # private/internal/public
+    webhook_timeout: 10
+    repository_downloads_path: tmp/repositories
+
+  issues_tracker:
+
+  gravatar:
+    enabled: true
+    plain_url: "http://www.gravatar.com/avatar/%{hash}?s=%{size}&d=mm"
+    ssl_url: "https://secure.gravatar.com/avatar/%{hash}?s=%{size}&d=mm"
+
+  ldap:
+    enabled: false
+
+  omniauth:
+    enabled: false
+    allow_single_sign_on: false
+    block_auto_created_users: true
+
+  satellites:
+    path: tmp/repo_satellites/
+    timeout: 30
+
+  backup:
+    path: "tmp/backups"
+    keep_time: 604800   # default: 0 (forever) (in seconds)
+
+  gitlab_shell:
+    path: /opt/gitlab-shell/
+    repos_path: /var/lib/gitlab/repositories/
+    hooks_path: /opt/gitlab-shell/hooks/
+    upload_pack: true
+    receive_pack: true
+    ssh_port: 22
+
+  git:
+    bin_path: /usr/bin/git
+    max_size: 20971520 # 20.megabytes
+    timeout: 10
+
+  extra:
+    # google_analytics_id: '_your_tracking_id'
+    # piwik_url: '_your_piwik_url'
+    # piwik_site_id: '_your_piwik_site_id'
+    # sign_in_text: |
+    #   ![Company Logo](http://www.companydomain.com/logo.png)
+    #   [Learn more about CompanyName](http://www.companydomain.com/)
