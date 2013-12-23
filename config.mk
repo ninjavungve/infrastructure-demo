@@ -4,6 +4,11 @@
 # Ubuntu raring is the default distribution
 SUITE := raring
 
+# VirtualBox testing machines do have apt-cacher running on the real host
+ifeq ($(strip $(shell cat /sys/block/sda/device/model)),VBOX HARDDISK)
+	PROXY := http://10.0.2.2:3142/
+endif
+
 # Container run options
 btsync_run_opts :=		-p 8888:8888 -p 14975:14975 \
 						-v /srv/storage:/var/storage
