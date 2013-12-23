@@ -2,29 +2,8 @@ SUITE :=
 MIRROR :=
 PROXY :=
 
-btsync_run_opts :=		-lxc-conf="lxc.network.ipv6 = 2a01:4f8:100:546f::4:40/112" \
-						-lxc-conf="lxc.network.ipv6.gateway = 2a01:4f8:100:546f::4:1" \
-						-p 8888:8888 -p 14975:14975 \
-						-v /srv/storage:/var/storage
-gitserver_run_opts :=	-lxc-conf="lxc.network.ipv6 = 2a01:4f8:100:546f::4:30/112" \
-						-lxc-conf="lxc.network.ipv6.gateway = 2a01:4f8:100:546f::4:1" \
-						-v /srv/repositories:/var/git
-mailserver_run_opts :=	-lxc-conf="lxc.network.ipv6 = 2a01:4f8:100:546f::4:50/112" \
-						-lxc-conf="lxc.network.ipv6.gateway = 2a01:4f8:100:546f::4:1" \
-						-v /srv/mail:/var/mail \
-						-v /srv/log/mail:/var/log/mail
-minecraft_run_opts :=	-lxc-conf="lxc.network.ipv6 = 2a01:4f8:100:546f::4:10/112" \
-						-lxc-conf="lxc.network.ipv6.gateway = 2a01:4f8:100:546f::4:1" \
-						-p 25565:25565 \
-						-v /srv/minecraft:/opt/minecraft
-redmine_run_opts :=		-v /srv/redmine:/var/lib/redmine \
-						-v /srv/web/redmine:/var/www/redmine \
-						-v /srv/log/redmine:/var/log/redmine
-webserver_run_opts :=	-lxc-conf="lxc.network.ipv6 = 2a01:4f8:100:546f::4:20/112" \
-						-lxc-conf="lxc.network.ipv6.gateway = 2a01:4f8:100:546f::4:1" \
-						-p 80:80 -p 443:443 \
-						-v /srv/web:/var/www \
-						-v /srv/log/nginx:/var/log/nginx
+-include config.mk
+-include config.$(shell hostname -s).mk
 
 #----------------------------------------------------------------------------
 
