@@ -103,3 +103,87 @@ Install the bootloader to both harddisks.
     $ umount /mnt/server
     $ sync
     $ reboot
+
+## Useful services
+
+### Relay Mailer
+
+    $ aptitude install ssmtp
+
+*etc/ssmtp/ssmtp.conf*
+
+    root=xxx@xxx.com
+    mailhub=mail02.dd24.net
+    hostname=server.dc.zargony.com
+
+### Monitoring
+
+    $ aptitude install monit
+
+*etc/monit/monitrc*
+
+    set daemon 60 with start delay 30
+
+    set logfile /var/log/monit.log
+    set idfile /var/lib/monit/id
+    set statefile /var/lib/monit/state
+    set eventqueue basedir /var/lib/monit/events slots 100
+
+    set mailserver mail02.dd24.net
+    set mail-format {
+      from: monit@$HOST
+      subject: ALERT: $SERVICE $DESCRIPTION
+      message: Event:  $SERVICE $DESCRIPTION
+    Action: $ACTION
+    Host:   $HOST
+    Date:   $DATE
+    }
+    set alert xxx@xxx.com not on { instance }
+
+    set httpd port 2812 and use address localhost allow localhost only
+
+    check system xxx
+      if loadavg (1min) > 5 then alert
+      if loadavg (5min) > 3 then alert
+      if memory usage > 95% for 5 cycles then alert
+      if swap usage > 50% for 5 cycles then alert
+      if cpu usage (user) > 90% for 5 cycles then alert
+      if cpu usage (system) > 50% for 5 cycles then alert
+      if cpu usage (wait) > 40% for 5 cycles then alert
+
+    check process sshd with pidfile /run/sshd.pid
+      start program = "/sbin/start ssh"
+      stop program = "/sbin/stop ssh"
+      if failed host localhost port 22 type tcp protocol ssh then restart
+
+    check filesystem rootfs with path /
+      if space usage > 90% for 2 cycles then alert
+      if inode usage > 90% for 2 cycles then alert
+
+    check filesystem dockerfs with path /var/lib/docker
+      if space usage > 90% for 2 cycles then alert
+      if inode usage > 90% for 2 cycles then alert
+
+    include /etc/monit/conf.d/*.monitrc
+
+### Firewall
+
+    $ aptitude install ufw
+    $ ufw allow OpenSSH
+
+*etc/default/ufw*
+
+    IPV6=yes
+    DEFAULT_INPUT_POLICY="DROP"
+    DEFAULT_OUTPUT_POLICY="ACCEPT"
+    DEFAULT_FORWARD_POLICY="DROP"
+    DEFAULT_APPLICATION_POLICY="SKIP"
+    MANAGE_BUILTINS=no
+
+*etc/ufw/ufw.conf*
+
+    ENABLED=yes
+
+### Tools
+
+    $ aptitude install htop iotop
