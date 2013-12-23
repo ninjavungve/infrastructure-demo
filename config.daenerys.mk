@@ -1,3 +1,5 @@
+MIRROR := hetzner
+
 btsync_run_opts :=		-lxc-conf="lxc.network.ipv6 = 2a01:4f8:100:546f::4:40/112" \
 						-lxc-conf="lxc.network.ipv6.gateway = 2a01:4f8:100:546f::4:1" \
 						$(btsync_run_opts)
