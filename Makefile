@@ -12,6 +12,8 @@ CONTAINERS := $(filter-out base,$(IMAGES))
 
 help:
 	@echo ""
+	@echo "  Configuration:   suite: $(if $(SUITE),$(SUITE),default), mirror: $(if $(MIRROR),$(MIRROR),none), proxy: $(if $(PROXY),$(PROXY),none)"
+	@echo ""
 	@echo "  base-image       create a new base image by bootstrapping from scratch"
 	@echo "  <name>           build and start the named container"
 	@echo "  <name>-image     build the image for the named container (see <name>/Dockerfile)"
