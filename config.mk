@@ -10,8 +10,6 @@ ifeq ($(strip $(shell cat /sys/block/sda/device/model)),VBOX HARDDISK)
 endif
 
 # Container run options
-btsync_run_opts :=		-p 8888:8888 -p 14975:14975 \
-						-v /srv/storage:/var/storage
 gitserver_run_opts :=	-v /srv/repositories:/var/git
 mailserver_run_opts :=	-v /srv/mail:/var/mail \
 						-v /srv/log/mail:/var/log/mail
