@@ -12,7 +12,7 @@ RUN mkdir /var/run/sshd
 RUN apt-get -qqy install openssh-server git-core
 
 RUN useradd -d /var/git/zargony -s /usr/bin/git-shell -u 1224 -g 100 zargony
-RUN useradd -d /var/git/mira -s /usr/bin/git-shell -u 1233 -g 100 mira
+RUN useradd -d /var/git/aurora -s /usr/bin/git-shell -u 1233 -g 100 aurora
 RUN useradd -d /var/git/hws -s /usr/bin/git-shell -u 1260 -g 100 hws
 
 VOLUME ["/var/git"]
