@@ -27,7 +27,7 @@ help:
 #----------------------------------------------------------------------------
 
 $(patsubst %,%-image,$(IMAGES)): %-image: %/Dockerfile
-	docker build -rm -t zargony/$* $(dir $<)
+	docker build --rm -t zargony/$* $(dir $<)
 
 base-image: base/bootstrap.tar.gz base/apt-proxy.conf
 
@@ -45,7 +45,7 @@ $(CONTAINERS): %: %-image %-start
 
 $(patsubst %,%-start,$(CONTAINERS)): %-start:
 	-docker stop $* 2>/dev/null && docker rm $* 2>/dev/null
-	docker run -name=$* -d $($*_run_opts) zargony/$*
+	docker run --name=$* -d $($*_run_opts) zargony/$*
 
 .PHONY: $(CONTAINERS) $(patsubst %,%-start,$(CONTAINERS))
 
