@@ -36,7 +36,7 @@ done
 # Parse arguments
 TARGET="${1}"
 shift || print_help
-SUITE="${1:-raring}"
+SUITE="${1:-trusty}"
 shift || true
 MIRROR="${1:-http://archive.ubuntu.com/ubuntu}"
 shift || true

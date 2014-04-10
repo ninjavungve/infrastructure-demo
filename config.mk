@@ -1,8 +1,8 @@
 # Default configuration. Settings here may be overridden or enhanced by
 # host-specific configuration in config.<hostname>.mk
 
-# Ubuntu raring is the default distribution
-SUITE := raring
+# Ubuntu trusty is the default distribution
+SUITE := trusty
 
 # VirtualBox testing machines do have apt-cacher running on the real host
 ifeq ($(strip $(shell cat /sys/block/sda/device/model)),VBOX HARDDISK)
