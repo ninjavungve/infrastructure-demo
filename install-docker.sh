@@ -1,10 +1,11 @@
 #!/bin/bash
 set -e
 
+test -r /etc/ssl/certs/ca-certificates.crt || apt-get install -qy ca-certificates
 test -x /usr/bin/curl || apt-get install -qy curl
 
 if ! test -e /etc/apt/sources.list.d/docker.list; then
-	curl -s http://get.docker.io/gpg |apt-key add -
+	curl -s https://get.docker.io/gpg |apt-key add -
 	echo "deb http://get.docker.io/ubuntu docker main" >/etc/apt/sources.list.d/docker.list
 	apt-get update -qq
 fi
