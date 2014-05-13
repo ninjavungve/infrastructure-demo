@@ -1,6 +1,9 @@
 FROM zargony/base
 
-RUN apt-get -qqy install dovecot-imapd ca-certificates
+# FIXME: Workaround for weird dovecot install problems in Ubuntu 14.04
+RUN apt-get -qqy install dovecot-core; ln -s /lib/init/upstart-job /etc/init.d/dovecot; apt-get -qqy install dovecot-core
+
+RUN apt-get -qqy install ca-certificates dovecot-imapd
 
 ADD imap.zargony.com.key /etc/ssl/private/
 RUN chown 0:0 /etc/ssl/private/*; chmod 600 /etc/ssl/private/*
