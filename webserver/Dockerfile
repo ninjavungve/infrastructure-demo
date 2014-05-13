@@ -2,8 +2,10 @@ FROM zargony/base
 
 RUN apt-get -qqy install nginx ca-certificates
 
+ADD cloud.zargony.com.key /etc/ssl/private/
 ADD developer.zargony.com.key /etc/ssl/private/
 RUN chown 0:0 /etc/ssl/private/*; chmod 600 /etc/ssl/private/*
+ADD cloud.zargony.com.pem /etc/ssl/certs/
 ADD developer.zargony.com.pem /etc/ssl/certs/
 RUN update-ca-certificates --fresh
 
