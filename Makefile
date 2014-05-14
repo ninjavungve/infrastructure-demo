@@ -18,8 +18,9 @@ help:
 	@echo "  <name>           build and start the named container"
 	@echo "  <name>-image     build the image for the named container (see <name>/Dockerfile)"
 	@echo "  <name>-start     start a fresh instance of the named container"
+	@echo "  <name>-shell     run an interactive shell in a fresh instance of the named image"
 	@echo "  all              build and start all containers"
-	@echo "  shell            run an interactive shell in a fresh container"
+	@echo "  shell            run an interactive shell in a fresh instance of the base image"
 	@echo ""
 	@echo "  Container names: $(CONTAINERS)"
 	@echo ""
@@ -47,7 +48,10 @@ $(patsubst %,%-start,$(CONTAINERS)): %-start:
 	-docker stop $* 2>/dev/null && docker rm $* 2>/dev/null
 	docker run --name=$* -d $($*_run_opts) zargony/$*
 
-.PHONY: $(CONTAINERS) $(patsubst %,%-start,$(CONTAINERS))
+$(patsubst %,%-shell,$(CONTAINERS)): %-shell:
+	docker run -i -t $($*_run_opts) zargony/$* /bin/bash
+
+.PHONY: $(CONTAINERS) $(patsubst %,%-start,$(CONTAINERS)) $(patsubst %,%-shell,$(CONTAINERS))
 
 #----------------------------------------------------------------------------
 
