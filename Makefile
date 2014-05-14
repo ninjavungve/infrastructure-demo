@@ -62,7 +62,7 @@ rm:
 rmi:
 	docker images |grep "^<none>" |awk '{print $$3}' |xargs -r docker rmi
 
-clean: rmi
+clean: rm rmi
 
 distclean: clean
 	rm -f base/bootstrap.tar.gz base/apt-proxy.conf
