@@ -9,7 +9,7 @@ ADD ssh_host_rsa_key.pub /etc/ssh/
 RUN chown 0:0 /etc/ssh/ssh_host*key*; chmod 600 /etc/ssh/ssh_host*key; chmod 644 /etc/ssh/ssh_host*key.pub
 RUN mkdir /var/run/sshd
 
-RUN apt-get -qqy install openssh-server git-core
+RUN apt-get -qqy install openssh-server git
 
 RUN useradd -d /var/git/zargony -s /usr/bin/git-shell -u 1224 -g 100 zargony
 RUN useradd -d /var/git/aurora -s /usr/bin/git-shell -u 1233 -g 100 aurora

@@ -1,6 +1,6 @@
 FROM zargony/base
 
-RUN apt-get -qqy install git-core ruby build-essential ruby-dev libsqlite3-dev libxml2-dev
+RUN apt-get -qqy install git ruby build-essential ruby-dev libsqlite3-dev libxml2-dev
 RUN gem install bundler --no-rdoc --no-ri
 
 RUN git clone https://github.com/chiliproject/chiliproject.git --branch stable --depth 1 /opt/redmine
