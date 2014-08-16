@@ -14,7 +14,7 @@
 
 ## Host setup
 
-For local testing, fire up a host in a VM using `vagrant up`.
+For local testing, use [boot2docker][boot2docker] or fire up a VM and install Docker using the `install-docker.sh` script.
 
 For setting up a real host, see [HOST.md][HOST.md].
 
@@ -33,4 +33,4 @@ To update an image to the latest version, simply rebuild and start it. If the ba
 
 [HOST.md]: HOST.md
 [docker]: http://docker.io/
-[vagrant]: http://vagrantup.com/
+[boot2docker]: http://boot2docker.io
