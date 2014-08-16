@@ -50,7 +50,7 @@ case "${TARGET}" in
 	*.tar.gz|*.tgz)
 		ARCHIVE="${TARGET}"
 		TARGET=`mktemp -d`
-		trap "umount ${TARGET}/proc; umount ${TARGET}/sys; rm -rf ${TARGET}" ERR INT TERM
+		trap "test -d ${TARGET}/proc && umount ${TARGET}/proc; test -d ${TARGET}/sys && umount ${TARGET}/sys; rm -rf ${TARGET}" EXIT
 		;;
 esac
 
