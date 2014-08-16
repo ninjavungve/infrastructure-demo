@@ -45,7 +45,8 @@ base/bootstrap.tar.gz:
 $(CONTAINERS): %: %-image %-start
 
 $(patsubst %,%-start,$(CONTAINERS)): %-start:
-	-docker stop $* 2>/dev/null && docker rm $* 2>/dev/null
+	-docker stop $* 2>/dev/null
+	-docker rm $* 2>/dev/null
 	docker run --name=$* -d $($*_run_opts) zargony/$*
 
 $(patsubst %,%-shell,$(CONTAINERS)): %-shell:
