@@ -87,11 +87,17 @@ cat >${TARGET}/etc/apt/sources.list <<-EOF
 	deb http://security.ubuntu.com/ubuntu ${SUITE}-security main restricted universe multiverse
 EOF
 
+# Configure APT proxy if set
+if [ -n "${http_proxy}" ]; then
+	echo "Configuring APT proxy: ${http_proxy}"
+	echo "Acquire::http { Proxy \"${http_proxy}\"; };" >${TARGET}/etc/apt/apt.conf.d/02proxy
+fi
+
 # Set timezone to Europe/Berlin
 ln -sf ../usr/share/zoneinfo/Europe/Berlin ${TARGET}/etc/localtime
 
 # Configure SSH access if installed
-if test -x ${TARGET}/usr/sbin/sshd; then
+if [ -x ${TARGET}/usr/sbin/sshd ]; then
 	mkdir -p ${TARGET}/root/.ssh
 	cat >${TARGET}/root/.ssh/authorized_keys <<-EOF
 		ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAsSt+5Ennalg+GM7+0/37ukXuYR523DEWHTygpuGH1CI3GG0vMKHquG2lUEOKJ2mh4Pt5OBXxNfKxl3mmaPxyUStcMBwS25AQQhyLkFGp2sRFKpZQrEYozJ1galkPwdG4OsdtZXDdeDodsttDjIKchPPOSh0bHoXvIkA+zzWBu9wxZKc4EhQHN2+cI268NT+mZYFCFLcL2Zpr+eBW1OvnQ5MdG9kh4jYBc2kORXR4CzzCEVnkoibLLM7cczV96jugouVGTpDIYValBERWOM2aUFEbyRo3vAlveAfoFrYWFmvOgT2ynq1wHG6AcbsOOeAeCLO8slimmmgExhxtTEOGzQ== zargony@lina

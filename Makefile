@@ -30,10 +30,7 @@ help:
 $(patsubst %,%-image,$(IMAGES)): %-image: %/Dockerfile
 	docker build -t zargony/$* $(dir $<)
 
-base-image: base/bootstrap.tar.gz base/apt-proxy.conf
-
-base/apt-proxy.conf:
-	echo "$(if $(PROXY),Acquire::http { Proxy \"$(PROXY)\"; };)" >$@
+base-image: base/bootstrap.tar.gz
 
 base/bootstrap.tar.gz:
 	$(if $(PROXY),http_proxy=$(PROXY)) ./bootstrap.sh $@ $(SUITE) $(MIRROR)
@@ -70,7 +67,7 @@ rmi:
 clean: rm rmi
 
 distclean: clean
-	rm -f base/bootstrap.tar.gz base/apt-proxy.conf
+	rm -f base/bootstrap.tar.gz
 
 .PHONY: all shell rm rmi clean distclean
 
