@@ -1,6 +1,5 @@
 SUITE :=
 MIRROR :=
-PROXY :=
 
 -include config.mk
 -include config.$(shell hostname -s).mk
@@ -12,7 +11,7 @@ CONTAINERS := $(filter-out base,$(IMAGES))
 
 help:
 	@echo ""
-	@echo "  Configuration:   suite: $(if $(SUITE),$(SUITE),default), mirror: $(if $(MIRROR),$(MIRROR),none), proxy: $(if $(PROXY),$(PROXY),none)"
+	@echo "  Configuration:   suite: $(if $(SUITE),$(SUITE),default), mirror: $(if $(MIRROR),$(MIRROR),none)"
 	@echo ""
 	@echo "  base-image       create a new base image by bootstrapping from scratch"
 	@echo "  <name>           build and start the named container"
@@ -33,7 +32,7 @@ $(patsubst %,%-image,$(IMAGES)): %-image: %/Dockerfile
 base-image: base/bootstrap.tar.gz
 
 base/bootstrap.tar.gz:
-	$(if $(PROXY),http_proxy=$(PROXY)) ./bootstrap.sh $@ $(SUITE) $(MIRROR)
+	./bootstrap.sh $@ $(SUITE) $(MIRROR)
 
 .PHONY: $(patsubst %,%-image,$(IMAGES))
 

@@ -58,6 +58,22 @@ case "${MIRROR}" in
 	local) MIRROR="http://localhost:3142/ubuntu" ;;
 esac
 
+# Check if a given proxy address works and use it
+check_and_set_proxy () {
+	if curl --max-time 5 --proxy "${1}" "${MIRROR}/dists/${SUITE}/Release.gpg" 2>/dev/null >/dev/null; then
+		http_proxy="${1}"
+	fi
+}
+
+# Try to auto-detect proxy on host machine when running inside VirtualBox or Docker
+if [ -z "${http_proxy}" ]; then
+	if grep -q "VBOX HARDDISK" /sys/block/sda/device/model; then
+		check_and_set_proxy "http://10.0.2.2:3142/"
+	elif [ -x /.dockerinit ]; then
+		check_and_set_proxy "http://172.17.42.1:3142/"
+	fi
+fi
+
 # Always install these packages
 PACKAGES="apparmor,vim"
 
