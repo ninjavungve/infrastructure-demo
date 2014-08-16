@@ -28,7 +28,7 @@ help:
 #----------------------------------------------------------------------------
 
 $(patsubst %,%-image,$(IMAGES)): %-image: %/Dockerfile
-	docker build --rm -t zargony/$* $(dir $<)
+	docker build -t zargony/$* $(dir $<)
 
 base-image: base/bootstrap.tar.gz base/apt-proxy.conf
 
