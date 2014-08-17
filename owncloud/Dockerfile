@@ -10,7 +10,7 @@ ADD start.sh /opt/owncloud/
 RUN chown -R 0:0 /opt/owncloud
 
 RUN useradd -d /opt/owncloud -s /bin/false -u 1281 -g 100 owncloud
-RUN mkdir /var/log/owncloud; chown owncloud:users /var/log/owncloud; chmod 700 /var/log/owncloud
+RUN install -o owncloud -g users -m 700 -d /var/log/owncloud
 
 ADD config.php /opt/owncloud/public/config/
 RUN chown owncloud:www-data /opt/owncloud/public/config/config.php
