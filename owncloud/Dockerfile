@@ -7,7 +7,7 @@ RUN cd /opt/owncloud && tar -jxf owncloud-*.tar.bz2 && mv owncloud public
 ADD nginx.conf /opt/owncloud/
 ADD php-fpm.conf /opt/owncloud/
 ADD start.sh /opt/owncloud/
-RUN chown -R 0:0 /opt/owncloud
+RUN chown -R root:root /opt/owncloud
 
 RUN useradd -d /opt/owncloud -s /bin/false -u 1281 -g 100 owncloud
 RUN install -o owncloud -g users -m 700 -d /var/log/owncloud
