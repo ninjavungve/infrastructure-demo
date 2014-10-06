@@ -32,5 +32,5 @@ To update an image to the latest version, simply rebuild and start it. If the ba
 
 
 [HOST.md]: HOST.md
-[docker]: http://docker.io/
+[docker]: http://docker.com/
 [boot2docker]: http://boot2docker.io
