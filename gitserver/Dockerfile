@@ -6,7 +6,7 @@ ADD ssh_host_ecdsa_key /etc/ssh/
 ADD ssh_host_ecdsa_key.pub /etc/ssh/
 ADD ssh_host_rsa_key /etc/ssh/
 ADD ssh_host_rsa_key.pub /etc/ssh/
-RUN chown root:root /etc/ssh/ssh_host*key*; chmod 600 /etc/ssh/ssh_host*key; chmod 644 /etc/ssh/ssh_host*key.pub
+RUN chown root:root /etc/ssh/ssh_host*key* && chmod 600 /etc/ssh/ssh_host*key && chmod 644 /etc/ssh/ssh_host*key.pub
 RUN install -o root -g root -m 755 -d /var/run/sshd
 
 RUN apt-get -qqy install openssh-server git
