@@ -64,7 +64,7 @@ esac
 # Check if a given proxy address works and use it
 check_and_set_proxy () {
 	if curl --max-time 5 --proxy "${1}" "${MIRROR}/dists/${SUITE}/Release.gpg" 2>/dev/null >/dev/null; then
-		http_proxy="${1}"
+		export http_proxy="${1}"
 	fi
 }
 
