@@ -1,7 +1,7 @@
 #!/bin/bash
 set -f
 
-VOLUMES="repositories web log minecraft"
+VOLUMES="gitlab web log minecraft"
 REMOTE="scp://xxx@xxx.your-backup.de"
 export GNUPGHOME="/root/.gnupg"
 export GNUPGKEY="xxx"

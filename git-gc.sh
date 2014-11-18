@@ -1,5 +1,5 @@
 #!/bin/bash
-for dir in /srv/repositories/*/*.git; do
+for dir in /srv/gitlab/repositories/*/*.git; do
 	echo "=== Optimizing repository $dir"
 	uid=`stat --printf="%u" $dir`
 	gid=`stat --printf="%g" $dir`

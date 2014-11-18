@@ -8,6 +8,7 @@ ADD Gemfile.local /opt/redmine/
 ADD config.ru /opt/redmine/
 ADD configuration.yml /opt/redmine/config/
 ADD database.yml /opt/redmine/config/
+ADD additional_environment.rb /opt/redmine/config/
 ADD robots.txt /opt/redmine/public/
 RUN rm -f /opt/redmine/public/favicon.ico
 RUN rm -rf /opt/redmine/public/files && ln -s /var/lib/redmine/files /opt/redmine/public/files

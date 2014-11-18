@@ -1,9 +1,9 @@
 MIRROR := hetzner
 
-gitserver_run_opts :=	--lxc-conf="lxc.network.flags = up" \
+gitlab_run_opts :=		--lxc-conf="lxc.network.flags = up" \
 						--lxc-conf="lxc.network.ipv6 = 2a01:4f8:100:546f::4:30/112" \
 						--lxc-conf="lxc.network.ipv6.gateway = 2a01:4f8:100:546f::4:1" \
-						$(gitserver_run_opts)
+						$(gitlab_run_opts)
 mailserver_run_opts :=	--lxc-conf="lxc.network.flags = up" \
 						--lxc-conf="lxc.network.ipv6 = 2a01:4f8:100:546f::4:50/112" \
 						--lxc-conf="lxc.network.ipv6.gateway = 2a01:4f8:100:546f::4:1" \
