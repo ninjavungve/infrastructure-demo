@@ -21,7 +21,7 @@ RUN rm -rf /opt/redmine/tmp && ln -s /tmp/redmine /opt/redmine/tmp
 RUN cd /opt/redmine && bundle install --without mysql2 postgres rmagick
 RUN cd /opt/redmine && rake config/initializers/session_store.rb
 
-RUN useradd -d /opt/redmine -s /bin/false -u 1282 -g 100 redmine
+RUN useradd -d /opt/redmine -s /usr/sbin/nologin -u 1282 -g 100 -c Redmine redmine
 RUN chown redmine:users /opt/redmine/config/*.yml && chmod 400 /opt/redmine/config/*.yml
 RUN install -o redmine -g users -m 700 -d /tmp/redmine
 RUN install -o redmine -g users -m 700 -d /var/log/redmine
