@@ -15,8 +15,8 @@ production:
     signin_enabled: true
     issue_closing_pattern: '([Cc]lose[sd]|[Ff]ixe[sd]) #(\d+)'
     default_projects_features:
-      issues: true
-      merge_requests: true
+      issues: false
+      merge_requests: false
       wiki: false
       snippets: false
       visibility_level: "private"  # private/internal/public
