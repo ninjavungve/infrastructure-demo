@@ -9,7 +9,6 @@ gitlab_run_opts :=		--link redis:redis \
 						-v /srv/gitlab:/var/lib/gitlab \
 						-v /srv/web/gitlab:/var/www/gitlab \
 						-v /srv/log/gitlab:/var/log/gitlab
-gitserver_run_opts :=	-v /srv/repositories:/var/git
 mailserver_run_opts :=	-v /srv/mail:/var/mail \
 						-v /srv/log/mail:/var/log/mail
 minecraft_run_opts :=	-p 25565:25565 \
