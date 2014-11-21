@@ -20,6 +20,7 @@ ADD resque.yml /opt/gitlab/config/
 ADD unicorn.rb /opt/gitlab/config/
 ADD smtp_settings.rb /opt/gitlab/config/initializers/
 RUN cp /opt/gitlab/config/initializers/rack_attack.rb.example /opt/gitlab/config/initializers/rack_attack.rb
+RUN sed -i "s/^\\s*config.serve_static_assets.*$/config.serve_static_assets = true/" /opt/gitlab/config/environments/production.rb
 RUN rm -rf /opt/gitlab/log && ln -s /var/log/gitlab /opt/gitlab/log
 RUN rm -rf /opt/gitlab/tmp && ln -s /tmp/gitlab /opt/gitlab/tmp
 RUN rm -rf /opt/gitlab/public/uploads && ln -s /var/lib/gitlab/uploads /opt/gitlab/public/uploads
