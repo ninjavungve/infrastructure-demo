@@ -12,7 +12,7 @@ gitlab_run_opts :=		--link redis:redis \
 mailserver_run_opts :=	-v /srv/mail:/var/mail \
 						-v /srv/log/mail:/var/log/mail
 minecraft_run_opts :=	-p 25565:25565 \
-						-v /srv/minecraft:/opt/minecraft
+						-v /srv/minecraft:/var/lib/minecraft
 owncloud_run_opts :=	-v /srv/owncloud:/var/lib/owncloud \
 						-v /srv/web/owncloud:/var/www/owncloud \
 						-v /srv/log/owncloud:/var/log/owncloud
