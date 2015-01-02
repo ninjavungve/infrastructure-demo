@@ -1,7 +1,5 @@
 user: git
 gitlab_url: "http://localhost:8080/"
-http_settings:
-  self_signed_cert: true
 repos_path: "/var/lib/gitlab/repositories"
 auth_file: "/var/lib/gitlab/repositories/.ssh/authorized_keys"
 redis:
