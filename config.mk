@@ -5,6 +5,9 @@
 SUITE := trusty
 
 # Container run options
+btsync_run_opts :=		-v /srv/storage:/var/storage \
+						-v /srv/log/btsync:/var/log/btsync \
+						-p 14975:14975
 gitlab_run_opts :=		--link redis:redis \
 						-v /srv/gitlab:/var/lib/gitlab \
 						-v /srv/web/gitlab:/var/www/gitlab \
