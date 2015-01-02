@@ -13,7 +13,7 @@ RUN apt-get -qqy install git ruby2.0 ruby2.0-dev libsqlite3-dev python2.7 openss
 RUN for f in erb gem testrb irb rake ruby ri rdoc; do ln -sf ${f}2.0 /usr/bin/${f}; done
 RUN apt-get -qqy install build-essential zlib1g-dev libyaml-dev libssl-dev libgdbm-dev libreadline-dev libncurses5-dev libffi-dev curl redis-tools checkinstall libxml2-dev libxslt-dev libcurl4-openssl-dev libicu-dev logrotate python-docutils pkg-config cmake
 
-RUN git clone https://gitlab.com/gitlab-org/gitlab-ce.git --branch 7-5-stable --depth 1 /opt/gitlab
+RUN git clone https://gitlab.com/gitlab-org/gitlab-ce.git --branch 7-6-stable --depth 1 /opt/gitlab
 ADD database.yml /opt/gitlab/config/
 ADD gitlab.yml /opt/gitlab/config/
 ADD resque.yml /opt/gitlab/config/
@@ -31,7 +31,7 @@ RUN gem install bundler --no-rdoc --no-ri
 RUN echo 'gem "sqlite3"' >>/opt/gitlab/Gemfile
 RUN cd /opt/gitlab && bundle install --without development test mysql postgres aws
 
-RUN git clone https://gitlab.com/gitlab-org/gitlab-shell.git --branch v2.2.0 --depth 1 /opt/gitlab-shell
+RUN git clone https://gitlab.com/gitlab-org/gitlab-shell.git --branch v2.4.0 --depth 1 /opt/gitlab-shell
 ADD gitlab-shell.yml /opt/gitlab-shell/config.yml
 RUN rm -rf /opt/gitlab-shell/.gitlab_shell_secret && ln -s ../gitlab/.gitlab_shell_secret /opt/gitlab-shell/
 RUN /opt/gitlab-shell/bin/install
