@@ -12,6 +12,13 @@ RUN chown -R root:root /opt/owncloud
 RUN useradd -d /opt/owncloud -s /usr/sbin/nologin -u 1281 -g 100 -c OwnCloud owncloud
 RUN rm -f /opt/owncloud/public/config/config.php && ln -s /var/lib/owncloud/config.php /opt/owncloud/public/config/config.php
 RUN install -o owncloud -g users -m 700 -d /var/log/owncloud
+RUN chown -R owncloud:root /var/lib/nginx
+
+# Fix /var/lib/nginx permissions
+RUN rm -rf /var/lib/nginx/*
+RUN mkdir -p /var/lib/nginx/{body,fastcgi,proxy,scgi,uwsgi}
+RUN chown -R owncloud:root /var/lib/nginx
+RUN chmod 700 /var/lib/nginx/*
 
 VOLUME ["/var/lib/owncloud"]
 
