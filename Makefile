@@ -58,10 +58,10 @@ shell:
 	docker run -i -t zargony/base /bin/bash
 
 rm:
-	docker ps -a |grep -E "Exited .* ago" |awk '{print $$1}' |xargs -r docker rm
+	docker ps -a |grep -E "Exited .* ago" |awk '{print $$1}' |xargs docker rm
 
 rmi:
-	docker images |grep "^<none>" |awk '{print $$3}' |xargs -r docker rmi
+	docker images |grep "^<none>" |awk '{print $$3}' |xargs docker rmi
 
 clean: rm rmi
 
