@@ -85,11 +85,12 @@ PACKAGES="apparmor,vim"
 if [ -n "${BOOTABLE}" ]; then
 	PACKAGES="${PACKAGES},grub-pc,linux-server,mdadm,lvm2,openssh-server"
 	PACKAGES="${PACKAGES},ufw,acpid,ntp,unattended-upgrades"
+	PACKAGES="${PACKAGES},bridge-utils,usbutils,pciutils"
 fi
 
 # Always install these useful tools
-PACKAGES="${PACKAGES},bash-completion,ca-certificates,curl,iptraf,lftp,lsof,ltrace"
-PACKAGES="${PACKAGES},pciutils,psmisc,rsync,screen,strace,tcpdump,tmux,usbutils,wget"
+PACKAGES="${PACKAGES},bash-completion,ca-certificates,curl,iptraf,lftp,lsof"
+PACKAGES="${PACKAGES},ltrace,psmisc,rsync,screen,strace,tcpdump,tmux,wget"
 
 # Install the base system (ubuntu-minimal)
 debootstrap --arch=amd64 --components=main --include=${PACKAGES} ${SUITE} ${TARGET} ${MIRROR}
