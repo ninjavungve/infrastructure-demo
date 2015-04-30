@@ -16,6 +16,3 @@ RUN echo "Europe/Berlin" >/etc/timezone && dpkg-reconfigure tzdata
 # Run apt update and upgrade all packages
 RUN apt-get -qq update
 RUN apt-get -qqy upgrade
-
-# Run a command to test that this image is able to execute commands
-RUN echo Base system created
