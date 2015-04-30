@@ -1,6 +1,3 @@
-SUITE :=
-MIRROR :=
-
 -include config.mk
 -include config.$(shell hostname -s).mk
 
@@ -11,9 +8,7 @@ CONTAINERS := $(filter-out base,$(IMAGES))
 
 help:
 	@echo ""
-	@echo "  Configuration:   suite: $(if $(SUITE),$(SUITE),default), mirror: $(if $(MIRROR),$(MIRROR),none)"
-	@echo ""
-	@echo "  base-image       create a new base image by bootstrapping from scratch"
+	@echo "  base-image       create a new base image"
 	@echo "  <name>           build and start the named container"
 	@echo "  <name>-image     build the image for the named container (see <name>/Dockerfile)"
 	@echo "  <name>-start     start a fresh instance of the named container"
@@ -28,11 +23,6 @@ help:
 
 $(patsubst %,%-image,$(IMAGES)): %-image: %/Dockerfile
 	docker build -t zargony/$* $(dir $<)
-
-base-image: base/bootstrap.tar.gz
-
-base/bootstrap.tar.gz:
-	./bootstrap.sh $@ $(SUITE) $(MIRROR)
 
 .PHONY: $(patsubst %,%-image,$(IMAGES))
 
@@ -65,10 +55,7 @@ rmi:
 
 clean: rm rmi
 
-distclean: clean
-	rm -f base/bootstrap.tar.gz
-
-.PHONY: all shell rm rmi clean distclean
+.PHONY: all shell rm rmi clean
 
 #----------------------------------------------------------------------------
 

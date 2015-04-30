@@ -1,9 +1,6 @@
 # Default configuration. Settings here may be overridden or enhanced by
 # host-specific configuration in config.<hostname>.mk
 
-# Ubuntu trusty is the default distribution
-SUITE := trusty
-
 # Container run options
 btsync_run_opts :=		-v /srv/storage:/var/storage \
 						-v /srv/log/btsync:/var/log/btsync \

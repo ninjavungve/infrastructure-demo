@@ -1,5 +1,3 @@
-MIRROR := hetzner
-
 gitlab_run_opts :=		--lxc-conf="lxc.network.flags = up" \
 						--lxc-conf="lxc.network.ipv6 = 2a01:4f8:100:546f::4:30/112" \
 						--lxc-conf="lxc.network.ipv6.gateway = 2a01:4f8:100:546f::4:1" \
