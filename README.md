@@ -6,12 +6,6 @@
 - **Base image**: a Docker image that contains a minimal Linux system, suitable for being used as the base for other images.
 - **Image**: an image based on the base image that contains additional files required to run a specific service.
 
-### Tools
-
-- `bootstrap.sh`: Bootstraps a new Linux system into a target directory. Used to build a new base image, but can also be used to install an OS to a real server (see [HOST.md][HOST.md]).
-- `install-docker.sh`: Installs the Docker daemon on the system it runs on.
-- `make`: Used to build various images.
-
 ## Host setup
 
 For local testing, use [boot2docker][boot2docker] or fire up a VM and install Docker using the `install-docker.sh` script.
@@ -20,7 +14,7 @@ For setting up a real host, see [HOST.md][HOST.md].
 
 ## Building a base image
 
-To create a new minimal base image, use `make base-image`. This uses bootstrap.sh to install a minimal base system into a directory, configures some core settings and imports it as the base image into Docker. The base image is the prerequisite for other images.
+To create a new minimal base image, use `make base-image`. This gets the Docker ubuntu image, configures some core settings and stores it as the base image into Docker. The base image is the prerequisite for other images.
 
 ## Building an image
 

@@ -24,10 +24,9 @@ Assuming that a the real host has two hard drives that should be mirrored. First
     $ mkdir /mnt/server
     $ mount /dev/sda /mnt/server
 
-## Install base system
+## Install base system (Hetzner mirror)
 
-    $ wget http://raw.github.com/zargony/infrastructure/master/bootstrap.sh
-    $ . ./bootstrap.sh -b /mnt/server
+    $ debootstrap --arch=amd64 --components=main --include=grub-pc,linux-server,lvm2,mdadm,openssh-server,ufw trusty /mnt/server http://mirror.hetzner.de/ubuntu/packages
 
 ## Configuration
 
@@ -50,6 +49,10 @@ Assuming that a the real host has two hard drives that should be mirrored. First
 *etc/hostname*
 
     server
+
+*etc/timezone*
+
+    Europe/Berlin
 
 *etc/network/interfaces* (Hetzner host routing)
 
@@ -74,6 +77,49 @@ Assuming that a the real host has two hard drives that should be mirrored. First
     nameserver 2a01:4f8:0:a0a1::add:1010
     nameserver 2a01:4f8:0:a102::add:9999
     nameserver 2a01:4f8:0:a111::add:9898
+
+*etc/bash.bashrc*
+
+    force_color_prompt=yes
+    . /etc/skel/.bashrc
+    alias l='ls -la'
+
+*etc/inputrc*
+
+    set input-meta on
+    set output-meta on
+    set show-all-if-ambiguous on
+    set completion-ignore-case on
+    "\e[1~": beginning-of-line
+    "\e[2~": quoted-insert
+    "\e[3~": delete-char
+    "\e[4~": end-of-line
+    "\e[A": history-search-backward
+    "\e[B": history-search-forward
+    "\e[1;5C": forward-word
+    "\e[1;5D": backward-word
+    "\e[5C": forward-word
+    "\e[5D": backward-word
+    "\e\e[C": forward-word
+    "\e\e[D": backward-word
+
+*etc/vim/vimrc.local*
+
+    syntax on
+    set background=dark
+    colorscheme elflord
+    set showcmd showmatch
+    set nowrap
+    set ignorecase smartcase hlsearch
+    if has("autocmd")
+      au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+      filetype plugin indent on
+    endif
+
+*root/.ssh/authorized_keys*
+
+    ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAsSt+5Ennalg+GM7+0/37ukXuYR523DEWHTygpuGH1CI3GG0vMKHquG2lUEOKJ2mh4Pt5OBXxNfKxl3mmaPxyUStcMBwS25AQQhyLkFGp2sRFKpZQrEYozJ1galkPwdG4OsdtZXDdeDodsttDjIKchPPOSh0bHoXvIkA+zzWBu9wxZKc4EhQHN2+cI268NT+mZYFCFLcL2Zpr+eBW1OvnQ5MdG9kh4jYBc2kORXR4CzzCEVnkoibLLM7cczV96jugouVGTpDIYValBERWOM2aUFEbyRo3vAlveAfoFrYWFmvOgT2ynq1wHG6AcbsOOeAeCLO8slimmmgExhxtTEOGzQ== zargony@lina
+    ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCwFQFH9XgcgJ2l43yr69sAkql39VKOCVSMfv6jH/ml0WyD0FP2GO1mMoW/teCuRbWqWxXr7fF0QhOi60g1e4xE766Rkll9xBmx+ckPuSj3xmKOUpnn/Z/rjFzwAQ452lJtIGySSNUbfxM00usDF0+kc5wMR1ugnR3S3y2loVN38RzVgUVMm7r1qhnttsUi/HeXFTw1j7Gaqbmz5PEyMKXeI9fvml1wAzf14JMvxjHSQBBvwLuvAAGMPbdd136bIpY+Vpvc3+zXyODLoFOuyl5cuAHULg0thrpifmgrtkLdD2TpKJqqio2kMrS7A0L5Hg+OXD3qlYPFaMl9tZb0QgBl zargony@priya
 
 ## Bootloader
 
@@ -103,6 +149,17 @@ Install the bootloader to both harddisks.
     $ umount /mnt/server
     $ sync
     $ reboot
+
+## Docker
+
+    $ apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
+    $ echo "deb http://get.docker.com/ubuntu docker main" >/etc/apt/sources.list.d/docker.list
+    $ aptitude update
+    $ aptitude install lxc-docker
+
+*etc/default/docker*
+
+    DOCKER_OPTS="--dns 213.133.98.98 --dns 213.133.99.99"
 
 ## Useful services
 
@@ -186,4 +243,4 @@ Install the bootloader to both harddisks.
 
 ### Tools
 
-    $ aptitude install htop iotop
+    $ aptitude install apparmor acpid bash-completion bridge-utils ca-certificates curl htop iotop iptraf lftp lsof ltrace ntp pciutils psmisc rsync screen strace tcpdump tmux unattended-upgrades usbutils vim wget
