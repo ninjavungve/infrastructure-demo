@@ -36,7 +36,7 @@ $(patsubst %,%-start,$(CONTAINERS)): %-start:
 	docker run --name=$* -d $($*_run_opts) zargony/$*
 
 $(patsubst %,%-shell,$(CONTAINERS)): %-shell:
-	docker run -i -t $($*_run_opts) zargony/$* /bin/bash
+	docker run --rm -i -t $($*_run_opts) zargony/$* /bin/bash
 
 .PHONY: $(CONTAINERS) $(patsubst %,%-start,$(CONTAINERS)) $(patsubst %,%-shell,$(CONTAINERS))
 
@@ -45,7 +45,7 @@ $(patsubst %,%-shell,$(CONTAINERS)): %-shell:
 all: $(CONTAINERS)
 
 shell:
-	docker run -i -t zargony/base /bin/bash
+	docker run --rm -i -t zargony/base /bin/bash
 
 rm:
 	docker ps -a |grep -E "Exited .* ago" |awk '{print $$1}' |xargs docker rm
