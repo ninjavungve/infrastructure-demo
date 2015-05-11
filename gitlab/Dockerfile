@@ -9,9 +9,14 @@ ADD ssh_host_rsa_key.pub /etc/ssh/
 RUN chown root:root /etc/ssh/ssh_host*key* && chmod 600 /etc/ssh/ssh_host*key && chmod 644 /etc/ssh/ssh_host*key.pub
 RUN install -o root -g root -m 755 -d /var/run/sshd
 
-RUN apt-get -qqy install git ruby2.0 ruby2.0-dev libsqlite3-dev python2.7 openssh-server ssmtp
-RUN for f in erb gem testrb irb rake ruby ri rdoc; do ln -sf ${f}2.0 /usr/bin/${f}; done
-RUN apt-get -qqy install build-essential zlib1g-dev libyaml-dev libssl-dev libgdbm-dev libreadline-dev libncurses5-dev libffi-dev curl redis-tools checkinstall libxml2-dev libxslt-dev libcurl4-openssl-dev libicu-dev logrotate python-docutils pkg-config cmake
+RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 80F70E11F0F0D5F10CB20E62F5DA5F09C3173AA6
+RUN echo "deb http://ppa.launchpad.net/brightbox/ruby-ng/ubuntu trusty main" >/etc/apt/sources.list.d/ruby-ng.list
+RUN apt-get -qq update
+
+RUN apt-get -qqy install ruby2.2 ruby-switch git build-essential ruby2.2-dev libsqlite3-dev libxml2-dev libxslt-dev zlib1g-dev libyaml-dev libssl-dev libgdbm-dev libreadline-dev libncurses5-dev libffi-dev curl libcurl4-openssl-dev libicu-dev python2.7 checkinstall openssh-server redis-tools logrotate python-docutils pkg-config cmake ssmtp
+RUN ruby-switch --set ruby2.2
+RUN echo "gem: --no-document" >/etc/gemrc
+RUN gem install bundler
 
 RUN git clone https://gitlab.com/gitlab-org/gitlab-ce.git --branch 7-7-stable --depth 1 /opt/gitlab
 ADD database.yml /opt/gitlab/config/
@@ -27,7 +32,6 @@ RUN rm -rf /opt/gitlab/public/uploads && ln -s /var/lib/gitlab/uploads /opt/gitl
 RUN rm -rf /opt/gitlab/.secret && ln -s /var/lib/gitlab/.secret /opt/gitlab/
 RUN rm -rf /opt/gitlab/.gitlab_shell_secret && ln -s /var/lib/gitlab/.gitlab_shell_secret /opt/gitlab/
 
-RUN gem install bundler --no-rdoc --no-ri
 RUN echo 'gem "sqlite3"' >>/opt/gitlab/Gemfile
 RUN cd /opt/gitlab && bundle install --without development test mysql postgres aws
 
