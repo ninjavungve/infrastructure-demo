@@ -17,6 +17,7 @@ minecraft_run_opts :=	-p 25565:25565 \
 owncloud_run_opts :=	-v /srv/owncloud:/var/lib/owncloud \
 						-v /srv/web/owncloud:/var/www/owncloud \
 						-v /srv/log/owncloud:/var/log/owncloud
+postgresql_run_opts :=	-v /srv/postgresql:/var/lib/postgresql
 redmine_run_opts :=		-v /srv/redmine:/var/lib/redmine \
 						-v /srv/web/redmine:/var/www/redmine \
 						-v /srv/log/redmine:/var/log/redmine
