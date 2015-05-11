@@ -1,4 +1,6 @@
-FROM zargony/base
+FROM zargony/base-ruby
+
+RUN apt-get -qqy install git curl python2.7 checkinstall build-essential libsqlite3-dev libxml2-dev libxslt-dev zlib1g-dev libyaml-dev libssl-dev libgdbm-dev libreadline-dev libncurses5-dev libffi-dev libcurl4-openssl-dev libicu-dev openssh-server redis-tools logrotate python-docutils pkg-config cmake ssmtp
 
 ADD ssh_host_dsa_key /etc/ssh/
 ADD ssh_host_dsa_key.pub /etc/ssh/
@@ -8,15 +10,6 @@ ADD ssh_host_rsa_key /etc/ssh/
 ADD ssh_host_rsa_key.pub /etc/ssh/
 RUN chown root:root /etc/ssh/ssh_host*key* && chmod 600 /etc/ssh/ssh_host*key && chmod 644 /etc/ssh/ssh_host*key.pub
 RUN install -o root -g root -m 755 -d /var/run/sshd
-
-RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 80F70E11F0F0D5F10CB20E62F5DA5F09C3173AA6
-RUN echo "deb http://ppa.launchpad.net/brightbox/ruby-ng/ubuntu trusty main" >/etc/apt/sources.list.d/ruby-ng.list
-RUN apt-get -qq update
-
-RUN apt-get -qqy install ruby2.2 ruby-switch git build-essential ruby2.2-dev libsqlite3-dev libxml2-dev libxslt-dev zlib1g-dev libyaml-dev libssl-dev libgdbm-dev libreadline-dev libncurses5-dev libffi-dev curl libcurl4-openssl-dev libicu-dev python2.7 checkinstall openssh-server redis-tools logrotate python-docutils pkg-config cmake ssmtp
-RUN ruby-switch --set ruby2.2
-RUN echo "gem: --no-document" >/etc/gemrc
-RUN gem install bundler
 
 RUN git clone https://gitlab.com/gitlab-org/gitlab-ce.git --branch 7-7-stable --depth 1 /opt/gitlab
 ADD database.yml /opt/gitlab/config/
