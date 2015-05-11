@@ -13,7 +13,6 @@ help:
 	@echo "  <name>-image     build the image for the named container (see <name>/Dockerfile)"
 	@echo "  <name>-start     start a fresh instance of the named container"
 	@echo "  <name>-shell     run an interactive shell in a fresh instance of the named image"
-	@echo "  all              build and start all containers"
 	@echo "  shell            run an interactive shell in a fresh instance of the base image"
 	@echo ""
 	@echo "  Container names: $(CONTAINERS)"
@@ -42,8 +41,6 @@ $(patsubst %,%-shell,$(CONTAINERS)): %-shell:
 
 #----------------------------------------------------------------------------
 
-all: $(CONTAINERS)
-
 shell:
 	docker run --rm -i -t zargony/base /bin/bash
 
@@ -55,7 +52,7 @@ rmi:
 
 clean: rm rmi
 
-.PHONY: all shell rm rmi clean
+.PHONY: shell rm rmi clean
 
 #----------------------------------------------------------------------------
 
