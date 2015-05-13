@@ -1,7 +1,7 @@
 #!/bin/bash
 set -f
 
-VOLUMES="gitlab web log minecraft"
+VOLUMES="postgresql gitlab web log minecraft"
 REMOTE="scp://xxx@xxx.your-backup.de"
 export GNUPGHOME="/root/.gnupg"
 export GNUPGKEY="xxx"
