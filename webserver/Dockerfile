@@ -2,16 +2,9 @@ FROM zargony/base
 
 RUN apt-get -qqy install nginx ca-certificates
 
-ADD cloud.zargony.com.key /etc/ssl/private/
-ADD developer.zargony.com.key /etc/ssl/private/
-RUN chown root:root /etc/ssl/private/* && chmod 600 /etc/ssl/private/*
-ADD cloud.zargony.com.pem /etc/ssl/certs/
-ADD developer.zargony.com.pem /etc/ssl/certs/
-RUN update-ca-certificates --fresh
-
-ADD nginx.conf /opt/nginx/
+ADD nginx.conf /etc/
 
 VOLUME ["/var/www"]
 
-CMD ["/usr/sbin/nginx", "-c", "/opt/nginx/nginx.conf"]
+CMD ["/usr/sbin/nginx", "-c", "/etc/nginx.conf"]
 EXPOSE 80 443
