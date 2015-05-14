@@ -11,3 +11,4 @@ redis:
 log_file: "/var/log/gitlab/gitlab-shell.log"
 log_level: INFO
 audit_usernames: false
+git_annex_enabled: false

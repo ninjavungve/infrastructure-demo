@@ -1,6 +1,6 @@
 FROM zargony/base-ruby
 
-RUN apt-get -qqy install git curl python2.7 checkinstall build-essential libsqlite3-dev libxml2-dev libxslt-dev zlib1g-dev libyaml-dev libssl-dev libgdbm-dev libreadline-dev libncurses5-dev libffi-dev libcurl4-openssl-dev libicu-dev openssh-server redis-tools logrotate python-docutils pkg-config cmake ssmtp
+RUN apt-get -qqy install git curl python2.7 checkinstall build-essential libsqlite3-dev libxml2-dev libxslt-dev zlib1g-dev libyaml-dev libssl-dev libgdbm-dev libreadline-dev libncurses5-dev libffi-dev libcurl4-openssl-dev libicu-dev openssh-server redis-tools logrotate python-docutils pkg-config cmake ssmtp nodejs
 
 ADD ssh_host_dsa_key /etc/ssh/
 ADD ssh_host_dsa_key.pub /etc/ssh/
@@ -11,7 +11,7 @@ ADD ssh_host_rsa_key.pub /etc/ssh/
 RUN chown root:root /etc/ssh/ssh_host*key* && chmod 600 /etc/ssh/ssh_host*key && chmod 644 /etc/ssh/ssh_host*key.pub
 RUN install -o root -g root -m 755 -d /var/run/sshd
 
-RUN git clone https://gitlab.com/gitlab-org/gitlab-ce.git --branch 7-7-stable --depth 1 /opt/gitlab
+RUN git clone https://gitlab.com/gitlab-org/gitlab-ce.git --branch 7-10-stable --depth 1 /opt/gitlab
 ADD database.yml /opt/gitlab/config/
 ADD gitlab.yml /opt/gitlab/config/
 ADD resque.yml /opt/gitlab/config/
@@ -28,7 +28,7 @@ RUN rm -rf /opt/gitlab/.gitlab_shell_secret && ln -s /var/lib/gitlab/.gitlab_she
 RUN echo 'gem "sqlite3"' >>/opt/gitlab/Gemfile
 RUN cd /opt/gitlab && bundle install --without development test mysql postgres aws
 
-RUN git clone https://gitlab.com/gitlab-org/gitlab-shell.git --branch v2.4.1 --depth 1 /opt/gitlab-shell
+RUN git clone https://gitlab.com/gitlab-org/gitlab-shell.git --branch v`cat /opt/gitlab/GITLAB_SHELL_VERSION` --depth 1 /opt/gitlab-shell
 ADD gitlab-shell.yml /opt/gitlab-shell/config.yml
 RUN rm -rf /opt/gitlab-shell/.gitlab_shell_secret && ln -s ../gitlab/.gitlab_shell_secret /opt/gitlab-shell/
 RUN /opt/gitlab-shell/bin/install

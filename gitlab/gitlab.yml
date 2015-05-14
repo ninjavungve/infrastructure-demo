@@ -5,15 +5,13 @@ production:
     https: true
     ssh_host: git.zargony.com
     user: git
-    time_zone: Europe/Berlin
+    time_zone: Berlin
     email_from: gitlab@zargony.com
-    default_projects_limit: 10
+    email_display_name: zargony.com GitLab
+    email_reply_to: noreply@zargony.com
     default_can_create_group: false
-    username_changing_enabled: true
+    username_changing_enabled: false
     default_theme: 2 # 1=BASIC, 2=MARS, 3=MODERN, 4=GRAY, 5=COLOR
-    signup_enabled: false
-    signin_enabled: true
-    issue_closing_pattern: '([Cc]lose[sd]|[Ff]ixe[sd]) #(\d+)'
     default_projects_features:
       issues: false
       merge_requests: false
@@ -21,9 +19,6 @@ production:
       snippets: false
       visibility_level: "private"  # private/internal/public
     webhook_timeout: 10
-    repository_downloads_path: tmp/repositories
-
-  issues_tracker:
 
   gravatar:
     enabled: true
@@ -35,8 +30,6 @@ production:
 
   omniauth:
     enabled: false
-    allow_single_sign_on: false
-    block_auto_created_users: true
 
   satellites:
     path: tmp/repo_satellites/
