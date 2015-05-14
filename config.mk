@@ -5,7 +5,7 @@
 btsync_run_opts :=		-v /srv/storage:/var/storage \
 						-v /srv/log/btsync:/var/log/btsync \
 						-p 8888:8888 -p 14975:14975
-gitlab_run_opts :=		--link redis:redis \
+gitlab_run_opts :=		--link postgresql:postgresql --link redis:redis \
 						-v /srv/gitlab:/var/lib/gitlab \
 						-v /srv/web/gitlab:/var/www/gitlab \
 						-v /srv/log/gitlab:/var/log/gitlab
