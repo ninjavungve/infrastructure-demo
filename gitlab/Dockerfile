@@ -19,7 +19,7 @@ ADD unicorn.rb /opt/gitlab/config/
 ADD smtp_settings.rb /opt/gitlab/config/initializers/
 RUN cp /opt/gitlab/config/initializers/rack_attack.rb.example /opt/gitlab/config/initializers/rack_attack.rb
 RUN sed -i "s/^\\s*config.serve_static_assets.*$/config.serve_static_assets = true/" /opt/gitlab/config/environments/production.rb
-RUN rm -rf /opt/gitlab/log && ln -s /var/log/gitlab /opt/gitlab/log
+RUN rm -rf /opt/gitlab/log && ln -s /var/log/gitlab/gitlab /opt/gitlab/log
 RUN rm -rf /opt/gitlab/tmp && ln -s /tmp/gitlab /opt/gitlab/tmp
 RUN rm -rf /opt/gitlab/public/uploads && ln -s /var/lib/gitlab/uploads /opt/gitlab/public/uploads
 RUN rm -rf /opt/gitlab/.secret && ln -s /var/lib/gitlab/.secret /opt/gitlab/
@@ -38,7 +38,8 @@ RUN useradd -d /var/lib/gitlab/repositories -s /bin/bash -u 1283 -g 1283 -c GitL
 RUN install -o git -g git -m 750 -d /tmp/gitlab/cache
 RUN install -o git -g git -m 750 -d /tmp/gitlab/pids
 RUN install -o git -g git -m 750 -d /tmp/gitlab/repo_satellites
-RUN install -o git -g git -m 750 -d /var/log/gitlab
+RUN install -o git -g git -m 750 -d /var/log/gitlab/gitlab
+RUN install -o git -g git -m 750 -d /var/log/gitlab/gitlab-shell
 
 RUN cd /opt/gitlab && bundle exec rake assets:precompile RAILS_ENV=production
 RUN chmod 644 /opt/gitlab/config/initializers/*.rb

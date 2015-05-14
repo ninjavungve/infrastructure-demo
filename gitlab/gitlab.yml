@@ -32,11 +32,11 @@ production:
     enabled: false
 
   satellites:
-    path: tmp/repo_satellites/
+    path: /var/lib/gitlab/gitlab-satellites/
     timeout: 30
 
   backup:
-    path: "tmp/backups"
+    path: /var/lib/gitlab/backups/
     keep_time: 604800   # default: 0 (forever) (in seconds)
 
   gitlab_shell:
