@@ -1,3 +1,0 @@
-production:
-  adapter: sqlite3
-  database: /var/lib/redmine/production.sqlite3
