@@ -32,7 +32,7 @@ $(CONTAINERS): %: %-image %-start
 $(patsubst %,%-start,$(CONTAINERS)): %-start:
 	-docker stop $* 2>/dev/null
 	-docker rm $* 2>/dev/null
-	docker run --name=$* -d $($*_run_opts) zargony/$*
+	docker run -d --name=$* --restart=on-failure:5 $($*_run_opts) zargony/$*
 
 $(patsubst %,%-shell,$(CONTAINERS)): %-shell:
 	docker run --rm -i -t $($*_run_opts) zargony/$* /bin/bash
