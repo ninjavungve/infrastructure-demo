@@ -2,9 +2,6 @@
 # host-specific configuration in config.<hostname>.mk
 
 # Container run options
-btsync_run_opts :=			-v /srv/storage:/var/storage \
-							-v /srv/log/btsync:/var/log/btsync \
-							-p 8888:8888 -p 14975:14975
 elasticsearch_run_opts :=	-v /srv/elasticsearch:/usr/share/elasticsearch/data
 gitlab_run_opts :=			--link postgresql:postgresql --link redis:redis \
 							-v /srv/gitlab:/var/lib/gitlab \
