@@ -19,6 +19,9 @@ owncloud_run_opts :=		-v /srv/owncloud:/var/lib/owncloud \
 							-v /srv/web/owncloud:/var/www/owncloud \
 							-v /srv/log/owncloud:/var/log/owncloud
 postgresql_run_opts :=		-v /srv/postgresql:/var/lib/postgresql
+syncthing_run_opts :=		-v /srv/storage/.syncthing:/home/user/.config/syncthing \
+							-v /srv/storage:/var/storage \
+							-p 127.0.0.1:8384:8384 -p 14975:14975
 webserver_run_opts :=		-p 80:80 -p 443:443 \
 							-v /srv/web:/var/www \
 							-v /srv/log/webserver:/var/log/nginx
