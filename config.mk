@@ -13,7 +13,8 @@ mailserver_run_opts :=		-p 993:993 \
 minecraft_run_opts :=		-p 25565:25565 \
 							-v /srv/minecraft:/var/lib/minecraft \
 							-v /srv/web/minecraft:/var/www/minecraft
-owncloud_run_opts :=		-v /srv/owncloud:/var/lib/owncloud \
+owncloud_run_opts :=		--link postgresql:postgresql \
+							-v /srv/owncloud:/var/lib/owncloud \
 							-v /srv/web/owncloud:/var/www/owncloud \
 							-v /srv/log/owncloud:/var/log/owncloud
 postgresql_run_opts :=		-p 127.0.0.1:5432:5432 \

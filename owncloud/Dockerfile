@@ -1,6 +1,6 @@
 FROM zargony/base
 
-RUN apt-get -qqy install nginx php5-cli php5-fpm php5-sqlite php5-gd
+RUN apt-get -qqy install nginx php5-cli php5-fpm php5-pgsql php5-gd php5-curl
 
 ADD https://download.owncloud.org/community/owncloud-8.0.3.tar.bz2 /opt/owncloud/
 RUN cd /opt/owncloud && tar -jxf owncloud-*.tar.bz2 && mv owncloud public
