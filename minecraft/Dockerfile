@@ -7,8 +7,8 @@ RUN echo "deb http://overviewer.org/debian ./" >/etc/apt/sources.list.d/overview
 RUN apt-get -qq update
 RUN apt-get -qqy install minecraft-overviewer
 
-ADD https://s3.amazonaws.com/Minecraft.Download/versions/1.8.1/1.8.1.jar /opt/minecraft/minecraft.jar
-ADD https://s3.amazonaws.com/Minecraft.Download/versions/1.8.1/minecraft_server.1.8.1.jar /opt/minecraft/minecraft_server.jar
+ADD https://s3.amazonaws.com/Minecraft.Download/versions/1.8.5/1.8.5.jar /opt/minecraft/minecraft.jar
+ADD https://s3.amazonaws.com/Minecraft.Download/versions/1.8.5/minecraft_server.1.8.5.jar /opt/minecraft/minecraft_server.jar
 RUN chmod 644 /opt/minecraft/minecraft*.jar
 
 RUN useradd -d /opt/minecraft -s /bin/bash -u 1280 -g 100 -c Minecraft minecraft
