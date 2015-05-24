@@ -1,7 +1,7 @@
 #!/bin/bash
 set -f
 
-VOLUMES="postgresql gitlab web log minecraft"
+VOLUMES="postgresql gitlab web mail log minecraft"
 REMOTE="scp://xxx@xxx.your-backup.de"
 export GNUPGHOME="/root/.gnupg"
 export GNUPGKEY="xxx"
@@ -53,7 +53,7 @@ done
 log "Removing old backups..."
 for v in $VOLUMES; do
 	duplicity cleanup -v1 --force $REMOTE/backup_$v
-	duplicity remove-older-than 1M -v1 --force $REMOTE/backup_$v
+	duplicity remove-older-than 2M -v1 --force $REMOTE/backup_$v
 done
 
 finalize
