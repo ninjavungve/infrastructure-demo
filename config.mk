@@ -16,7 +16,8 @@ minecraft_run_opts :=		-p 25565:25565 \
 owncloud_run_opts :=		-v /srv/owncloud:/var/lib/owncloud \
 							-v /srv/web/owncloud:/var/www/owncloud \
 							-v /srv/log/owncloud:/var/log/owncloud
-postgresql_run_opts :=		-v /srv/postgresql:/var/lib/postgresql/data
+postgresql_run_opts :=		-p 127.0.0.1:5432:5432 \
+							-v /srv/postgresql:/var/lib/postgresql/data
 syncthing_run_opts :=		-p 127.0.0.1:8384:8384 -p 14975:14975 \
 							-v /srv/storage/.syncthing:/home/user/.config/syncthing \
 							-v /srv/storage:/var/storage
