@@ -44,6 +44,13 @@ $(patsubst %,%-shell,$(CONTAINERS)): %-shell:
 shell:
 	docker run --rm -i -t zargony/base /bin/bash
 
+psql:
+	docker run --rm -i -t --link postgresql:postgresql zargony/postgresql /usr/bin/psql -h postgresql -U postgres
+
+.PHONY: shell psql
+
+#----------------------------------------------------------------------------
+
 rm:
 	docker ps -a |grep -E "Exited .* ago" |awk '{print $$1}' |xargs docker rm
 
@@ -52,7 +59,7 @@ rmi:
 
 clean: rm rmi
 
-.PHONY: shell rm rmi clean
+.PHONY: rm rmi clean
 
 #----------------------------------------------------------------------------
 
