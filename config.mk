@@ -1,27 +1,32 @@
-# Default configuration. Settings here may be overridden or enhanced by
-# host-specific configuration in config.<hostname>.mk
-
 # Container run options
+
 elasticsearch_run_opts :=	-v /srv/elasticsearch:/usr/share/elasticsearch/data
-gitlab_run_opts :=			--link postgresql:postgresql --link redis:redis \
-							-v /srv/gitlab:/var/lib/gitlab \
+
+gitlab_run_opts :=			-v /srv/gitlab:/var/lib/gitlab \
 							-v /srv/web/gitlab:/var/www/gitlab \
-							-v /srv/log/gitlab:/var/log/gitlab
-mailserver_run_opts :=		-p 993:993 \
-							-v /srv/mail:/var/mail \
-							-v /srv/log/mailserver:/var/log/mail
-minecraft_run_opts :=		-p 25565:25565 \
-							-v /srv/minecraft:/var/lib/minecraft \
-							-v /srv/web/minecraft:/var/www/minecraft
-owncloud_run_opts :=		--link postgresql:postgresql \
-							-v /srv/owncloud:/var/lib/owncloud \
+							-v /srv/log/gitlab:/var/log/gitlab \
+							--link postgresql:postgresql --link redis:redis
+
+mailserver_run_opts :=		-v /srv/mail:/var/mail \
+							-v /srv/log/mailserver:/var/log/mail \
+							-p 993:993
+
+minecraft_run_opts :=		-v /srv/minecraft:/var/lib/minecraft \
+							-v /srv/web/minecraft:/var/www/minecraft \
+							-p 25565:25565
+
+owncloud_run_opts :=		-v /srv/owncloud:/var/lib/owncloud \
 							-v /srv/web/owncloud:/var/www/owncloud \
-							-v /srv/log/owncloud:/var/log/owncloud
-postgresql_run_opts :=		-p 127.0.0.1:5432:5432 \
-							-v /srv/postgresql:/var/lib/postgresql/data
-syncthing_run_opts :=		-p 127.0.0.1:8384:8384 -p 14975:14975 \
-							-v /srv/storage/.syncthing:/home/user/.config/syncthing \
-							-v /srv/storage:/var/storage
-webserver_run_opts :=		-p 80:80 -p 443:443 \
-							-v /srv/web:/var/www \
-							-v /srv/log/webserver:/var/log/nginx
+							-v /srv/log/owncloud:/var/log/owncloud \
+							--link postgresql:postgresql
+
+postgresql_run_opts :=		-v /srv/postgresql:/var/lib/postgresql/data \
+							-p 127.0.0.1:5432:5432
+
+syncthing_run_opts :=		-v /srv/storage/.syncthing:/home/user/.config/syncthing \
+							-v /srv/storage:/var/storage \
+							-p 127.0.0.1:8384:8384 -p 14975:14975
+
+webserver_run_opts :=		-v /srv/web:/var/www \
+							-v /srv/log/webserver:/var/log/nginx \
+							-p 80:80 -p 443:443
