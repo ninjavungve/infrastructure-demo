@@ -42,7 +42,7 @@ $(patsubst %,%-shell,$(CONTAINERS)): %-shell:
 #----------------------------------------------------------------------------
 
 shell:
-	docker run --rm -i -t zargony/base /bin/bash
+	docker run --rm -i -t -v /srv:/srv zargony/base /bin/bash
 
 psql:
 	docker run --rm -i -t --link postgresql:postgresql zargony/postgresql /usr/bin/psql -h postgresql -U postgres
