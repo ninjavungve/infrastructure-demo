@@ -52,10 +52,10 @@ psql:
 #----------------------------------------------------------------------------
 
 rm:
-	docker ps -a |grep -E "Exited .* ago" |awk '{print $$1}' |xargs docker rm
+	docker rm $$(docker ps -a |grep "Exited .* ago" |awk '{print $$1}')
 
 rmi:
-	docker images |grep "^<none>" |awk '{print $$3}' |xargs docker rmi
+	docker rmi $$(docker images |grep "^<none>" |awk '{print $$3}')
 
 clean: rm rmi
 
