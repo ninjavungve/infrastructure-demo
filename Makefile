@@ -35,7 +35,7 @@ $(patsubst %,%-start,$(CONTAINERS)): %-start:
 	docker run -d --name=$* --restart=on-failure:5 $($*_run_opts) zargony/$*
 
 $(patsubst %,%-shell,$(CONTAINERS)): %-shell:
-	docker run --rm -i -t $($*_run_opts) zargony/$* /bin/bash
+	docker exec -i -t $* /bin/bash
 
 .PHONY: $(CONTAINERS) $(patsubst %,%-start,$(CONTAINERS)) $(patsubst %,%-shell,$(CONTAINERS))
 
