@@ -5,7 +5,8 @@ elasticsearch_run_opts :=	-v /srv/elasticsearch:/usr/share/elasticsearch/data
 gitlab_run_opts :=			-v /srv/gitlab:/var/lib/gitlab \
 							-v /srv/web/gitlab:/var/www/gitlab \
 							-v /srv/log/gitlab:/var/log/gitlab \
-							--link postgresql:postgresql --link redis:redis
+							--link postgresql:postgresql --link redis:redis \
+							--mac-address="00:00:00:00:00:30"
 
 mailserver_run_opts :=		-v /srv/mail:/var/mail \
 							-v /srv/log/mailserver:/var/log/mail \
@@ -13,6 +14,7 @@ mailserver_run_opts :=		-v /srv/mail:/var/mail \
 
 minecraft_run_opts :=		-v /srv/minecraft:/var/lib/minecraft \
 							-v /srv/web/minecraft:/var/www/minecraft \
+							--mac-address="00:00:00:00:00:10" \
 							-p 25565:25565
 
 owncloud_run_opts :=		-v /srv/owncloud:/var/lib/owncloud \
@@ -29,4 +31,5 @@ syncthing_run_opts :=		-v /srv/storage/.syncthing:/home/user/.config/syncthing \
 
 webserver_run_opts :=		-v /srv/web:/var/www \
 							-v /srv/log/webserver:/var/log/nginx \
+							--mac-address="00:00:00:00:00:20" \
 							-p 80:80 -p 443:443
