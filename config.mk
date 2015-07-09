@@ -2,10 +2,11 @@
 
 elasticsearch_run_opts :=	-v /srv/elasticsearch:/usr/share/elasticsearch/data
 
-gitlab_run_opts :=			-v /srv/gitlab:/var/lib/gitlab \
-							-v /srv/web/gitlab:/var/www/gitlab \
+gitlab_run_opts :=			-v /srv/gitlab:/home/git/data \
+							-v /srv/web/gitlab:/home/git/gitlab/tmp/sockets \
 							-v /srv/log/gitlab:/var/log/gitlab \
-							--link postgresql:postgresql --link redis:redis \
+							--link postgresql:postgresql --link redis:redisio \
+							--env-file /srv/gitlab/gitlab.env \
 							--mac-address="00:00:00:00:00:30"
 
 mailserver_run_opts :=		-v /srv/mail:/var/mail \
