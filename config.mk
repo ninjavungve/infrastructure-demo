@@ -3,7 +3,6 @@
 elasticsearch_run_opts :=	-v /srv/elasticsearch:/usr/share/elasticsearch/data
 
 gitlab_run_opts :=			-v /srv/gitlab:/home/git/data \
-							-v /srv/web/gitlab:/home/git/gitlab/tmp/sockets \
 							-v /srv/log/gitlab:/var/log/gitlab \
 							--link postgresql:postgresql --link redis:redisio \
 							--env-file /srv/gitlab/gitlab.env \
@@ -19,7 +18,6 @@ minecraft_run_opts :=		-v /srv/minecraft:/var/lib/minecraft \
 							-p 25565:25565
 
 owncloud_run_opts :=		-v /srv/owncloud:/var/lib/owncloud \
-							-v /srv/web/owncloud:/var/www/owncloud \
 							-v /srv/log/owncloud:/var/log/owncloud \
 							--link postgresql:postgresql
 
@@ -32,5 +30,6 @@ syncthing_run_opts :=		-v /srv/storage/.syncthing:/home/user/.config/syncthing \
 
 webserver_run_opts :=		-v /srv/web:/var/www \
 							-v /srv/log/webserver:/var/log/nginx \
+							--link gitlab:gitlab --link owncloud:owncloud \
 							--mac-address="00:00:00:00:00:20" \
 							-p 80:80 -p 443:443
