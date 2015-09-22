@@ -2,29 +2,24 @@
 
 ## Components
 
-- **Host**: a Linux machine that runs multiple images. In production, this is a real server running the Docker daemon. For testing, a host can be started in a local VM.
-- **Base image**: a Docker image that contains a minimal Linux system, suitable for being used as the base for other images.
-- **Image**: an image based on the base image that contains additional files required to run a specific service.
+- **Host**: a Linux machine that runs multiple containers. In production, this is a real server running the [Docker][docker] daemon. For testing, a host can be started in a local VM.
+- **Base image**: a Docker image that contains a minimal Linux system, suitable for being used as the base for custom build services.
 
 ## Host setup
 
-For local testing, use [boot2docker][boot2docker] or fire up a VM and install Docker using the `install-docker.sh` script.
+For local testing, use [docker-machine][docker-machine].
 
 For setting up a real host, see [HOST.md][HOST.md].
 
 ## Building a base image
 
-To create a new minimal base image, use `make base-image`. This gets the Docker ubuntu image, configures some core settings and stores it as the base image into Docker. The base image is the prerequisite for other images.
+To create a new minimal base image, use `rake baseimage`. This gets the Docker ubuntu image, configures some core settings and stores it as the base image into Docker. The base image is the prerequisite for other images.
 
-## Building an image
+## Building / running /updating services
 
-Use `make <name>` to build the image with the given name and start a container from it. The image is built from a Dockerfile in the subdirectory `<name>`. After building the image, a container of the same name will be started (a previously running one is stopped first, so a running service is effectively restarted with a new fresh image).
-
-## Updating images
-
-To update an image to the latest version, simply rebuild and start it. If the base image is rebuild, it'll contain all latest updates from the distribution (other images based on it must also be rebuild to take advantage of a new base image).
+Use [docker-machine][docker-machine].
 
 
 [HOST.md]: HOST.md
-[docker]: http://docker.com/
-[boot2docker]: http://boot2docker.io
+[docker]: http://www.docker.com/
+[docker-machine]: https://www.docker.com/docker-machine
