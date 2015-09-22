@@ -80,6 +80,8 @@ gitlab:
     GITLAB_PROJECTS_WIKI: "false"
     GITLAB_PROJECTS_SNIPPETS: "false"
     GITLAB_PROJECTS_VISIBILITY: private
+    # FIXME: If not set, REDIS_PORT conflicts with env from linked redis container
+    REDIS_PORT: 6379
     DB_NAME: gitlab
     DB_USER: gitlab
     #DB_PASS: xxxxx
