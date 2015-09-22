@@ -63,7 +63,7 @@ owncloud:
 
 gitlab:
   image: sameersbn/gitlab
-  external_links:
+  links:
     - postgresql:postgresql
     - redis:redisio
   volumes:
