@@ -5,6 +5,7 @@ webserver:
   build: webserver
   links:
     - gitlab:gitlab
+    - owncloud:owncloud
   ports:
     - 80:80
     - 443:443
