@@ -99,7 +99,6 @@ gitlab:
 #
 # INTERNAL SERVICES
 #
-
 redis:
   image: redis:3
   container_name: redis
