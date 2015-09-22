@@ -4,18 +4,18 @@ task :setup do
     # Webserver
     'install -o    0 -g    0 -m 755 -d /srv/web',
     'install -o    0 -g    0 -m 755 -d /srv/log/webserver',
-    # OwnCloud
-    'install -o 1281 -g  100 -m 700 -d /srv/owncloud',
-    'install -o 1281 -g  100 -m 755 -d /srv/log/owncloud',
-    # GitLab
-    'install -o 1283 -g 1283 -m 755 -d /srv/gitlab',
-    'install -o 1283 -g  100 -m 755 -d /srv/log/gitlab',
     # Mailserver
     'install -o    0 -g    0 -m 755 -d /srv/mail',
     # Syncthing
     'install -o 1224 -g  100 -m 755 -d /srv/storage',
     # Minecraft
     'install -o 1280 -g  100 -m 755 -d /srv/minecraft',
+    # OwnCloud
+    'install -o 1281 -g  100 -m 700 -d /srv/owncloud',
+    'install -o 1281 -g  100 -m 755 -d /srv/log/owncloud',
+    # GitLab
+    'install -o 1283 -g 1283 -m 755 -d /srv/gitlab',
+    'install -o 1283 -g  100 -m 755 -d /srv/log/gitlab',
     # PostgreSQL
     'install -o  999 -g    0 -m 700 -d /srv/postgresql',
     # ElasticSearch

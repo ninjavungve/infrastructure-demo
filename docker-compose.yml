@@ -15,6 +15,38 @@ webserver:
   mac_address: 00:00:00:00:00:20
   restart: always
 
+mailserver:
+  build: mailserver
+  ports:
+    - 993:993
+  volumes:
+    - /srv/mail:/var/mail
+    - /srv/log/mailserver:/var/log/mail
+  container_name: mailserver
+  restart: always
+
+syncthing:
+  image: tianon/syncthing
+  ports:
+    - 127.0.0.1:8384:8383
+    - 14975:14975
+  volumes:
+    - /srv/storage/.syncthing:/home/user/.config/syncthing
+    - /srv/storage:/var/storage
+  container_name: syncthing
+  restart: always
+
+minecraft:
+  build: minecraft
+  ports:
+    - 25565:25565
+  volumes:
+    - /srv/minecraft:/var/lib/minecraft
+    - /srv/web/minecraft:/var/www/minecraft
+  container_name: minecraft
+  mac_address: 00:00:00:00:00:10
+  restart: always
+
 
 #
 # BACKEND SERVICES
@@ -60,38 +92,6 @@ gitlab:
   env_file: /srv/gitlab/gitlab.env
   container_name: gitlab
   mac_address: 00:00:00:00:00:30
-  restart: always
-
-mailserver:
-  build: mailserver
-  ports:
-    - 993:993
-  volumes:
-    - /srv/mail:/var/mail
-    - /srv/log/mailserver:/var/log/mail
-  container_name: mailserver
-  restart: always
-
-syncthing:
-  image: tianon/syncthing
-  ports:
-    - 127.0.0.1:8384:8383
-    - 14975:14975
-  volumes:
-    - /srv/storage/.syncthing:/home/user/.config/syncthing
-    - /srv/storage:/var/storage
-  container_name: syncthing
-  restart: always
-
-minecraft:
-  build: minecraft
-  ports:
-    - 25565:25565
-  volumes:
-    - /srv/minecraft:/var/lib/minecraft
-    - /srv/web/minecraft:/var/www/minecraft
-  container_name: minecraft
-  mac_address: 00:00:00:00:00:10
   restart: always
 
 
