@@ -24,9 +24,11 @@ Assuming that a the real host has two hard drives that should be mirrored. First
     $ mkdir /mnt/server
     $ mount /dev/sda /mnt/server
 
-## Install base system (Hetzner mirror)
+## Install base system
 
-    $ debootstrap --arch=amd64 --components=main --include=grub-pc,linux-server,lvm2,mdadm,openssh-server,ufw trusty /mnt/server http://mirror.hetzner.de/ubuntu/packages
+    $ debootstrap --arch=amd64 --components=main --include=grub-pc,linux-server,lvm2,mdadm,openssh-server,ufw trusty /mnt/server http://archive.ubuntu.com/ubuntu
+
+    Use country mirror (http://de.archive.ubuntu.com/ubuntu) or host provider mirror (http://mirror.hetzner.de/ubuntu/packages) as appropriate.
 
 ## Configuration
 
@@ -48,7 +50,7 @@ Assuming that a the real host has two hard drives that should be mirrored. First
 
 *etc/hostname*
 
-    server
+    <some nice name>
 
 *etc/timezone*
 
@@ -70,7 +72,7 @@ Assuming that a the real host has two hard drives that should be mirrored. First
 
 *etc/resolv.conf* (Hetzner DNS)
 
-    domain dc.zargony.com
+    search dc.zargony.com
     nameserver 213.133.98.98
     nameserver 213.133.99.99
     nameserver 213.133.100.100
@@ -116,6 +118,20 @@ Assuming that a the real host has two hard drives that should be mirrored. First
       filetype plugin indent on
     endif
 
+*etc/apt/sources.list*
+
+    deb http://de.archive.ubuntu.com/ubuntu     trusty          main restricted universe multiverse
+    deb http://de.archive.ubuntu.com/ubuntu     trusty-updates  main restricted universe multiverse
+    deb http://de.archive.ubuntu.com/ubuntu     trusty-security main restricted universe multiverse
+    deb http://security.ubuntu.com/ubuntu       trusty-security main restricted universe multiverse
+
+*etc/apt/sources.list* (Hetzner Mirror)
+
+    deb http://mirror.hetzner.de/ubuntu/packages    trusty          main restricted universe multiverse
+    deb http://mirror.hetzner.de/ubuntu/packages    trusty-updates  main restricted universe multiverse
+    deb http://mirror.hetzner.de/ubuntu/packages    trusty-security main restricted universe multiverse
+    deb http://security.ubuntu.com/ubuntu           trusty-security main restricted universe multiverse
+
 *root/.ssh/authorized_keys*
 
     ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAsSt+5Ennalg+GM7+0/37ukXuYR523DEWHTygpuGH1CI3GG0vMKHquG2lUEOKJ2mh4Pt5OBXxNfKxl3mmaPxyUStcMBwS25AQQhyLkFGp2sRFKpZQrEYozJ1galkPwdG4OsdtZXDdeDodsttDjIKchPPOSh0bHoXvIkA+zzWBu9wxZKc4EhQHN2+cI268NT+mZYFCFLcL2Zpr+eBW1OvnQ5MdG9kh4jYBc2kORXR4CzzCEVnkoibLLM7cczV96jugouVGTpDIYValBERWOM2aUFEbyRo3vAlveAfoFrYWFmvOgT2ynq1wHG6AcbsOOeAeCLO8slimmmgExhxtTEOGzQ== zargony@lina
@@ -130,7 +146,7 @@ Add `panic=60` to the kernel commandline to ensure a reboot after a kernel panic
     GRUB_DEFAULT=0
     GRUB_HIDDEN_TIMEOUT=0
     GRUB_HIDDEN_TIMEOUT_QUIET=true
-    GRUB_TIMEOUT=10
+    GRUB_TIMEOUT=2
     GRUB_CMDLINE_LINUX_DEFAULT=""
     GRUB_CMDLINE_LINUX="panic=60"
 
@@ -152,14 +168,15 @@ Install the bootloader to both harddisks.
 
 ## Docker
 
+    $ aptitude install apt-transport-https
     $ apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
-    $ echo "deb http://get.docker.com/ubuntu docker main" >/etc/apt/sources.list.d/docker.list
+    $ echo "deb https://apt.dockerproject.org/repo ubuntu-trusty main" >/etc/apt/sources.list.d/docker.list
     $ aptitude update
     $ aptitude install lxc-docker
 
 *etc/default/docker*
 
-    DOCKER_OPTS="--dns 213.133.98.98 --dns 213.133.99.99"
+    DOCKER_OPTS="--ipv6 --fixed-cidr-v6 2a01:xxx:xxx::/80 --dns 213.133.98.98 --dns 213.133.99.99 -H unix:///var/run/docker.sock -H tcp://127.0.0.1:2375"
 
 ## Useful services
 
@@ -187,22 +204,14 @@ Install the bootloader to both harddisks.
     set eventqueue basedir /var/lib/monit/events slots 100
 
     set mailserver mail02.dd24.net
-    set mail-format {
-      from: monit@$HOST
-      subject: ALERT: $SERVICE $DESCRIPTION
-      message: Event:  $SERVICE $DESCRIPTION
-    Action: $ACTION
-    Host:   $HOST
-    Date:   $DATE
-    }
-    set alert xxx@xxx.com not on { instance }
+    set alert xxx@xxx.com not on { instance, action }
 
     set httpd port 2812 and use address localhost allow localhost only
 
     check system xxx
       if loadavg (1min) > 5 then alert
       if loadavg (5min) > 3 then alert
-      if memory usage > 95% for 5 cycles then alert
+      if memory usage > 90% for 5 cycles then alert
       if swap usage > 50% for 5 cycles then alert
       if cpu usage (user) > 90% for 5 cycles then alert
       if cpu usage (system) > 50% for 5 cycles then alert
@@ -212,6 +221,10 @@ Install the bootloader to both harddisks.
       start program = "/sbin/start ssh"
       stop program = "/sbin/stop ssh"
       if failed host localhost port 22 type tcp protocol ssh then restart
+
+    check process docker with pidfile /run/docker.pid
+      start program = "/sbin/start docker"
+      stop program = "/sbin/stop docker"
 
     check filesystem rootfs with path /
       if space usage > 90% for 2 cycles then alert
@@ -233,7 +246,7 @@ Install the bootloader to both harddisks.
     IPV6=yes
     DEFAULT_INPUT_POLICY="DROP"
     DEFAULT_OUTPUT_POLICY="ACCEPT"
-    DEFAULT_FORWARD_POLICY="DROP"
+    DEFAULT_FORWARD_POLICY="ACCEPT"
     DEFAULT_APPLICATION_POLICY="SKIP"
     MANAGE_BUILTINS=no
 
