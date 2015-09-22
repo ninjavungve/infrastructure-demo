@@ -1,0 +1,119 @@
+#
+# PUBLIC SERVICES
+#
+webserver:
+  build: webserver
+  links:
+    - gitlab:gitlab
+  ports:
+    - 80:80
+    - 443:443
+  volumes:
+    - /srv/web:/var/www:ro
+    - /srv/log/webserver:/var/log/nginx
+  container_name: webserver
+  mac_address: 00:00:00:00:00:20
+  restart: always
+
+
+#
+# BACKEND SERVICES
+#
+owncloud:
+  build: owncloud
+  links:
+    - postgresql:postgresql
+  volumes:
+    - /srv/owncloud:/var/lib/owncloud
+    - /srv/log/owncloud:/var/log/owncloud
+  container_name: owncloud
+  restart: always
+
+gitlab:
+  image: sameersbn/gitlab
+  external_links:
+    - postgresql:postgresql
+    - redis:redisio
+  volumes:
+    - /srv/gitlab:/home/git/data
+    - /srv/log/gitlab:/var/log/gitlab
+  environment:
+    GITLAB_HOST: developer.zargony.com
+    GITLAB_TIMEZONE: Berlin
+    GITLAB_EMAIL: gitlab@zargony.com
+    GITLAB_EMAIL_DISPLAY_NAME: zargony.com GitLab
+    GITLAB_PROJECTS_ISSUES: "false"
+    GITLAB_PROJECTS_MERGE_REQUESTS: "false"
+    GITLAB_PROJECTS_WIKI: "false"
+    GITLAB_PROJECTS_SNIPPETS: "false"
+    GITLAB_PROJECTS_VISIBILITY: private
+    DB_NAME: gitlab
+    DB_USER: gitlab
+    #DB_PASS: xxxxx
+    SMTP_ENABLED: "true"
+    SMTP_DOMAIN: zargony.com
+    SMTP_HOST: smtp.sendgrid.net
+    SMTP_USER: zargony
+    #SMTP_PASS: xxxxx
+    USERMAP_UID: 1283
+    USERMAP_GID: 1283
+  env_file: /srv/gitlab/gitlab.env
+  container_name: gitlab
+  mac_address: 00:00:00:00:00:30
+  restart: always
+
+mailserver:
+  build: mailserver
+  ports:
+    - 993:993
+  volumes:
+    - /srv/mail:/var/mail
+    - /srv/log/mailserver:/var/log/mail
+  container_name: mailserver
+  restart: always
+
+syncthing:
+  image: tianon/syncthing
+  ports:
+    - 127.0.0.1:8384:8383
+    - 14975:14975
+  volumes:
+    - /srv/storage/.syncthing:/home/user/.config/syncthing
+    - /srv/storage:/var/storage
+  container_name: syncthing
+  restart: always
+
+minecraft:
+  build: minecraft
+  ports:
+    - 25565:25565
+  volumes:
+    - /srv/minecraft:/var/lib/minecraft
+    - /srv/web/minecraft:/var/www/minecraft
+  container_name: minecraft
+  mac_address: 00:00:00:00:00:10
+  restart: always
+
+
+#
+# INTERNAL SERVICES
+#
+
+redis:
+  image: redis:3
+  container_name: redis
+  restart: always
+
+postgresql:
+  image: postgres:9.4
+  volumes:
+    - /srv/postgresql:/var/lib/postgresql/data
+  container_name: postgresql
+  restart: always
+
+elasticsearch:
+  image: elasticsearch:1.4
+  volumes:
+    - /srv/elasticsearch:/usr/share/elasticsearch/data
+  container_name: elasticsearch
+  restart: always
