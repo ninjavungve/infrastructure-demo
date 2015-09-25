@@ -72,6 +72,7 @@ gitlab:
     - /srv/log/gitlab:/var/log/gitlab
   environment:
     GITLAB_HOST: developer.zargony.com
+    #GITLAB_SECRETS_DB_KEY_BASE: xxxxx
     GITLAB_TIMEZONE: Berlin
     GITLAB_EMAIL: gitlab@zargony.com
     GITLAB_EMAIL_DISPLAY_NAME: zargony.com GitLab
