@@ -108,14 +108,14 @@ redis:
   restart: always
 
 postgresql:
-  image: postgres:9.4
+  image: postgres:9
   volumes:
     - /srv/postgresql:/var/lib/postgresql/data
   container_name: postgresql
   restart: always
 
 elasticsearch:
-  image: elasticsearch:1.4
+  image: elasticsearch:1
   volumes:
     - /srv/elasticsearch:/usr/share/elasticsearch/data
   container_name: elasticsearch
