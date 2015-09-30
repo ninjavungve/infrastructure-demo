@@ -1,29 +1,3 @@
-desc 'Set up host environment (create /srv directories)'
-task :setup do
-  cmds = [
-    # Webserver
-    'install -o    0 -g    0 -m 755 -d /srv/web',
-    'install -o    0 -g    0 -m 755 -d /srv/log/webserver',
-    # Mailserver
-    'install -o    0 -g    0 -m 755 -d /srv/mail',
-    # Syncthing
-    'install -o 1224 -g  100 -m 755 -d /srv/storage',
-    # Minecraft
-    'install -o 1280 -g  100 -m 755 -d /srv/minecraft',
-    # OwnCloud
-    'install -o 1281 -g  100 -m 700 -d /srv/owncloud',
-    'install -o 1281 -g  100 -m 755 -d /srv/log/owncloud',
-    # GitLab
-    'install -o 1283 -g 1283 -m 755 -d /srv/gitlab',
-    'install -o 1283 -g  100 -m 755 -d /srv/log/gitlab',
-    # PostgreSQL
-    'install -o  999 -g    0 -m 700 -d /srv/postgresql',
-    # ElasticSearch
-    'install -o  105 -g  108 -m 755 -d /srv/elasticsearch',
-  ]
-  sh "docker run --rm -v /srv:/srv zargony/base /bin/bash -c '#{cmds.join(' && ')}'"
-end
-
 desc 'Build base iamge(s)'
 task :baseimage do
   sh "docker build -t zargony/base base"
