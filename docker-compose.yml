@@ -81,6 +81,7 @@ gitlab:
     GITLAB_PROJECTS_WIKI: "false"
     GITLAB_PROJECTS_SNIPPETS: "false"
     GITLAB_PROJECTS_VISIBILITY: private
+    GITLAB_SSH_HOST: git.zargony.com
     # FIXME: If not set, REDIS_PORT conflicts with env from linked redis container
     REDIS_PORT: 6379
     DB_NAME: gitlab
@@ -91,8 +92,6 @@ gitlab:
     SMTP_HOST: smtp.sendgrid.net
     SMTP_USER: zargony
     #SMTP_PASS: xxxxx
-    USERMAP_UID: 1283
-    USERMAP_GID: 1283
   env_file: /srv/gitlab/gitlab.env
   container_name: gitlab
   mac_address: 00:00:00:00:00:30
