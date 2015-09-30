@@ -1,7 +1,6 @@
-desc 'Build base iamge(s)'
+desc 'Build base iamge'
 task :baseimage do
   sh "docker build -t zargony/base base"
-  sh "docker build -t zargony/base-ruby base-ruby"
 end
 
 desc 'Remove exited containers'
