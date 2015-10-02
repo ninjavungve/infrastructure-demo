@@ -187,7 +187,7 @@ Install the bootloader to both harddisks.
 *etc/ssmtp/ssmtp.conf*
 
     root=xxx@xxx.com
-    mailhub=mail02.dd24.net
+    mailhub=mail.your-server.de
     hostname=server.dc.zargony.com
 
 ### Monitoring
@@ -203,7 +203,7 @@ Install the bootloader to both harddisks.
     set statefile /var/lib/monit/state
     set eventqueue basedir /var/lib/monit/events slots 100
 
-    set mailserver mail02.dd24.net
+    set mailserver mail.your-server.de
     set alert xxx@xxx.com not on { instance, action }
 
     set httpd port 2812 and use address localhost allow localhost only
