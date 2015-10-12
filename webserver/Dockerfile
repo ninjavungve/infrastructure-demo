@@ -1,10 +1,5 @@
-FROM zargony/base
+FROM nginx:1.9
 
-RUN apt-get -qqy install nginx ca-certificates
+COPY nginx.conf /etc/nginx/nginx.conf
 
-ADD nginx.conf /etc/
-
-VOLUME ["/var/www"]
-
-CMD ["/usr/sbin/nginx", "-c", "/etc/nginx.conf"]
 EXPOSE 80 443
