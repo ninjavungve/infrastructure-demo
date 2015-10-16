@@ -53,12 +53,12 @@ minecraft:
 # BACKEND SERVICES
 #
 owncloud:
-  build: owncloud
+  image: owncloud
   links:
     - postgresql:postgresql
   volumes:
-    - /srv/owncloud:/var/lib/owncloud
-    - /srv/log/owncloud:/var/log/owncloud
+    - /srv/owncloud/config.php:/var/www/html/config/config.php
+    - /srv/owncloud:/var/www/html/data
   container_name: owncloud
   restart: always
 
