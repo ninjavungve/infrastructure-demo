@@ -3,6 +3,11 @@ task :baseimage do
   sh "docker build -t zargony/base base"
 end
 
+desc 'Show status of services'
+task :ps do
+  sh 'docker-compose ps'
+end
+
 desc 'Ensure that all services are running'
 task :up do
   sh 'docker-compose up -d'
