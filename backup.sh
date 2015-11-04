@@ -41,10 +41,6 @@ for v in $VOLUMES; do
 	duplicity incremental --asynchronous-upload \
 		--encrypt-key $GNUPGKEY --sign-key $GNUPGKEY \
 		--full-if-older-than 7D --exclude-other-filesystems \
-		--exclude $dir/dev --exclude $dir/proc --exclude $dir/sys \
-		--exclude $dir/tmp --exclude $dir/var/tmp --exclude $dir/var/cache \
-		--exclude $dir/mnt --exclude $dir/var/log/mysql/*bin* \
-		--exclude $dir/var/lib/mongodb/journal/prealloc.* \
 		$dir $REMOTE/backup_$v
 	log "Cleaning up..."
 	cleanup
