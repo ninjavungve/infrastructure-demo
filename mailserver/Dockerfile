@@ -1,11 +1,8 @@
-FROM zargony/base
+FROM alpine
 
-# FIXME: Workaround for weird dovecot install problems in Ubuntu 14.04 (ignore first time install error)
-RUN apt-get -qqy install dovecot-core; ln -s /lib/init/upstart-job /etc/init.d/dovecot; apt-get -qqy install dovecot-core
+RUN apk add --update ca-certificates dovecot
 
-RUN apt-get -qqy install ca-certificates dovecot-imapd
-
-ADD dovecot.conf /etc/
+COPY dovecot.conf /etc/
 
 VOLUME ["/var/mail"]
 
