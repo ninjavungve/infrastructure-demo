@@ -11,6 +11,7 @@ end
 desc 'Update and restart services'
 task :update do
   sh 'docker-compose pull'
+  sh 'docker-compose build --pull'
   sh 'docker-compose up -d'
 end
 
