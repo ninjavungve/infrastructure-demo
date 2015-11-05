@@ -1,8 +1,3 @@
-desc 'Build base image'
-task :baseimage do
-  sh "docker build -t zargony/base base"
-end
-
 desc 'Show status of services'
 task :ps do
   sh 'docker-compose ps'
@@ -37,7 +32,7 @@ task clean: [:rm, :rmi]
 
 desc 'Start interactive shell in a fresh container'
 task :shell do
-  sh 'docker run --rm -i -t -v /srv:/srv zargony/base /bin/bash'
+  sh 'docker run --rm -i -t -v /srv:/srv ubuntu /bin/bash'
 end
 
 desc 'Start interactive PostgreSQL command line interface'
