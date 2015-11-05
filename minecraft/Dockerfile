@@ -1,6 +1,6 @@
 FROM java:8-jre
 
-ENV MINECRAFT_VERSION=1.8.5
+ENV MINECRAFT_VERSION=1.8.8
 
 ADD https://s3.amazonaws.com/Minecraft.Download/versions/$MINECRAFT_VERSION/$MINECRAFT_VERSION.jar /opt/minecraft/minecraft.jar
 ADD https://s3.amazonaws.com/Minecraft.Download/versions/$MINECRAFT_VERSION/minecraft_server.$MINECRAFT_VERSION.jar /opt/minecraft/minecraft_server.jar
