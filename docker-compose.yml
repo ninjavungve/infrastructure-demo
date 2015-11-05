@@ -43,7 +43,6 @@ minecraft:
     - 25565:25565
   volumes:
     - /srv/minecraft:/var/lib/minecraft
-    - /srv/web/minecraft:/var/www/minecraft
   container_name: minecraft
   mac_address: 00:00:00:00:00:10
   restart: always

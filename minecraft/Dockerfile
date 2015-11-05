@@ -1,10 +1,5 @@
 FROM java:8-jre
 
-#RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 97BDD17642A97E9B43E7FF23AB6EAF871F4C1BCE
-#RUN echo "deb http://overviewer.org/debian ./" >/etc/apt/sources.list.d/overviewer.list
-#RUN apt-get -qq update
-#RUN apt-get -qqy install minecraft-overviewer
-
 ENV MINECRAFT_VERSION=1.8.5
 
 ADD https://s3.amazonaws.com/Minecraft.Download/versions/$MINECRAFT_VERSION/$MINECRAFT_VERSION.jar /opt/minecraft/minecraft.jar
