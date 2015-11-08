@@ -99,7 +99,7 @@ gitlab:
   restart: always
 
 gitlab-runner:
-  image: gitlab/gitlab-runner
+  build: gitlab-runner
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock
     - /srv/gitlab-runner:/etc/gitlab-runner
