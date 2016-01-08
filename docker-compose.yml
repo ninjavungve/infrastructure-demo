@@ -116,7 +116,7 @@ redis:
   restart: always
 
 postgresql:
-  image: postgres:9
+  image: postgres:9.4
   volumes:
     - /srv/postgresql:/var/lib/postgresql/data
   container_name: postgresql
