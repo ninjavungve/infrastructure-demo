@@ -29,7 +29,7 @@ mailserver:
 syncthing:
   image: tianon/syncthing
   ports:
-    - 127.0.0.1:8384:8383
+    - 127.0.0.1:8384:8384
     - 14975:14975
   volumes:
     - /srv/storage/.syncthing:/home/user/.config/syncthing
