@@ -14,7 +14,7 @@ webserver:
     - /srv/log/webserver:/var/log/nginx
   container_name: webserver
   mac_address: 00:00:00:00:00:20
-  restart: always
+  restart: unless-stopped
 
 mailserver:
   build: mailserver
@@ -24,7 +24,7 @@ mailserver:
     - /srv/mail:/var/mail
     - /srv/log/mailserver:/var/log/mail
   container_name: mailserver
-  restart: always
+  restart: unless-stopped
 
 syncthing:
   image: tianon/syncthing
@@ -35,7 +35,7 @@ syncthing:
     - /srv/storage/.syncthing:/home/user/.config/syncthing
     - /srv/storage:/var/storage
   container_name: syncthing
-  restart: always
+  restart: unless-stopped
 
 minecraft:
   build: minecraft
@@ -45,7 +45,7 @@ minecraft:
     - /srv/minecraft:/var/lib/minecraft
   container_name: minecraft
   mac_address: 00:00:00:00:00:10
-  restart: always
+  restart: unless-stopped
 
 
 #
@@ -59,7 +59,7 @@ owncloud:
     - /srv/owncloud/config.php:/var/www/html/config/config.php
     - /srv/owncloud:/var/www/html/data
   container_name: owncloud
-  restart: always
+  restart: unless-stopped
 
 gitlab:
   image: sameersbn/gitlab
@@ -96,7 +96,7 @@ gitlab:
   env_file: /srv/gitlab/gitlab.env
   container_name: gitlab
   mac_address: 00:00:00:00:00:30
-  restart: always
+  restart: unless-stopped
 
 gitlab-runner:
   build: gitlab-runner
@@ -104,7 +104,7 @@ gitlab-runner:
     - /var/run/docker.sock:/var/run/docker.sock
     - /srv/gitlab-runner:/etc/gitlab-runner
   container_name: gitlab-runner
-  restart: always
+  restart: unless-stopped
 
 
 #
@@ -113,18 +113,18 @@ gitlab-runner:
 redis:
   image: redis:3
   container_name: redis
-  restart: always
+  restart: unless-stopped
 
 postgresql:
   image: postgres:9.4
   volumes:
     - /srv/postgresql:/var/lib/postgresql/data
   container_name: postgresql
-  restart: always
+  restart: unless-stopped
 
 elasticsearch:
   image: elasticsearch:1
   volumes:
     - /srv/elasticsearch:/usr/share/elasticsearch/data
   container_name: elasticsearch
-  restart: always
+  restart: unless-stopped
