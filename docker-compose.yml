@@ -1,130 +1,149 @@
+version: '2'
+
 #
-# PUBLIC SERVICES
+# VOLUMES
 #
-webserver:
-  build: webserver
-  links:
-    - gitlab:gitlab
-    - owncloud:owncloud
-  ports:
-    - 80:80
-    - 443:443
-  volumes:
-    - /srv/web:/var/www:ro
-    - /srv/log/webserver:/var/log/nginx
-  container_name: webserver
-  mac_address: 00:00:00:00:00:20
-  restart: unless-stopped
 
-mailserver:
-  build: mailserver
-  ports:
-    - 993:993
-  volumes:
-    - /srv/mail:/var/mail
-    - /srv/log/mailserver:/var/log/mail
-  container_name: mailserver
-  restart: unless-stopped
-
-syncthing:
-  image: tianon/syncthing
-  ports:
-    - 127.0.0.1:8384:8384
-    - 14975:14975
-  volumes:
-    - /srv/storage/.syncthing:/home/user/.config/syncthing
-    - /srv/storage:/var/storage
-  container_name: syncthing
-  restart: unless-stopped
-
-minecraft:
-  build: minecraft
-  ports:
-    - 25565:25565
-  volumes:
-    - /srv/minecraft:/var/lib/minecraft
-  container_name: minecraft
-  mac_address: 00:00:00:00:00:10
-  restart: unless-stopped
+volumes:
+  web:
+  web_logs:
+  mail:
+  cloud:
+  minecraft:
+  owncloud:
+  gitlab:
+  redis:
+  postgresql:
 
 
 #
-# BACKEND SERVICES
+# NETWORKS
 #
-owncloud:
-  image: owncloud
-  links:
-    - postgresql:postgresql
-  volumes:
-    - /srv/owncloud/config.php:/var/www/html/config/config.php
-    - /srv/owncloud:/var/www/html/data
-  container_name: owncloud
-  restart: unless-stopped
 
-gitlab:
-  image: sameersbn/gitlab
-  links:
-    - postgresql:postgresql
-    - redis:redisio
-  volumes:
-    - /srv/gitlab:/home/git/data
-    - /srv/log/gitlab:/var/log/gitlab
-  environment:
-    GITLAB_HOST: developer.zargony.com
-    #GITLAB_SECRETS_DB_KEY_BASE: xxxxx
-    GITLAB_TIMEZONE: Berlin
-    GITLAB_EMAIL: gitlab@zargony.com
-    GITLAB_EMAIL_DISPLAY_NAME: zargony.com GitLab
-    GITLAB_PROJECTS_ISSUES: "false"
-    GITLAB_PROJECTS_MERGE_REQUESTS: "false"
-    GITLAB_PROJECTS_WIKI: "false"
-    GITLAB_PROJECTS_SNIPPETS: "false"
-    GITLAB_PROJECTS_VISIBILITY: private
-    GITLAB_SSH_HOST: git.zargony.com
-    GITLAB_HTTPS: "true"
-    SSL_SELF_SIGNED: "true"
-    # FIXME: If not set, REDIS_PORT conflicts with env from linked redis container
-    REDIS_PORT: 6379
-    DB_NAME: gitlab
-    DB_USER: gitlab
-    #DB_PASS: xxxxx
-    SMTP_ENABLED: "true"
-    SMTP_DOMAIN: zargony.com
-    SMTP_HOST: smtp.sendgrid.net
-    SMTP_USER: zargony
-    #SMTP_PASS: xxxxx
-  env_file: /srv/gitlab/gitlab.env
-  container_name: gitlab
-  mac_address: 00:00:00:00:00:30
-  restart: unless-stopped
-
-gitlab-runner:
-  build: gitlab-runner
-  volumes:
-    - /var/run/docker.sock:/var/run/docker.sock
-    - /srv/gitlab-runner:/etc/gitlab-runner
-  container_name: gitlab-runner
-  restart: unless-stopped
+networks:
+  default:
 
 
 #
-# INTERNAL SERVICES
+# SERVICES
 #
-redis:
-  image: redis:3
-  container_name: redis
-  restart: unless-stopped
 
-postgresql:
-  image: postgres:9.4
-  volumes:
-    - /srv/postgresql:/var/lib/postgresql/data
-  container_name: postgresql
-  restart: unless-stopped
+services:
 
-elasticsearch:
-  image: elasticsearch:1
-  volumes:
-    - /srv/elasticsearch:/usr/share/elasticsearch/data
-  container_name: elasticsearch
-  restart: unless-stopped
+  #
+  # PUBLIC SERVICES
+  #
+
+  webserver:
+    container_name: webserver
+    build: webserver
+    depends_on:
+      - gitlab
+      - owncloud
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - web:/var/www:ro
+      - web_logs:/var/log/nginx
+    mac_address: 00:00:00:00:00:20
+    restart: unless-stopped
+
+  mailserver:
+    container_name: mailserver
+    build: mailserver
+    ports:
+      - 993:993
+    volumes:
+      - mail:/var/mail
+    restart: unless-stopped
+
+  syncthing:
+    container_name: syncthing
+    image: tianon/syncthing
+    ports:
+      - 14975:14975
+      - 127.0.0.1:8384:8384
+    volumes:
+      - cloud:/home/user
+    restart: unless-stopped
+
+  minecraft:
+    container_name: minecraft
+    image: itzg/minecraft-server
+    ports:
+      - 25565:25565
+    volumes:
+      - minecraft:/data
+    environment:
+      EULA: "true"
+    mac_address: 00:00:00:00:00:10
+    restart: unless-stopped
+
+  #
+  # BACKEND SERVICES
+  #
+
+  owncloud:
+    container_name: owncloud
+    image: owncloud
+    depends_on:
+      - postgresql
+    volumes:
+      - owncloud:/var/www/html
+    restart: unless-stopped
+
+  gitlab:
+    container_name: gitlab
+    image: sameersbn/gitlab
+    depends_on:
+      - redis
+      - postgresql
+    volumes:
+      - gitlab:/home/git/data
+    environment:
+      GITLAB_HOST: developer.zargony.com
+      #GITLAB_SECRETS_DB_KEY_BASE: xxxxx
+      GITLAB_TIMEZONE: Berlin
+      GITLAB_EMAIL: gitlab@zargony.com
+      GITLAB_EMAIL_DISPLAY_NAME: zargony.com GitLab
+      GITLAB_PROJECTS_ISSUES: "false"
+      GITLAB_PROJECTS_MERGE_REQUESTS: "false"
+      GITLAB_PROJECTS_WIKI: "false"
+      GITLAB_PROJECTS_SNIPPETS: "false"
+      GITLAB_PROJECTS_VISIBILITY: private
+      GITLAB_SSH_HOST: git.zargony.com
+      GITLAB_HTTPS: "true"
+      SSL_SELF_SIGNED: "true"
+      REDIS_HOST: redis
+      DB_ADAPTER: postgresql
+      DB_HOST: postgresql
+      DB_NAME: gitlab
+      DB_USER: gitlab
+      #DB_PASS: xxxxx
+      SMTP_ENABLED: "true"
+      SMTP_DOMAIN: zargony.com
+      SMTP_HOST: smtp.sendgrid.net
+      SMTP_USER: zargony
+      #SMTP_PASS: xxxxx
+    env_file: ./gitlab.env
+    mac_address: 00:00:00:00:00:30
+    restart: unless-stopped
+
+  #
+  # INTERNAL SERVICES
+  #
+
+  redis:
+    container_name: redis
+    image: redis:3
+    volumes:
+      - redis:/data
+    restart: unless-stopped
+
+  postgresql:
+    container_name: postgresql
+    image: postgres:9.4
+    volumes:
+      - postgresql:/var/lib/postgresql/data
+    restart: unless-stopped

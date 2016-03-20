@@ -32,10 +32,10 @@ task clean: [:rm, :rmi]
 
 desc 'Start interactive shell in a fresh container'
 task :shell do
-  sh 'docker run --rm -i -t -v /srv:/srv ubuntu /bin/bash'
+  sh 'docker run --rm -i -t ubuntu /bin/bash'
 end
 
 desc 'Start interactive PostgreSQL command line interface'
 task :psql do
-  sh 'docker run --rm -i -t --link postgresql:postgresql postgres /usr/bin/psql -h postgresql -U postgres'
+  sh 'docker run --rm -i -t --net infrastructure_default --link postgresql:postgresql postgres:9.4 /usr/bin/psql -h postgresql -U postgres'
 end
