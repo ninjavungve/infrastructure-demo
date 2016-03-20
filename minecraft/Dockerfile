@@ -8,7 +8,7 @@ RUN chmod 644 /opt/minecraft/minecraft*.jar
 
 RUN useradd -d /opt/minecraft -s /bin/bash -u 1280 -g 100 -c Minecraft minecraft
 
-VOLUME ["/var/lib/minecraft"]
+VOLUME /var/lib/minecraft
 
 WORKDIR /var/lib/minecraft
 USER minecraft
