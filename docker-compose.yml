@@ -43,6 +43,7 @@ services:
     ports:
       - 80:80
       - 443:443
+      - 2222:2222
     volumes:
       - web:/var/www:ro
       - web_logs:/var/log/nginx
@@ -112,7 +113,7 @@ services:
       GITLAB_PROJECTS_WIKI: "false"
       GITLAB_PROJECTS_SNIPPETS: "false"
       GITLAB_PROJECTS_VISIBILITY: private
-      GITLAB_SSH_HOST: git.zargony.com
+      GITLAB_SSH_PORT: 2222
       GITLAB_HTTPS: "true"
       SSL_SELF_SIGNED: "true"
       REDIS_HOST: redis
@@ -127,7 +128,6 @@ services:
       SMTP_USER: zargony
       #SMTP_PASS: xxxxx
     env_file: ./gitlab.env
-    mac_address: 00:00:00:00:00:30
     restart: unless-stopped
 
   #
