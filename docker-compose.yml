@@ -28,8 +28,8 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 172.16.238.0/24
         - subnet: 2a01:4f8:100:546f:4::/80
+          ip_range: 2a01:4f8:100:546f:4:b0c5::/96
 
 
 #
@@ -48,6 +48,9 @@ services:
     depends_on:
       - gitlab
       - owncloud
+    networks:
+      default:
+        ipv6_address: 2a01:4f8:100:546f:4::20
     ports:
       - 80:80
       - 443:443
@@ -55,7 +58,6 @@ services:
     volumes:
       - web:/var/www:ro
       - web_logs:/var/log/nginx
-    mac_address: 00:00:00:00:00:20
     restart: unless-stopped
 
   mailserver:
@@ -80,13 +82,15 @@ services:
   minecraft:
     container_name: minecraft
     image: itzg/minecraft-server
+    networks:
+      default:
+        ipv6_address: 2a01:4f8:100:546f:4::10
     ports:
       - 25565:25565
     volumes:
       - minecraft:/data
     environment:
       EULA: "true"
-    mac_address: 00:00:00:00:00:10
     restart: unless-stopped
 
   #
