@@ -176,7 +176,7 @@ Install the bootloader to both harddisks.
 
 *etc/default/docker*
 
-    DOCKER_OPTS="--ipv6 --fixed-cidr-v6 2a01:xxx:xxx::/80 --dns 213.133.98.98 --dns 213.133.99.99 -H unix:///var/run/docker.sock -H tcp://127.0.0.1:2375"
+    DOCKER_OPTS="--ipv6 --dns 213.133.98.98 --dns 213.133.99.99 --dns 213.133.100.100 -H unix:///var/run/docker.sock -H tcp://127.0.0.1:2375"
 
 ## Useful services
 

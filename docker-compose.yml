@@ -22,6 +22,14 @@ volumes:
 
 networks:
   default:
+    driver: bridge
+    driver_opts:
+      com.docker.network.enable_ipv6: "true"
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.238.0/24
+        - subnet: 2a01:4f8:100:546f:4::/80
 
 
 #
