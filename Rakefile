@@ -30,6 +30,11 @@ end
 desc 'Clean up (remove exited containers and unused images)'
 task clean: [:rm, :rmi]
 
+desc 'Run daily maintenance'
+task :daily do
+  sh 'docker exec -i -t gitlab bundle exec rake gitlab:git:gc RAILS_ENV=production'
+end
+
 desc 'Start interactive shell in a fresh container'
 task :shell do
   sh 'docker run --rm -i -t ubuntu /bin/bash'
