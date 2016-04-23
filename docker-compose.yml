@@ -127,7 +127,6 @@ services:
       GITLAB_PROJECTS_VISIBILITY: private
       GITLAB_SSH_PORT: 2222
       GITLAB_HTTPS: "true"
-      SSL_SELF_SIGNED: "true"
       REDIS_HOST: redis
       DB_ADAPTER: postgresql
       DB_HOST: postgresql
