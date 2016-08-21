@@ -103,7 +103,8 @@ services:
     depends_on:
       - postgresql
     volumes:
-      - owncloud:/var/www/html
+      - owncloud:/var/www/html/config
+      - owncloud:/var/www/html/data
     restart: unless-stopped
 
   gitlab:
