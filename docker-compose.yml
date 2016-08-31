@@ -10,7 +10,7 @@ volumes:
   mail:
   cloud:
   minecraft:
-  owncloud:
+  nextcloud:
   gitlab:
   redis:
   postgresql:
@@ -47,7 +47,7 @@ services:
     build: webserver
     depends_on:
       - gitlab
-      - owncloud
+      - nextcloud
     networks:
       default:
         ipv6_address: 2a01:4f8:100:546f:4::20
@@ -97,14 +97,14 @@ services:
   # BACKEND SERVICES
   #
 
-  owncloud:
-    container_name: owncloud
-    image: owncloud
+  nextcloud:
+    container_name: nextcloud
+    image: wonderfall/nextcloud
     depends_on:
       - postgresql
     volumes:
-      - owncloud:/var/www/html/config
-      - owncloud:/var/www/html/data
+      - nextcloud:/config
+      - nextcloud:/data
     restart: unless-stopped
 
   gitlab:
