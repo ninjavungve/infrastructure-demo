@@ -165,7 +165,7 @@ services:
 
   postgresql:
     container_name: postgresql
-    image: postgres:9.4
+    image: postgres:9.5
     volumes:
       - postgresql:/var/lib/postgresql/data
     restart: unless-stopped
