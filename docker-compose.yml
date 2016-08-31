@@ -8,7 +8,6 @@ volumes:
   web:
   web_logs:
   mail:
-  cloud:
   minecraft:
   nextcloud:
   gitlab:
@@ -67,16 +66,6 @@ services:
       - 993:993
     volumes:
       - mail:/var/mail
-    restart: unless-stopped
-
-  syncthing:
-    container_name: syncthing
-    image: tianon/syncthing
-    ports:
-      - 14975:14975
-      - 127.0.0.1:8384:8384
-    volumes:
-      - cloud:/home/user
     restart: unless-stopped
 
   minecraft:
