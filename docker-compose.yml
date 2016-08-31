@@ -13,7 +13,7 @@ volumes:
   nextcloud:
   gitlab:
   redis:
-  postgresql:
+  postgres:
 
 
 #
@@ -101,7 +101,7 @@ services:
     container_name: nextcloud
     image: wonderfall/nextcloud
     depends_on:
-      - postgresql
+      - postgres
     volumes:
       - nextcloud:/config
       - nextcloud:/data
@@ -112,7 +112,7 @@ services:
     image: gitlab/gitlab-ce
     depends_on:
       - redis
-      - postgresql
+      - postgres
     volumes:
       - gitlab:/etc/gitlab
       - gitlab:/var/opt/gitlab
@@ -134,7 +134,7 @@ services:
         gitlab_rails['db_database'] = 'gitlab'
         gitlab_rails['db_username'] = 'gitlab'
         gitlab_rails['db_password'] = ENV['DB_PASS']
-        gitlab_rails['db_host'] = 'postgresql'
+        gitlab_rails['db_host'] = 'postgres'
         gitlab_rails['db_port'] = 5432
         gitlab_rails['redis_host'] = 'redis'
         gitlab_rails['redis_port'] = 6379
@@ -163,9 +163,9 @@ services:
       - redis:/data
     restart: unless-stopped
 
-  postgresql:
-    container_name: postgresql
+  postgres:
+    container_name: postgres
     image: postgres:9.5
     volumes:
-      - postgresql:/var/lib/postgresql/data
+      - postgres:/var/lib/postgresql/data
     restart: unless-stopped

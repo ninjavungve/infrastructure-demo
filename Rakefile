@@ -37,5 +37,5 @@ end
 
 desc 'Start interactive PostgreSQL command line interface'
 task :psql do
-  sh 'docker run --rm -i -t --net infrastructure_default --link postgresql:postgresql postgres:9.5 /usr/bin/psql -h postgresql -U postgres'
+  sh 'docker run --rm -i -t --net infrastructure_default --link postgres:postgres postgres:9.5 /usr/bin/psql -h postgres -U postgres'
 end
