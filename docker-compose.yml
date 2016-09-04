@@ -8,6 +8,7 @@ volumes:
   web:
   web_logs:
   mail:
+  storage:
   minecraft:
   nextcloud:
   gitlab:
@@ -66,6 +67,16 @@ services:
       - 993:993
     volumes:
       - mail:/var/mail
+    restart: unless-stopped
+
+  btsync:
+    container_name: btsync
+    build: btsync
+    ports:
+      - 14975:14975
+      - 127.0.0.1:8888:8888
+    volumes:
+      - storage:/data
     restart: unless-stopped
 
   minecraft:
