@@ -105,6 +105,7 @@ services:
     volumes:
       - nextcloud:/config
       - nextcloud:/data
+      - storage:/storage
     restart: unless-stopped
 
   gitlab:
