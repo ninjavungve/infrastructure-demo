@@ -69,9 +69,9 @@ services:
       - mail:/var/mail
     restart: unless-stopped
 
-  btsync:
-    container_name: btsync
-    build: btsync
+  rslsync:
+    container_name: rslsync
+    build: rslsync
     ports:
       - 14975:14975
       - 127.0.0.1:8888:8888
