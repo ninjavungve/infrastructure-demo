@@ -12,6 +12,7 @@ volumes:
   minecraft:
   nextcloud:
   gitlab:
+  gitlab-runner:
   redis:
   postgres:
 
@@ -151,6 +152,14 @@ services:
         redis['enable'] = false
         nginx['enable'] = false
     env_file: ./gitlab.env
+    restart: unless-stopped
+
+  gitlab-runner:
+    container_name: gitlab-runner
+    image: gitlab/gitlab-runner
+    volumes:
+      - gitlab-runner:/etc/gitlab-runner
+      - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
 
   #
