@@ -203,7 +203,8 @@ Install the bootloader to both harddisks.
     set statefile /var/lib/monit/state
     set eventqueue basedir /var/lib/monit/events slots 100
 
-    set mailserver mail.your-server.de
+    set mail-format { from: monit@zargony.com }
+    set mailserver smtp.sendgrid.net port 587 username apikey password xxx using tlsv1
     set alert xxx@xxx.com not on { instance, action }
 
     set httpd port 2812 and use address localhost allow localhost only
