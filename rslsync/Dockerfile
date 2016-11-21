@@ -4,7 +4,7 @@ RUN apt-get update && \
     apt-get install -y ca-certificates --no-install-recommends && \
     rm -rf /var/lib/apt/lists/*
 
-ADD http://internal.getsync.com/2.4.0.640_WO2KKX/resilio-sync_glibc23_x64.tar.gz /tmp/rslsync.tar.gz
+ADD https://download-cdn.resilio.com/stable/linux-glibc-x64/resilio-sync_glibc23_x64.tar.gz /tmp/rslsync.tar.gz
 RUN tar -C /usr/local/bin -zxf /tmp/rslsync.tar.gz rslsync && \
     rm -f /tmp/rslsync.tar.gz
 
