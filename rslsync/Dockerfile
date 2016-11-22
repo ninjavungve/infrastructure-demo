@@ -1,7 +1,7 @@
 FROM debian
 
 RUN apt-get update && \
-    apt-get install -y ca-certificates --no-install-recommends && \
+    apt-get install -y --no-install-recommends ca-certificates && \
     rm -rf /var/lib/apt/lists/*
 
 ADD https://download-cdn.resilio.com/stable/linux-glibc-x64/resilio-sync_glibc23_x64.tar.gz /tmp/rslsync.tar.gz
