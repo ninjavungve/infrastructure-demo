@@ -1,7 +1,7 @@
 #!/bin/bash
 set -f
 
-VOLUMES="postgres gitlab mail nextcloud web web_logs minecraft"
+VOLUMES="postgres gitlab mail discourse nextcloud web web_logs minecraft"
 REMOTE="sftp://xxx@xxx.your-backup.de"
 export GNUPGHOME="/root/.gnupg"
 export GNUPGKEY="xxx"

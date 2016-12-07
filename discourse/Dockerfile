@@ -1,8 +1,8 @@
 FROM ruby:2.3
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends ca-certificates build-essential git \
-    jhead libpq-dev libxml2-dev libxslt-dev nodejs pkg-config && \
+    apt-get install -y --no-install-recommends ca-certificates build-essential gifsicle git \
+    jhead jpegoptim libpq-dev libxml2-dev libxslt-dev nodejs optipng pngquant pkg-config && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /opt/app

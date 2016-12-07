@@ -13,6 +13,7 @@ volumes:
   nextcloud:
   gitlab:
   gitlab-runner:
+  discourse:
   redis:
   postgres:
 
@@ -168,8 +169,8 @@ services:
     depends_on:
       - postgres
       - redis
-    ports:
-      - 3000:3000
+    volumes:
+      - discourse:/opt/app/public/uploads
     environment:
       DISCOURSE_DB_HOST: postgres
       DISCOURSE_DB_NAME: discourse
