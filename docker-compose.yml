@@ -13,7 +13,6 @@ volumes:
   nextcloud:
   gitlab:
   gitlab-runner:
-  mattermost:
   redis:
   postgres:
 
@@ -161,16 +160,6 @@ services:
     volumes:
       - gitlab-runner:/etc/gitlab-runner
       - /var/run/docker.sock:/var/run/docker.sock
-    restart: unless-stopped
-
-  mattermost:
-    container_name: mattermost
-    build: mattermost
-    depends_on:
-      - postgres
-    volumes:
-      - mattermost:/mattermost/data
-    env_file: ./mattermost.env
     restart: unless-stopped
 
   #
