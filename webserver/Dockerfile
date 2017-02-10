@@ -7,7 +7,7 @@ RUN apt-get update && \
 COPY nginx.conf /etc/nginx/nginx.conf
 
 RUN /usr/sbin/make-ssl-cert generate-default-snakeoil && \
-    openssl dhparam -out /etc/ssl/dhparam.pem 256 && \
+    openssl dhparam -out /etc/ssl/dhparam.pem 2048 && \
     mkdir -p /etc/letsencrypt/live/zargony.com && \
     ln -sf /etc/ssl/private/ssl-cert-snakeoil.key /etc/letsencrypt/live/zargony.com/privkey.pem && \
     ln -sf /etc/ssl/certs/ssl-cert-snakeoil.pem /etc/letsencrypt/live/zargony.com/fullchain.pem && \
