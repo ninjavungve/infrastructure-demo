@@ -17,6 +17,9 @@ RUN /usr/sbin/make-ssl-cert generate-default-snakeoil && \
     mkdir -p /etc/letsencrypt/live/developer.zargony.com && \
     ln -sf /etc/ssl/private/ssl-cert-snakeoil.key /etc/letsencrypt/live/developer.zargony.com/privkey.pem && \
     ln -sf /etc/ssl/certs/ssl-cert-snakeoil.pem /etc/letsencrypt/live/developer.zargony.com/fullchain.pem && \
+    mkdir -p /etc/letsencrypt/live/cafe.zargony.com && \
+    ln -sf /etc/ssl/private/ssl-cert-snakeoil.key /etc/letsencrypt/live/cafe.zargony.com/privkey.pem && \
+    ln -sf /etc/ssl/certs/ssl-cert-snakeoil.pem /etc/letsencrypt/live/cafe.zargony.com/fullchain.pem && \
     mkdir -p /var/www/blog /var/www/charmer
 
 VOLUME /var/www
