@@ -6,15 +6,18 @@ RUN apt-get update && \
 
 COPY nginx.conf /etc/nginx/nginx.conf
 
-RUN mkdir -p /var/www/certs && \
-    /usr/sbin/make-ssl-cert generate-default-snakeoil && \
-    openssl dhparam -out /var/www/certs/dhparam.pem 256 && \
-    ln -sf /etc/ssl/private/ssl-cert-snakeoil.key /var/www/certs/zargony.com.key && \
-    ln -sf /etc/ssl/certs/ssl-cert-snakeoil.pem /var/www/certs/zargony.com.pem && \
-    ln -sf /etc/ssl/private/ssl-cert-snakeoil.key /var/www/certs/cloud.zargony.com.key && \
-    ln -sf /etc/ssl/certs/ssl-cert-snakeoil.pem /var/www/certs/cloud.zargony.com.pem && \
-    ln -sf /etc/ssl/private/ssl-cert-snakeoil.key /var/www/certs/developer.zargony.com.key && \
-    ln -sf /etc/ssl/certs/ssl-cert-snakeoil.pem /var/www/certs/developer.zargony.com.pem
+RUN /usr/sbin/make-ssl-cert generate-default-snakeoil && \
+    openssl dhparam -out /etc/ssl/dhparam.pem 256 && \
+    mkdir -p /etc/letsencrypt/live/zargony.com && \
+    ln -sf /etc/ssl/private/ssl-cert-snakeoil.key /etc/letsencrypt/live/zargony.com/privkey.pem && \
+    ln -sf /etc/ssl/certs/ssl-cert-snakeoil.pem /etc/letsencrypt/live/zargony.com/fullchain.pem && \
+    mkdir -p /etc/letsencrypt/live/cloud.zargony.com && \
+    ln -sf /etc/ssl/private/ssl-cert-snakeoil.key /etc/letsencrypt/live/cloud.zargony.com/privkey.pem && \
+    ln -sf /etc/ssl/certs/ssl-cert-snakeoil.pem /etc/letsencrypt/live/cloud.zargony.com/fullchain.pem && \
+    mkdir -p /etc/letsencrypt/live/developer.zargony.com && \
+    ln -sf /etc/ssl/private/ssl-cert-snakeoil.key /etc/letsencrypt/live/developer.zargony.com/privkey.pem && \
+    ln -sf /etc/ssl/certs/ssl-cert-snakeoil.pem /etc/letsencrypt/live/developer.zargony.com/fullchain.pem && \
+    mkdir -p /var/www/blog /var/www/charmer
 
 VOLUME /var/www
 VOLUME /var/log/nginx

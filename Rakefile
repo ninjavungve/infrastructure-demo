@@ -39,3 +39,15 @@ desc 'Start interactive PostgreSQL command line interface'
 task :psql do
   sh 'docker run --rm -i -t --net infrastructure_default --link postgres:postgres postgres:9.5 /usr/bin/psql -h postgres -U postgres'
 end
+
+namespace :ssl do
+  desc 'Request new SSL certificate from Let\'s Encrypt'
+  task :new do
+    sh 'docker run --rm -i -t -v infrastructure_letsencrypt:/etc/letsencrypt quay.io/letsencrypt/letsencrypt certonly --manual --preferred-challenges dns-01'
+  end
+
+  desc 'Renew existing SSL certificate from Let\'s Encrypt'
+  task :renew do
+    sh 'docker run --rm -i -t -v infrastructure_letsencrypt:/etc/letsencrypt quay.io/letsencrypt/letsencrypt renew'
+  end
+end
