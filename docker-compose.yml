@@ -95,7 +95,7 @@ services:
       - 127.0.0.1:8080:8080
     volumes:
       - parity:/root/.local/share/io.parity.ethereum
-    command: --mode active --chain homestead --ui-interface 0.0.0.0 --ui-no-validation --no-warp --nat extip:188.40.80.208 --no-discovery --allow-ips public --max-pending-peers 10 --jsonrpc-interface 0.0.0.0 --tracing on --pruning archive
+    command: --mode active --chain mainnet --ui-interface 0.0.0.0 --ui-no-validation --no-warp --nat extip:188.40.80.208 --no-discovery --allow-ips public --max-pending-peers 10 --jsonrpc-interface 0.0.0.0 --tracing on --pruning archive
     stop_grace_period: 30s
     restart: unless-stopped
 
