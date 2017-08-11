@@ -43,11 +43,11 @@ end
 namespace :ssl do
   desc 'Request new SSL certificate from Let\'s Encrypt'
   task :new do
-    sh 'docker run --rm -i -t -v infrastructure_letsencrypt:/etc/letsencrypt quay.io/letsencrypt/letsencrypt certonly --manual --preferred-challenges dns-01'
+    sh 'docker run --rm -i -t -v infrastructure_letsencrypt:/etc/letsencrypt certbot/certbot certonly --manual --preferred-challenges dns-01'
   end
 
   desc 'Renew existing SSL certificate from Let\'s Encrypt'
   task :renew do
-    sh 'docker run --rm -i -t -v infrastructure_letsencrypt:/etc/letsencrypt quay.io/letsencrypt/letsencrypt renew'
+    sh 'docker run --rm -i -t -v infrastructure_letsencrypt:/etc/letsencrypt certbot/certbot renew'
   end
 end
