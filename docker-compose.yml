@@ -86,16 +86,16 @@ services:
 
   parity:
     container_name: parity
-    image: parity/parity:beta
+    image: parity/parity:v1.7.0
     ports:
       - 30303:30303
       - 30303:30303/udp
       - 127.0.0.1:8180:8180
       - 127.0.0.1:8545:8545
-      - 127.0.0.1:8080:8080
+      - 127.0.0.1:8546:8546
     volumes:
       - parity:/root/.local/share/io.parity.ethereum
-    command: --mode active --chain mainnet --ui-interface 0.0.0.0 --ui-no-validation --no-warp --nat extip:188.40.80.208 --no-discovery --allow-ips public --max-pending-peers 10 --jsonrpc-interface 0.0.0.0 --tracing on --pruning archive
+    command: --mode active --chain mainnet --unsafe-expose --no-warp --nat extip:188.40.80.208 --no-discovery --allow-ips public --max-pending-peers 10 --pruning archive
     stop_grace_period: 30s
     restart: unless-stopped
 
