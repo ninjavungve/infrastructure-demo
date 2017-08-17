@@ -210,8 +210,8 @@ Install the bootloader to both harddisks.
     set httpd port 2812 and use address localhost allow localhost only
 
     check system xxx
-      if loadavg (1min) > 5 then alert
-      if loadavg (5min) > 3 then alert
+      if loadavg (1min) > 7 then alert
+      if loadavg (5min) > 5 then alert
       if memory usage > 90% for 5 cycles then alert
       if swap usage > 50% for 5 cycles then alert
       if cpu usage (user) > 90% for 5 cycles then alert
