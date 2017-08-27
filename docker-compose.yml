@@ -95,7 +95,6 @@ services:
       - 127.0.0.1:8546:8546
     volumes:
       - parity:/root/.local/share/io.parity.ethereum
-    command: --mode active --chain mainnet --unsafe-expose --nat extip:188.40.80.208 --no-discovery --allow-ips public --max-pending-peers 10
     stop_grace_period: 30s
     restart: unless-stopped
 
