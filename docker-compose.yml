@@ -86,7 +86,7 @@ services:
 
   parity:
     container_name: parity
-    image: parity/parity:v1.7.1
+    image: parity/parity:v1.7.2
     ports:
       - 30303:30303
       - 30303:30303/udp
