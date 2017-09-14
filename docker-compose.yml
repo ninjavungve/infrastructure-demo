@@ -15,7 +15,6 @@ volumes:
   nextcloud:
   gitlab:
   gitlab-runner:
-  discourse:
   redis:
   postgres:
 
@@ -51,7 +50,6 @@ services:
     depends_on:
       - nextcloud
       - gitlab
-      - discourse
     networks:
       default:
         ipv6_address: 2a01:4f8:221:1405:4::20
@@ -170,35 +168,6 @@ services:
         redis['enable'] = false
         nginx['enable'] = false
     env_file: ./gitlab.env
-    restart: unless-stopped
-
-  discourse:
-    container_name: discourse
-    build: discourse
-    depends_on:
-      - postgres
-      - redis
-    volumes:
-      - discourse:/opt/app/public/uploads
-    environment:
-      DISCOURSE_DB_HOST: postgres
-      DISCOURSE_DB_NAME: discourse
-      DISCOURSE_DB_USERNAME: discourse
-      #DISCOURSE_DB_PASSWORD:
-      DISCOURSE_HOSTNAME: cafe.zargony.com
-      DISCOURSE_SMTP_ADDRESS: smtp.sendgrid.net
-      DISCOURSE_SMTP_PORT: 587
-      DISCOURSE_SMTP_DOMAIN: zargony.com
-      DISCOURSE_SMTP_USER_NAME: apikey
-      #DISCOURSE_SMTP_PASSWORD:
-      DISCOURSE_SMTP_AUTHENTICATION: plain
-      DISCOURSE_SMTP_ENABLE_START_TLS: 'true'
-      DISCOURSE_REDIS_HOST: redis
-      DISCOURSE_SERVE_STATIC_ASSETS: 'true'
-      #SECRET_TOKEN:
-      UNICORN_WORKERS: 3
-      UNICORN_SIDEKIQS: 3
-    env_file: ./discourse.env
     restart: unless-stopped
 
   #
