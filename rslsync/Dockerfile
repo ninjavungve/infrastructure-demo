@@ -4,9 +4,9 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends ca-certificates && \
     rm -rf /var/lib/apt/lists/*
 
-ADD https://download-cdn.resilio.com/stable/linux-glibc-x64/resilio-sync_glibc23_x64.tar.gz /tmp/rslsync.tar.gz
-RUN tar -C /usr/local/bin -zxf /tmp/rslsync.tar.gz rslsync && \
-    rm -f /tmp/rslsync.tar.gz
+ADD https://download-cdn.resilio.com/stable/linux-glibc-x64/resilio-sync_glibc23_x64.tar.gz /tmp/
+RUN tar -C /usr/local/bin -zxf /tmp/resilio-sync_glibc23_x64.tar.gz rslsync && \
+    rm -f /tmp/resilio-sync_glibc23_x64.tar.gz
 
 RUN addgroup --gid 1000 user && \
     adduser --uid 1000 --gid 1000 user && \
